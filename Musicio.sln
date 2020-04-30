@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Client.Web", "Musicio.Client.Web\Musicio.Client.Web.csproj", "{F99A4897-1179-4FBB-94A8-0ED87BD2CA71}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Server", "Musicio.Server.API\Musicio.Server.csproj", "{132CFF8C-6AA3-4142-B271-5F8B656C1E13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Server", "Musicio.Server\Musicio.Server.csproj", "{132CFF8C-6AA3-4142-B271-5F8B656C1E13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{8F85ECC1-AC5C-4FFF-AA71-A14B6D08635C}"
 EndProject
