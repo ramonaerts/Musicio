@@ -1,6 +1,6 @@
 using System;
 
-namespace Musicio.Server.API
+namespace Musicio.Server
 {
     public class WeatherForecast
     {

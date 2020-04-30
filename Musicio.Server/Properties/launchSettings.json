@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Musicio.Server.API": {
+    "Musicio.Server": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

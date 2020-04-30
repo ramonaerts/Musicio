@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Musicio.Server.API.Controllers
+namespace Musicio.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
