@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Client.Web", "Musicio.Client.Web\Musicio.Client.Web.csproj", "{F99A4897-1179-4FBB-94A8-0ED87BD2CA71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Server", "Musicio.Server.API\Musicio.Server.csproj", "{132CFF8C-6AA3-4142-B271-5F8B656C1E13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{8F85ECC1-AC5C-4FFF-AA71-A14B6D08635C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Core", "Musicio.Core\Musicio.Core.csproj", "{BC3EFE53-2F18-41AC-8727-F80007F51064}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F99A4897-1179-4FBB-94A8-0ED87BD2CA71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99A4897-1179-4FBB-94A8-0ED87BD2CA71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99A4897-1179-4FBB-94A8-0ED87BD2CA71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99A4897-1179-4FBB-94A8-0ED87BD2CA71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132CFF8C-6AA3-4142-B271-5F8B656C1E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132CFF8C-6AA3-4142-B271-5F8B656C1E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132CFF8C-6AA3-4142-B271-5F8B656C1E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132CFF8C-6AA3-4142-B271-5F8B656C1E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F85ECC1-AC5C-4FFF-AA71-A14B6D08635C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F85ECC1-AC5C-4FFF-AA71-A14B6D08635C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F85ECC1-AC5C-4FFF-AA71-A14B6D08635C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F85ECC1-AC5C-4FFF-AA71-A14B6D08635C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC3EFE53-2F18-41AC-8727-F80007F51064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC3EFE53-2F18-41AC-8727-F80007F51064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC3EFE53-2F18-41AC-8727-F80007F51064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC3EFE53-2F18-41AC-8727-F80007F51064}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E33BC592-02C7-43FB-9020-334AFD8631DF}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,106 @@
+﻿@using System.IO
+@using Howler.Blazor.Components
+@using Musicio.Client.Web.Invokables
+@using Musicio.Core.Domain
+@using NAudio.Wave
+@inject IJSRuntime JSRuntime
+@inject IHowl Howl
+@inject IHowlGlobal HowlGlobal
+
+<button class="btn btn-primary oi oi-media-play" @onclick="TogglePlay"></button>
+<button class="btn btn-primary oi oi-media-stop" @onclick="Stop"></button>
+
+@*<button class="btn btn-primary oi oi-media-step-backward" @onclick="Previous"></button>
+<button class="btn btn-primary oi oi-media-step-forward" @onclick="Next"></button>*@
+<pre>TotalTime : @CurrentSong.SongDuration</pre>
+<pre>Title : @CurrentSong.SongTitle</pre><br/>
+<MusicProgress @ref="_musicProgress"/>
+
+@code {
+
+    MusicProgress _musicProgress;
+    Functions functions;
+
+    [Parameter]
+    public Song CurrentSong { get; set; }
+
+    [Parameter]
+    public bool IsPlaying { get; set; }
+
+    [Parameter]
+    public bool HasStarted { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        IsPlaying = false;
+        HasStarted = false;
+
+        Song song = new Song {SongFile = "https://www.healingfrequenciesmusic.com/wp-content/uploads/2015/03/Love-Abounds-Sample.mp3?_=1", SongTitle = "Sample Song"};
+        CurrentSong = song;
+
+        functions = new Functions(JSRuntime);
+
+        Howl.OnPlay += e =>
+        {
+            CurrentSong.SongDuration = e.TotalTime;
+
+            StateHasChanged();
+        };
+
+        Howl.OnPause += e =>
+        {
+            StateHasChanged();
+        };
+
+        Howl.OnStop += e =>
+        {
+            StateHasChanged();
+        };
+    }
+
+    protected async Task TogglePlay()
+    {
+        if (!IsPlaying && !HasStarted)
+        {
+            IsPlaying = true;
+            HasStarted = true;
+            functions.SetTimeout(RefreshTimeStatus, 900);
+            await Howl.Play(CurrentSong.SongFile);
+        }
+        else if (IsPlaying && HasStarted)
+        {
+            IsPlaying = false;
+            await Howl.Pause();
+        }
+        else if (!IsPlaying && HasStarted)
+        {
+            IsPlaying = true;
+            functions.SetTimeout(RefreshTimeStatus, 900);
+            await Howl.Pause();
+        }
+    }
+
+    protected async Task Stop()
+    {
+        IsPlaying = false;
+        HasStarted = false;
+        await Howl.Stop();
+    }
+
+    async Task RefreshTimeStatus()
+    {
+        if (IsPlaying)
+        {
+            _musicProgress.SetTotalTime((int)CurrentSong.SongDuration.TotalSeconds);
+            TimeSpan currentTime = await Howl.GetCurrentTime();
+            Console.WriteLine(currentTime);
+            int currentTimeSec = (int) currentTime.TotalSeconds;
+            Console.WriteLine(currentTimeSec);
+            _musicProgress.Refresh(currentTimeSec);
+
+            functions.SetTimeout(RefreshTimeStatus, 900);
+        }
+    }
+}

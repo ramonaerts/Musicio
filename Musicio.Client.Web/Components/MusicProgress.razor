@@ -1,0 +1,23 @@
+﻿<progress id="music-progress" value="@TimeStatus.ToString()" max="@TotalTime.ToString()"></progress>
+@*<div class="progress-bar" aria-valuenow="@TimeStatus.ToString()" aria-valuemin="0" aria-valuemax="@TotalTime.ToString()" style="width:50%"></div>*@
+
+@code {
+
+    int TimeStatus { get; set; }
+
+    int TotalTime { get; set; }
+
+    public void SetTotalTime(int totalTime)
+    {
+        TotalTime = totalTime;
+
+        StateHasChanged();
+    }
+
+    public void Refresh(int timeStatus)
+    {
+        TimeStatus = timeStatus;
+
+        StateHasChanged();
+    }
+}
