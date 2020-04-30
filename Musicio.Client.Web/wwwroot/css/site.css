@@ -197,7 +197,7 @@ app {
     }
 }
 
-progress {
+/*progress {
     display: inline-block;
     width: 190px;
     height: 20px;
@@ -236,4 +236,4 @@ progress:after {
     padding: 0;
     display: inline-block;
     float: left;
-}
+}*/

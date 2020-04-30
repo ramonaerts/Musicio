@@ -1,4 +1,10 @@
-﻿<progress id="music-progress" value="@TimeStatus.ToString()" max="@TotalTime.ToString()"></progress>
+﻿@using Howler.Blazor.Components
+@using Musicio.Client.Web.Invokables
+@inject IHowl Howl
+@inject IHowlGlobal HowlGlobal
+@inject IJSRuntime JSRuntime
+
+<progress id="music-progress" name="music-progress" value="@TimeStatus.ToString()" max="@TotalTime.ToString()" @onclick="ProgressClick"></progress>
 @*<div class="progress-bar" aria-valuenow="@TimeStatus.ToString()" aria-valuemin="0" aria-valuemax="@TotalTime.ToString()" style="width:50%"></div>*@
 
 @code {
@@ -19,5 +25,19 @@
         TimeStatus = timeStatus;
 
         StateHasChanged();
+    }
+
+    async Task ProgressClick(MouseEventArgs e)
+    {
+        Element element = new Element("music-progress", JSRuntime);
+
+        decimal offsetWidth = await element.GetOffsetWidth();
+        decimal offsetLeft = await element.GetOffsetLeft();
+        decimal x = (int) e.ClientX - offsetLeft;
+        decimal newTimeDec = x / offsetWidth * TotalTime;
+
+        TimeSpan newTime = TimeSpan.FromSeconds(Convert.ToInt32(newTimeDec));
+
+        await Howl.Seek(newTime);
     }
 }
