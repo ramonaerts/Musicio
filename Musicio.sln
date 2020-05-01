@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Core", "Musicio.Core\Musicio.Core.csproj", "{BC3EFE53-2F18-41AC-8727-F80007F51064}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Musicio.Client", "Musicio.Client\Musicio.Client.csproj", "{2A22AC17-A45D-4556-9F65-92DDF1C19AE3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BC3EFE53-2F18-41AC-8727-F80007F51064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC3EFE53-2F18-41AC-8727-F80007F51064}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC3EFE53-2F18-41AC-8727-F80007F51064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A22AC17-A45D-4556-9F65-92DDF1C19AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A22AC17-A45D-4556-9F65-92DDF1C19AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A22AC17-A45D-4556-9F65-92DDF1C19AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A22AC17-A45D-4556-9F65-92DDF1C19AE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

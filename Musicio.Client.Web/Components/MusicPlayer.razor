@@ -10,6 +10,9 @@
 <MusicProgress @ref="_musicProgress" />
 <button class="btn btn-primary @icon" @onclick="TogglePlay"></button>
 <button class="btn btn-primary oi oi-media-stop" @onclick="Stop"></button>
+@*<audio controls>
+    <source src="audio/Sample.mp3" type="audio/mpeg">
+</audio>*@
 @*<p>@CurrentSong.SongTitle</p>
 <p>@CurrentSong.Artist</p>*@
 
@@ -20,6 +23,7 @@
 
     MusicProgress _musicProgress;
     Functions functions;
+    FileEncoder encoder;
     string icon = "oi oi-media-play";
 
     [Parameter]
@@ -38,7 +42,11 @@
         IsPlaying = false;
         HasStarted = false;
 
-        Song song = new Song { SongFile = "https://www.healingfrequenciesmusic.com/wp-content/uploads/2015/03/Love-Abounds-Sample.mp3?_=1", SongTitle = "Sample Song", Artist = "Sample Artist" };
+        encoder = new FileEncoder();
+
+        string path = "audio/Animals.mp3";
+
+        Song song = new Song { SongFile = path, SongTitle = "Animals", Artist = "Martin Garrix" };
         CurrentSong = song;
 
         functions = new Functions(JSRuntime);
