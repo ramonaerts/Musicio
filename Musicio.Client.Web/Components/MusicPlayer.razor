@@ -7,19 +7,20 @@
 @inject IHowl Howl
 @inject IHowlGlobal HowlGlobal
 
-<button class="btn btn-primary oi oi-media-play" @onclick="TogglePlay"></button>
+<MusicProgress @ref="_musicProgress" />
+<button class="btn btn-primary @icon" @onclick="TogglePlay"></button>
 <button class="btn btn-primary oi oi-media-stop" @onclick="Stop"></button>
+@*<p>@CurrentSong.SongTitle</p>
+<p>@CurrentSong.Artist</p>*@
 
 @*<button class="btn btn-primary oi oi-media-step-backward" @onclick="Previous"></button>
-<button class="btn btn-primary oi oi-media-step-forward" @onclick="Next"></button>*@
-<pre>TotalTime : @CurrentSong.SongDuration</pre>
-<pre>Title : @CurrentSong.SongTitle</pre><br/>
-<MusicProgress @ref="_musicProgress"/>
+    <button class="btn btn-primary oi oi-media-step-forward" @onclick="Next"></button>*@
 
 @code {
 
     MusicProgress _musicProgress;
     Functions functions;
+    string icon = "oi oi-media-play";
 
     [Parameter]
     public Song CurrentSong { get; set; }
@@ -37,7 +38,7 @@
         IsPlaying = false;
         HasStarted = false;
 
-        Song song = new Song {SongFile = "https://www.healingfrequenciesmusic.com/wp-content/uploads/2015/03/Love-Abounds-Sample.mp3?_=1", SongTitle = "Sample Song"};
+        Song song = new Song { SongFile = "https://www.healingfrequenciesmusic.com/wp-content/uploads/2015/03/Love-Abounds-Sample.mp3?_=1", SongTitle = "Sample Song", Artist = "Sample Artist" };
         CurrentSong = song;
 
         functions = new Functions(JSRuntime);
@@ -67,36 +68,44 @@
             IsPlaying = true;
             HasStarted = true;
             functions.SetTimeout(RefreshTimeStatus, 900);
+            icon = "oi oi-media-pause";
             await Howl.Play(CurrentSong.SongFile);
         }
         else if (IsPlaying && HasStarted)
         {
             IsPlaying = false;
+            icon = "oi oi-media-play";
             await Howl.Pause();
         }
         else if (!IsPlaying && HasStarted)
         {
             IsPlaying = true;
             functions.SetTimeout(RefreshTimeStatus, 900);
+            icon = "oi oi-media-pause";
             await Howl.Pause();
         }
+        StateHasChanged();
     }
 
     protected async Task Stop()
     {
         IsPlaying = false;
         HasStarted = false;
+        icon = "oi oi-media-play";
+        await RefreshTimeStatus();
         await Howl.Stop();
+
+        StateHasChanged();
     }
 
     async Task RefreshTimeStatus()
     {
-        if (IsPlaying)
+        if (IsPlaying || !HasStarted)
         {
             _musicProgress.SetTotalTime((int)CurrentSong.SongDuration.TotalSeconds);
             TimeSpan currentTime = await Howl.GetCurrentTime();
             Console.WriteLine(currentTime);
-            int currentTimeSec = (int) currentTime.TotalSeconds;
+            int currentTimeSec = (int)currentTime.TotalSeconds;
             Console.WriteLine(currentTimeSec);
             _musicProgress.Refresh(currentTimeSec);
 

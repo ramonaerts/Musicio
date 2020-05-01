@@ -37,6 +37,7 @@
         decimal newTimeDec = x / offsetWidth * TotalTime;
 
         TimeSpan newTime = TimeSpan.FromSeconds(Convert.ToInt32(newTimeDec));
+        Console.WriteLine(newTime);
 
         await Howl.Seek(newTime);
     }

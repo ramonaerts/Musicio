@@ -8,7 +8,7 @@ namespace Musicio.Core.Domain
 {
     public class Song : BaseEntity
     {
-        public int ArtistId { get; set; }
+        public string Artist { get; set; }
         public SongType Type { get; set; }
         public int? AlbumId { get; set; }
         public string SongTitle { get; set; }
