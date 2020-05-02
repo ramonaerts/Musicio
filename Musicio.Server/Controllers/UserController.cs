@@ -28,6 +28,7 @@ namespace Musicio.Server.Controllers
         [Route("login")]
         public async Task<ApiResult> PostLogin(LoginMessage message)
         {
+            Console.WriteLine("here?");
             var testUser = new Core.Models.User(1, "Ramon", "Aerts", 1);
             return ApiResult.Success(testUser);
         }

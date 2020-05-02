@@ -14,5 +14,10 @@ namespace Musicio.Core.Messages
             Username = username;
             Password = password;
         }
+
+        public LoginMessage()
+        {
+            
+        }
     }
 }
