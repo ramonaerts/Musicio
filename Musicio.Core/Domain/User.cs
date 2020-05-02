@@ -11,7 +11,7 @@ namespace Musicio.Core.Domain
         public string Username { get; set; }
         public string Password { get; set; }
         public string Mail { get; set; }
-        public UserRole Role { get; set; }
+        public int Role { get; set; }
         public List<Playlist> Playlists { get; set; }
     }
 }

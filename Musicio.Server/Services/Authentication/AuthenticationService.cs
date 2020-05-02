@@ -14,7 +14,7 @@ namespace Musicio.Server.Services.Authentication
             
         }
 
-        public Task<User> LoginUser(LoginMessage message)
+        public async Task<User> LoginUser(LoginMessage message)
         {
             throw new NotImplementedException();
         }
