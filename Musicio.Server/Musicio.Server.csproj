@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Musicio.Client.Web\Musicio.Client.Web.csproj" />
+    <ProjectReference Include="..\Musicio.Server.Data\Musicio.Server.Data.csproj" />
   </ItemGroup>
 
 

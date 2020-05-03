@@ -8,11 +8,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Musicio.Core;
+using Musicio.Core.Data;
+using Musicio.Core.Domain;
+using Musicio.Server.Data;
 using Musicio.Server.Services.Authentication;
 
 namespace Musicio.Server
@@ -29,10 +33,11 @@ namespace Musicio.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<DbContext, MusicioContext>();
             services.AddControllers();
-
+            services.AddScoped<IRepository<BaseEntity>, Repository<BaseEntity>>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-
             /*services.AddRepositories();
             services.AddServices();*/
 

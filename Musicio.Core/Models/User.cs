@@ -11,19 +11,24 @@ namespace Musicio.Core.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public string Email { get; set; }
-        public UserRole Role { get; set; }
+        public string Mail { get; set; }
+        public int Role { get; set; }
         //public List<Playlist> Playlists { get; set; }
 
         public User(int id, string username, string email, int roleId)
         {
             Id = id;
             Username = username;
-            Email = email;
-            SetUserRole(roleId);
+            Mail = email;
+            Role = roleId;
         }
 
-        private void SetUserRole(int roleId)
+        public User()
+        {
+            
+        }
+
+        /*private void SetUserRole(int roleId)
         {
             switch (roleId)
             {
@@ -37,6 +42,6 @@ namespace Musicio.Core.Models
                     Role = UserRole.User;
                     break;
             }
-        }
+        }*/
     }
 }

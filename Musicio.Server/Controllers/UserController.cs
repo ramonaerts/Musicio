@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.WebEncoders.Testing;
 using Musicio.Core;
 using Musicio.Core.Domain;
 using Musicio.Core.Messages;
-using Musicio.Core.Models;
 using Musicio.Server.Services.Authentication;
 
 namespace Musicio.Server.Controllers
@@ -18,19 +19,23 @@ namespace Musicio.Server.Controllers
     {
         //private readonly service _authenticationService;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IMapper _mapper;
 
-        public UserController(IAuthenticationService authenticationService)
+        public UserController(IAuthenticationService authenticationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
+            _mapper = mapper;
         }
 
         [HttpPost]
         [Route("login")]
         public async Task<ApiResult> PostLogin(LoginMessage message)
         {
-            Console.WriteLine("here?");
-            var testUser = new Core.Models.User(1, "Ramon", "Aerts", 1);
-            return ApiResult.Success(testUser);
+            User user = await _authenticationService.LoginUser(message);
+
+            var userModel = _mapper.Map<Core.Models.User>(user);
+
+            return ApiResult.Success(userModel);
         }
     }
 }

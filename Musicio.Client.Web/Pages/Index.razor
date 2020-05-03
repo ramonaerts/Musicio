@@ -39,7 +39,7 @@
     {
         Console.WriteLine(_username);
         var test = await AuthenticationService.Login(_username, _password);
-        Test = test.Username;
+        Test = test.Mail;
         StateHasChanged();
     }
 

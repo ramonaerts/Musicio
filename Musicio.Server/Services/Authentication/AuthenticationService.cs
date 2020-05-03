@@ -4,19 +4,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Musicio.Core.Data;
 
 namespace Musicio.Server.Services.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public AuthenticationService()
+        private readonly IRepository<User> _userRepository;
+        public AuthenticationService(IRepository<User> userRepository)
         {
-            
+            _userRepository = userRepository;
         }
 
         public async Task<User> LoginUser(LoginMessage message)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(message);
+            User user = _userRepository.Table.SingleOrDefault(a => a.Username == message.Username);
+            Console.WriteLine("hi");
+            return user;
         }
     }
 }

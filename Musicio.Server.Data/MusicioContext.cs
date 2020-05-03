@@ -13,6 +13,8 @@ namespace Musicio.Server.Data
     {
         //public DbSet<User> Users { get; set; }
 
+        public MusicioContext() { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var configurations = Assembly.GetExecutingAssembly().GetTypes().Where(t =>
@@ -26,9 +28,11 @@ namespace Musicio.Server.Data
 
             base.OnModelCreating(modelBuilder);
         }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //optionsBuilder.UseNpgsql("User ID=lighttown;Password=pHmGfPMJ8LpV4CnPxZRy6wKTqAXdxi8nUKHw;Host=localhost;Port=5432;Database=Musicio;");
             optionsBuilder.UseMySql("Server=localhost;Database=musicio;Uid=root;");
         }
     }
