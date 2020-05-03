@@ -18,9 +18,7 @@ namespace Musicio.Server.Services.Authentication
 
         public async Task<User> LoginUser(LoginMessage message)
         {
-            Console.WriteLine(message);
             User user = _userRepository.Table.SingleOrDefault(a => a.Username == message.Username);
-            Console.WriteLine("hi");
             return user;
         }
     }

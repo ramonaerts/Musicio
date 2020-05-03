@@ -35,7 +35,8 @@ namespace Musicio.Server.Controllers
 
             var userModel = _mapper.Map<Core.Models.User>(user);
 
-            return ApiResult.Success(userModel);
+            if(userModel != null) return ApiResult.Success(userModel);
+            return ApiResult.BadRequest();
         }
     }
 }

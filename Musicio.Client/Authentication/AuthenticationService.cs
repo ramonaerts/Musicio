@@ -18,12 +18,10 @@ namespace Musicio.Client.Authentication
             _httpClient = httpClient;
         }
 
-        public async Task<User> Login(string username, string password)
+        public async Task<bool> Login(string username, string password)
         {
-            Console.WriteLine(username);
             var result = await _httpClient.PostJsonAsync<ApiResult>("api/User/login", new LoginMessage(username, password));
-            Console.WriteLine(result);
-            return result.GetData<User>();
+            return result.IsSuccess;
         }
     }
 }

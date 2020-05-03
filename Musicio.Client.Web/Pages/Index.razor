@@ -1,46 +1,5 @@
 ﻿@page "/"
-@using Musicio.Client.Authentication
-@inject IAuthenticationService AuthenticationService;
-
-<h1>@Test</h1>
-
-<form>
-    <input @bind="_username" type="text" placeholder="Username" />
-    <input @bind="_password" id="password" type="text" placeholder="Password" />
-    <input type="button" value="Login" @onclick="LoginUser"/>
-</form>
 
 @code {
-    [Parameter]
-    public string Test { get; set; }
-
-    private string _username;
-    private string _password;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        Test = "Test";
-    }
-
-    public void OnUsernameChange(string value)
-    {
-        _username = value;
-        StateHasChanged();
-    }
-
-    public void OnPasswordChange(string value)
-    {
-        _password = value;
-        StateHasChanged();
-    }
-
-    private async Task LoginUser()
-    {
-        Console.WriteLine(_username);
-        var test = await AuthenticationService.Login(_username, _password);
-        Test = test.Mail;
-        StateHasChanged();
-    }
 
 }
