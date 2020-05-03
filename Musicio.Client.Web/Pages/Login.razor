@@ -10,21 +10,24 @@
 @layout LoginLayout
 
 <Form Id="form-login">
+    <FormGroup>
+        <h2>Login</h2>
+    </FormGroup>
+    <FormGroup>
+        <InputField Type="text" Placeholder="Username" OnChange="@OnUsernameChange"/>
+    </FormGroup>
+    <FormGroup>
+        <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange"/>
+    </FormGroup>
+    <FormGroup>
+        <Button Enabled="@_buttonEnabled" Text="Login" OnClick="@LoginAsync"></Button>
+    </FormGroup>
     @if (!_loginSuccess)
     {
         <div class="alert alert-danger">
             Error logging in, make sure your credentials are correct.
         </div>
     }
-    <FormGroup>
-        <InputField Type="text" Placeholder="Username" OnChange="@OnUsernameChange" />
-    </FormGroup>
-    <FormGroup>
-        <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
-    </FormGroup>
-    <FormGroup>
-        <Button Enabled="@_buttonEnabled" Text="Login" OnClick="@LoginAsync"></Button>
-    </FormGroup>
 </Form>
 
 @code {

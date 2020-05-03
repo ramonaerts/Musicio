@@ -32,13 +32,5 @@ namespace Musicio.Client.Validation
 
             return true;
         }
-
-        public bool ValidatePostInput(string content)
-        {
-            if (string.IsNullOrEmpty(content))
-                return false;
-
-            return true;
-        }
     }
 }
