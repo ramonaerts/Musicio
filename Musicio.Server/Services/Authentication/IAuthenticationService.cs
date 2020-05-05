@@ -10,5 +10,7 @@ namespace Musicio.Server.Services.Authentication
     public interface IAuthenticationService
     {
         Task<User> LoginUser(LoginMessage message);
+
+        Task<bool> RegisterUser(RegisterMessage message);
     }
 }

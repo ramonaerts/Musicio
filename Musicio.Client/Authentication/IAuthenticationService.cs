@@ -9,5 +9,7 @@ namespace Musicio.Client.Authentication
     public interface IAuthenticationService
     {
         Task<bool> Login(string username, string password);
+
+        Task<bool> Register(string mail, string username, string password);
     }
 }

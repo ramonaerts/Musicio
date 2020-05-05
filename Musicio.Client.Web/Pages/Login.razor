@@ -9,7 +9,7 @@
 
 @layout LoginLayout
 
-@if (_login)
+@if (_isLogin)
 {
     <Form Id="form-login">
         <FormGroup>
@@ -30,7 +30,7 @@
         @if (!_loginSuccess)
         {
             <div class="alert alert-danger">
-                Error logging in, make sure your credentials are correct.
+                @_errorMessage
             </div>
         }
     </Form>
@@ -42,23 +42,35 @@ else
             <h2>Register</h2>
         </FormGroup>
         <FormGroup>
+            <InputField Type="mail" Placeholder="E-mail" OnChange="@OnMailChange" />
+        </FormGroup>
+        <FormGroup>
             <InputField Type="text" Placeholder="Username" OnChange="@OnUsernameChange" />
         </FormGroup>
         <FormGroup>
             <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="confirmpassword" Placeholder="Confirm Password" OnChange="@OnConfirmPasswordChange" />
+            <InputField Type="password" Placeholder="Confirm Password" OnChange="@OnConfirmPasswordChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="mail" Placeholder="E-mail" OnChange="@OnMailChange" />
-        </FormGroup>
-        <FormGroup>
-            <Button Enabled="@_buttonEnabled" Text="Register" OnClick="@LoginAsync"></Button>
+            <Button Enabled="@_buttonEnabled" Text="Register" OnClick="@RegisterAsync"></Button>
         </FormGroup>
         <FormGroup>
             <Button Enabled="true" Text="Login to existing account" OnClick="@SwitchForm"></Button>
         </FormGroup>
+        @if (!_registerSuccess)
+        {
+            <div class="alert alert-danger">
+                @_errorMessage
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-success">
+                @_errorMessage
+            </div>
+        }
     </Form>
 }
 
@@ -66,19 +78,20 @@ else
 
     private bool _buttonEnabled;
     private bool _loginSuccess = true;
+    private bool _registerSuccess = true;
+    private string _errorMessage;
 
     private string _username;
     private string _password;
     private string _confirmPassword;
     private string _mail;
-    private bool _login = true;
+
+    private bool _isLogin = true;
 
     private async Task LoginAsync()
     {
 
         _loginSuccess = await AuthenticationService.Login(_username, _password);
-
-        Console.WriteLine(_loginSuccess);
 
         if (_loginSuccess)
         {
@@ -88,13 +101,41 @@ else
         }
         else
         {
+            _errorMessage = "Error logging in, make sure your credentials are correct.";
+            StateHasChanged();
+        }
+    }
+
+    private async Task RegisterAsync()
+    {
+        if (!_password.Equals(_confirmPassword))
+        {
+            _errorMessage = "Make sure your password match correctly.";
+            _registerSuccess = false;
+
+            StateHasChanged();
+            return;
+        }
+
+        _registerSuccess = await AuthenticationService.Register(_mail, _username, _password);
+
+        if (_registerSuccess)
+        {
+            _errorMessage = "Account has been successfully created, you can now login using your mail address.";
+            _registerSuccess = true;
+            StateHasChanged();
+        }
+        else
+        {
+            _errorMessage = "An account with the same mail address already exists, use another one.";
+            _registerSuccess = false;
             StateHasChanged();
         }
     }
 
     private void ValidateInput()
     {
-        if (_login) _buttonEnabled = ValidationService.ValidateLoginInput(_username, _password);
+        if (_isLogin) _buttonEnabled = ValidationService.ValidateLoginInput(_username, _password);
         else _buttonEnabled = ValidationService.ValidateRegisterInput(_username, _password, _confirmPassword, _mail);
 
         StateHasChanged();
@@ -102,7 +143,7 @@ else
 
     private Task SwitchForm()
     {
-        _login = !_login;
+        _isLogin = !_isLogin;
 
         StateHasChanged();
 

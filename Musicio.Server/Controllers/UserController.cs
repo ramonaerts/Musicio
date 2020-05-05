@@ -35,8 +35,16 @@ namespace Musicio.Server.Controllers
 
             var userModel = _mapper.Map<Core.Models.User>(user);
 
-            if(userModel != null) return ApiResult.Success(userModel);
-            return ApiResult.BadRequest();
+            return userModel != null ? ApiResult.Success(userModel) : ApiResult.BadRequest();
+        }
+
+        [HttpPost]
+        [Route("Register")]
+        public async Task<ApiResult> PostRegister(RegisterMessage message)
+        {
+            var success = await _authenticationService.RegisterUser(message);
+
+            return success ? ApiResult.Success(success) : ApiResult.BadRequest();
         }
     }
 }

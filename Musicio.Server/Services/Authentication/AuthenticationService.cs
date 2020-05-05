@@ -21,5 +21,21 @@ namespace Musicio.Server.Services.Authentication
             User user = _userRepository.Table.SingleOrDefault(a => a.Username == message.Username);
             return user;
         }
+
+        public async Task<bool> RegisterUser(RegisterMessage message)
+        {
+            if (_userRepository.Table.SingleOrDefault(a => a.Mail == message.Mail) != null) return false;
+            User newUser = new User()
+            {
+                Username = message.Username,
+                Password = message.Password,
+                Mail = message.Mail,
+                Role = 3
+            };
+
+            _userRepository.Insert(newUser);
+
+            return true;
+        }
     }
 }

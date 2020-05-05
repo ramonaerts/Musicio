@@ -10,10 +10,7 @@ namespace Musicio.Client.Validation
         {
             if (string.IsNullOrEmpty(username))
                 return false;
-            if (string.IsNullOrEmpty(password))
-                return false;
-
-            return true;
+            return !string.IsNullOrEmpty(password);
         }
 
 
@@ -25,12 +22,7 @@ namespace Musicio.Client.Validation
                 return false;
             if (string.IsNullOrEmpty(passwordConfirm))
                 return false;
-            if (string.IsNullOrEmpty(email))
-                return false;
-            if (password != passwordConfirm)
-                return false;
-
-            return true;
+            return !string.IsNullOrEmpty(email);
         }
     }
 }
