@@ -11,8 +11,6 @@ namespace Musicio.Server.Data
 {
     public class MusicioContext : DbContext
     {
-        //public DbSet<User> Users { get; set; }
-
         public MusicioContext() { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

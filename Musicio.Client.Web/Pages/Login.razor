@@ -9,26 +9,58 @@
 
 @layout LoginLayout
 
-<Form Id="form-login">
-    <FormGroup>
-        <h2>Login</h2>
-    </FormGroup>
-    <FormGroup>
-        <InputField Type="text" Placeholder="Username" OnChange="@OnUsernameChange"/>
-    </FormGroup>
-    <FormGroup>
-        <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange"/>
-    </FormGroup>
-    <FormGroup>
-        <Button Enabled="@_buttonEnabled" Text="Login" OnClick="@LoginAsync"></Button>
-    </FormGroup>
-    @if (!_loginSuccess)
-    {
-        <div class="alert alert-danger">
-            Error logging in, make sure your credentials are correct.
-        </div>
-    }
-</Form>
+@if (_login)
+{
+    <Form Id="form-login">
+        <FormGroup>
+            <h2>Login</h2>
+        </FormGroup>
+        <FormGroup>
+            <InputField Type="text" Placeholder="Username" OnChange="@OnUsernameChange" />
+        </FormGroup>
+        <FormGroup>
+            <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
+        </FormGroup>
+        <FormGroup>
+            <Button Enabled="@_buttonEnabled" Text="Login" OnClick="@LoginAsync"></Button>
+        </FormGroup>
+        <FormGroup>
+            <Button Enabled="true" Text="Register new account" OnClick="@SwitchForm"></Button>
+        </FormGroup>
+        @if (!_loginSuccess)
+        {
+            <div class="alert alert-danger">
+                Error logging in, make sure your credentials are correct.
+            </div>
+        }
+    </Form>
+}
+else
+{
+    <Form Id="form-register">
+        <FormGroup>
+            <h2>Register</h2>
+        </FormGroup>
+        <FormGroup>
+            <InputField Type="text" Placeholder="Username" OnChange="@OnUsernameChange" />
+        </FormGroup>
+        <FormGroup>
+            <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
+        </FormGroup>
+        <FormGroup>
+            <InputField Type="confirmpassword" Placeholder="Confirm Password" OnChange="@OnConfirmPasswordChange" />
+        </FormGroup>
+        <FormGroup>
+            <InputField Type="mail" Placeholder="E-mail" OnChange="@OnMailChange" />
+        </FormGroup>
+        <FormGroup>
+            <Button Enabled="@_buttonEnabled" Text="Register" OnClick="@LoginAsync"></Button>
+        </FormGroup>
+        <FormGroup>
+            <Button Enabled="true" Text="Login to existing account" OnClick="@SwitchForm"></Button>
+        </FormGroup>
+    </Form>
+}
 
 @code {
 
@@ -37,7 +69,9 @@
 
     private string _username;
     private string _password;
-    private bool _rememberMe;
+    private string _confirmPassword;
+    private string _mail;
+    private bool _login = true;
 
     private async Task LoginAsync()
     {
@@ -60,9 +94,19 @@
 
     private void ValidateInput()
     {
-        _buttonEnabled = ValidationService.ValidateLoginInput(_username, _password);
+        if (_login) _buttonEnabled = ValidationService.ValidateLoginInput(_username, _password);
+        else _buttonEnabled = ValidationService.ValidateRegisterInput(_username, _password, _confirmPassword, _mail);
 
         StateHasChanged();
+    }
+
+    private Task SwitchForm()
+    {
+        _login = !_login;
+
+        StateHasChanged();
+
+        return Task.CompletedTask;
     }
 
     public Task OnUsernameChange(string value)
@@ -83,9 +127,18 @@
         return Task.CompletedTask;
     }
 
-    public Task OnRememberMeChange(bool value)
+    public Task OnConfirmPasswordChange(string value)
     {
-        _rememberMe = value;
+        _confirmPassword = value;
+
+        ValidateInput();
+
+        return Task.CompletedTask;
+    }
+
+    public Task OnMailChange(string value)
+    {
+        _mail = value;
 
         ValidateInput();
 
