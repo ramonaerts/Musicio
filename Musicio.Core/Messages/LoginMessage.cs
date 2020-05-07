@@ -6,12 +6,12 @@ namespace Musicio.Core.Messages
 {
     public class LoginMessage
     {
-        public string Username { get; set; }
+        public string Mail { get; set; }
         public string Password { get; set; }
 
-        public LoginMessage(string username, string password)
+        public LoginMessage(string mail, string password)
         {
-            Username = username;
+            Mail = mail;
             Password = password;
         }
 

@@ -6,9 +6,9 @@ namespace Musicio.Client.Validation
 {
     public class ValidationService : IValidationService
     {
-        public bool ValidateLoginInput(string username, string password)
+        public bool ValidateLoginInput(string mail, string password)
         {
-            if (string.IsNullOrEmpty(username))
+            if (string.IsNullOrEmpty(mail))
                 return false;
             return !string.IsNullOrEmpty(password);
         }

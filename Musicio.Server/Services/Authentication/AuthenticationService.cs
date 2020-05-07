@@ -18,17 +18,22 @@ namespace Musicio.Server.Services.Authentication
 
         public async Task<User> LoginUser(LoginMessage message)
         {
-            User user = _userRepository.Table.SingleOrDefault(a => a.Username == message.Username);
+            var user = _userRepository.Table.SingleOrDefault(a => a.Mail == message.Mail);
+            if (user == null) return null;
+            if (!BCrypt.Net.BCrypt.Verify(message.Password, user.Password)) return null;
             return user;
         }
 
         public async Task<bool> RegisterUser(RegisterMessage message)
         {
             if (_userRepository.Table.SingleOrDefault(a => a.Mail == message.Mail) != null) return false;
-            User newUser = new User()
+
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(message.Password);
+
+            var newUser = new User()
             {
                 Username = message.Username,
-                Password = message.Password,
+                Password = hashedPassword,
                 Mail = message.Mail,
                 Role = 3
             };

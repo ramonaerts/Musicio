@@ -16,7 +16,7 @@
             <h2>Login</h2>
         </FormGroup>
         <FormGroup>
-            <InputField Type="text" Placeholder="Username" OnChange="@OnUsernameChange" />
+            <InputField Type="text" Placeholder="E-mail" OnChange="@OnMailChange" />
         </FormGroup>
         <FormGroup>
             <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
@@ -65,12 +65,12 @@ else
                 @_errorMessage
             </div>
         }
-        else
+        @*else
         {
             <div class="alert alert-success">
                 @_errorMessage
             </div>
-        }
+        }*@
     </Form>
 }
 
@@ -91,7 +91,7 @@ else
     private async Task LoginAsync()
     {
 
-        _loginSuccess = await AuthenticationService.Login(_username, _password);
+        _loginSuccess = await AuthenticationService.Login(_mail, _password);
 
         if (_loginSuccess)
         {
@@ -135,7 +135,7 @@ else
 
     private void ValidateInput()
     {
-        if (_isLogin) _buttonEnabled = ValidationService.ValidateLoginInput(_username, _password);
+        if (_isLogin) _buttonEnabled = ValidationService.ValidateLoginInput(_mail, _password);
         else _buttonEnabled = ValidationService.ValidateRegisterInput(_username, _password, _confirmPassword, _mail);
 
         StateHasChanged();
