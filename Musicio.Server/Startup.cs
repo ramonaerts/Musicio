@@ -18,6 +18,7 @@ using Musicio.Core.Data;
 using Musicio.Core.Domain;
 using Musicio.Server.Data;
 using Musicio.Server.Services.Authentication;
+using Musicio.Server.Services.Playlist;
 
 namespace Musicio.Server
 {
@@ -34,10 +35,13 @@ namespace Musicio.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<DbContext, MusicioContext>();
+            services.AddDbContext<MusicioContext>();
             services.AddControllers();
             services.AddScoped<IRepository<BaseEntity>, Repository<BaseEntity>>();
             services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<Playlist>, Repository<Playlist>>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IPlaylistService, PlaylistService>();
             /*services.AddRepositories();
             services.AddServices();*/
 
@@ -65,6 +69,8 @@ namespace Musicio.Server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToClientSideBlazor<Client.Web.Program>("index.html");
             });
+
+            app.EnsureMigrated();
         }
     }
 }

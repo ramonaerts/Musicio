@@ -23,16 +23,13 @@ namespace Musicio.Server.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateAdded")
+                    b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("PlaylistTitle")
+                    b.Property<string>("Title")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("UserId")
@@ -43,43 +40,6 @@ namespace Musicio.Server.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Playlist");
-                });
-
-            modelBuilder.Entity("Musicio.Core.Domain.Song", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AlbumId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Artist")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("Genre")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PlaylistId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("SongDuration")
-                        .HasColumnType("time(6)");
-
-                    b.Property<string>("SongFile")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("SongTitle")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlaylistId");
-
-                    b.ToTable("Song");
                 });
 
             modelBuilder.Entity("Musicio.Core.Domain.User", b =>
@@ -112,13 +72,6 @@ namespace Musicio.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Musicio.Core.Domain.Song", b =>
-                {
-                    b.HasOne("Musicio.Core.Domain.Playlist", null)
-                        .WithMany("PlaylistSongs")
-                        .HasForeignKey("PlaylistId");
                 });
 #pragma warning restore 612, 618
         }

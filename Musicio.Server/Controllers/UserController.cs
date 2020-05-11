@@ -17,7 +17,6 @@ namespace Musicio.Server.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        //private readonly service _authenticationService;
         private readonly IAuthenticationService _authenticationService;
         private readonly IMapper _mapper;
 
@@ -39,7 +38,7 @@ namespace Musicio.Server.Controllers
         }
 
         [HttpPost]
-        [Route("Register")]
+        [Route("register")]
         public async Task<ApiResult> PostRegister(RegisterMessage message)
         {
             var success = await _authenticationService.RegisterUser(message);

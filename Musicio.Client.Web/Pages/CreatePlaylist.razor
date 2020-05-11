@@ -19,7 +19,7 @@
         <InputField Type="description" Placeholder="Description" OnChange="@OnDescriptionChange" />
     </FormGroup>
     <FormGroup>
-        <Button Enabled="@_buttonEnabled" Text="Create playlist" OnClick="@CreateAsync"></Button>
+        <Button Enabled="true" Text="Create playlist" OnClick="@CreateAsync"></Button>
     </FormGroup>
     @if (!_creationSuccess)
     {
