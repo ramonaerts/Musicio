@@ -1,0 +1,80 @@
+﻿@page "/playlists/create"
+
+@using Musicio.Client.Playlist
+@using Musicio.Client.Validation
+@using Musicio.Client.Web.Components
+
+@inject IValidationService ValidationService
+@inject NavigationManager NavigationManager
+@inject IPlaylistService PlaylistService
+
+<Form Id="form-createplaylist">
+    <FormGroup>
+        <h2>Create new playlist</h2>
+    </FormGroup>
+    <FormGroup>
+        <InputField Type="name" Placeholder="Playlist name" OnChange="@OnNameChange" />
+    </FormGroup>
+    <FormGroup>
+        <InputField Type="description" Placeholder="Description" OnChange="@OnDescriptionChange" />
+    </FormGroup>
+    <FormGroup>
+        <Button Enabled="@_buttonEnabled" Text="Create playlist" OnClick="@CreateAsync"></Button>
+    </FormGroup>
+    @if (!_creationSuccess)
+    {
+        <div class="alert alert-danger">
+            @_errorMessage
+        </div>
+    }
+</Form>
+
+@code {
+    private bool _buttonEnabled;
+    private bool _creationSuccess = true;
+    private string _errorMessage;
+
+    private string _name;
+    private string _description;
+
+    public Task OnNameChange(string value)
+    {
+        _name = value;
+
+        ValidateInput();
+
+        return Task.CompletedTask;
+    }
+
+    public Task OnDescriptionChange(string value)
+    {
+        _description = value;
+
+        return Task.CompletedTask;
+    }
+
+    private void ValidateInput()
+    {
+        ValidationService.ValidateSingleInput(_name);
+
+        StateHasChanged();
+    }
+
+    public async Task CreateAsync()
+    {
+        _creationSuccess = await PlaylistService.CreatePlaylist(_name, _description);
+
+        if (_creationSuccess)
+        {
+            StateHasChanged();
+
+            NavigationManager.NavigateTo("/playlists");
+        }
+        else
+        {
+            _errorMessage = "Something went wrong during the creation, please try again.";
+
+            StateHasChanged();
+        }
+    }
+}

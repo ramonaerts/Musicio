@@ -24,5 +24,10 @@ namespace Musicio.Client.Validation
                 return false;
             return !string.IsNullOrEmpty(email);
         }
+
+        public bool ValidateSingleInput(string value)
+        {
+            return !string.IsNullOrEmpty(value);
+        }
     }
 }

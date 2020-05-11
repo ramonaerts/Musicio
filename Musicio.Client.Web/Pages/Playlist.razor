@@ -1,0 +1,18 @@
+﻿@page "/playlists"
+
+@using Musicio.Client.Web.Components
+
+@inject NavigationManager NavigationManager
+
+<FormGroup>
+    <Button Enabled="true" Text="Create new playlist" OnClick="@CreatePlaylist"></Button>
+</FormGroup>
+
+@code {
+    private Task CreatePlaylist()
+    {
+        NavigationManager.NavigateTo("/playlists/create");
+
+        return Task.CompletedTask;
+    }
+}
