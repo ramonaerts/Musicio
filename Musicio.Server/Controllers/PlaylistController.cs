@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Musicio.Core;
+using Musicio.Core.Domain;
 using Musicio.Core.Messages;
 using Musicio.Server.Services.Playlist;
 
@@ -30,6 +31,17 @@ namespace Musicio.Server.Controllers
             var success = await _playlistService.CreatePlaylist(message);
 
             return success ? ApiResult.Success(success) : ApiResult.BadRequest();
+        }
+
+        [HttpGet]
+        [Route("{userId}")]
+        public async Task<ApiResult> GetUserPlaylists(int userId)
+        {
+            List<Playlist> playlistsEntities = await _playlistService.GetUserPlaylists(userId);
+
+            var playlistsModels = _mapper.Map<List<Core.Models.Playlist>>(playlistsEntities);
+
+            return ApiResult.Success(playlistsModels);
         }
     }
 }

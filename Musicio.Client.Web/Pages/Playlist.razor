@@ -1,14 +1,35 @@
 ﻿@page "/playlists"
 
+@using Musicio.Client.Playlist
 @using Musicio.Client.Web.Components
 
 @inject NavigationManager NavigationManager
+@inject IPlaylistService PlaylistService
+
+@foreach (var pl in _playlists)
+{
+    <div class="playlist-container">
+        <div class="playlist-image" style="background-image:url(images/StockImage.jpg)"></div>
+        <div class="playlist-title">@pl.Title</div>
+    </div>
+}
 
 <FormGroup>
     <Button Enabled="true" Text="Create new playlist" OnClick="@CreatePlaylist"></Button>
 </FormGroup>
 
 @code {
+    private List<Core.Models.Playlist> _playlists = new List<Core.Models.Playlist>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _playlists = await PlaylistService.GetUserPlaylists(1);
+
+        Console.WriteLine(_playlists.Count);
+
+        StateHasChanged();
+    }
+
     private Task CreatePlaylist()
     {
         NavigationManager.NavigateTo("/playlists/create");

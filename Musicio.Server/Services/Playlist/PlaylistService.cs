@@ -29,5 +29,10 @@ namespace Musicio.Server.Services.Playlist
 
             return true;
         }
+
+        public async Task<List<Core.Domain.Playlist>> GetUserPlaylists(int userId)
+        {
+            return _playlistRepository.Table.Where(e => e.UserId == userId).ToList();
+        }
     }
 }

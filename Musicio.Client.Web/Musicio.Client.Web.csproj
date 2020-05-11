@@ -20,4 +20,10 @@
     <ProjectReference Include="..\Musicio.Core\Musicio.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\images\StockImage.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
