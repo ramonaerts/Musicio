@@ -1,11 +1,22 @@
-﻿﻿.playlist-container {
-     margin: 12px;
-     padding: 10px;
-     background: white;
-     position:absolute;
-     border-radius: 2px;
-     display: inline-block;
- }
+﻿.playlist-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.playlist-column {
+    height: 265px;
+    margin: 15px;
+}
+﻿
+
+.playlist-container {
+    margin: 12px;
+    padding: 10px;
+    background: black;
+    position: absolute;
+    border-radius: 2px;
+    display: inline-block;
+}
 
 .playlist-container:hover .playlist-image {
     -moz-transform: scale(1.1);

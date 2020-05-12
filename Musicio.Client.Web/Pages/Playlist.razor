@@ -6,17 +6,21 @@
 @inject NavigationManager NavigationManager
 @inject IPlaylistService PlaylistService
 
-@foreach (var pl in _playlists)
-{
-    <div class="playlist-container">
-        <div class="playlist-image" style="background-image:url(images/StockImage.jpg)"></div>
-        <div class="playlist-title">@pl.Title</div>
-    </div>
-}
+    <FormGroup>
+        <Button Enabled="true" Text="Create new playlist" OnClick="@CreatePlaylist"></Button>
+    </FormGroup>
 
-<FormGroup>
-    <Button Enabled="true" Text="Create new playlist" OnClick="@CreatePlaylist"></Button>
-</FormGroup>
+<div class="playlist-row">
+    @foreach (var pl in _playlists)
+    {
+        <div class="playlist-column">
+            <div class="playlist-container">
+                <div class="playlist-image" style="background-image: url(images/StockImage.jpg)"></div>
+                <div class="playlist-title">@pl.Title</div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<Core.Models.Playlist> _playlists = new List<Core.Models.Playlist>();
