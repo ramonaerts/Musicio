@@ -1,8 +1,10 @@
 ﻿@page "/playlists/create"
 
 @using Musicio.Client.Playlist
+@using BlazorInputFile
 @using Musicio.Client.Validation
 @using Musicio.Client.Web.Components
+@using Musicio.Client.Web.Invokables
 
 @inject IValidationService ValidationService
 @inject NavigationManager NavigationManager
@@ -17,6 +19,9 @@
     </FormGroup>
     <FormGroup>
         <InputField Type="description" Placeholder="Description" OnChange="@OnDescriptionChange" />
+    </FormGroup>
+    <FormGroup>
+        <InputFile OnChange="@HandleFileSelect"/>
     </FormGroup>
     <FormGroup>
         <Button Enabled="true" Text="Create playlist" OnClick="@CreateAsync"></Button>
@@ -36,6 +41,7 @@
 
     private string _name;
     private string _description;
+    private IFileListEntry _image;
 
     public Task OnNameChange(string value)
     {
@@ -51,6 +57,15 @@
         _description = value;
 
         return Task.CompletedTask;
+    }
+
+    private async Task HandleFileSelect(IFileListEntry[] files)
+    {
+        _image = files.FirstOrDefault();
+
+        var con = new Converter();
+
+        string test = await con.ImageToBase64(_image);
     }
 
     private void ValidateInput()

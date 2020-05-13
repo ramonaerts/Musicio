@@ -9,7 +9,7 @@ using Musicio.Server.Data;
 namespace Musicio.Server.Data.Migrations
 {
     [DbContext(typeof(MusicioContext))]
-    [Migration("20200511135249_InitialCreate")]
+    [Migration("20200513231754_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
