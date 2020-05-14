@@ -2,6 +2,7 @@
 
 @using Musicio.Client.Playlist
 @using BlazorInputFile
+@using Musicio.Client.Converting
 @using Musicio.Client.Validation
 @using Musicio.Client.Web.Components
 @using Musicio.Client.Web.Invokables
@@ -9,6 +10,7 @@
 @inject IValidationService ValidationService
 @inject NavigationManager NavigationManager
 @inject IPlaylistService PlaylistService
+@inject IConvertingService ConvertingService
 
 <Form Id="form-createplaylist">
     <FormGroup>
@@ -38,9 +40,11 @@
     private bool _buttonEnabled;
     private bool _creationSuccess = true;
     private string _errorMessage;
+    private string _fileExtension;
 
     private string _name;
     private string _description;
+    private string _base64Image;
     private IFileListEntry _image;
 
     public Task OnNameChange(string value)
@@ -63,9 +67,8 @@
     {
         _image = files.FirstOrDefault();
 
-        var con = new Converter();
-
-        string test = await con.ImageToBase64(_image);
+        _base64Image = await ConvertingService.ImageToBase64(_image);
+        _fileExtension = _image.Type;
     }
 
     private void ValidateInput()
@@ -77,7 +80,7 @@
 
     public async Task CreateAsync()
     {
-        _creationSuccess = await PlaylistService.CreatePlaylist(_name, _description);
+        _creationSuccess = await PlaylistService.CreatePlaylist(_name, _description, _base64Image, _fileExtension);
 
         if (_creationSuccess)
         {

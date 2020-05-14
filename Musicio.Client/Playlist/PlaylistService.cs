@@ -17,9 +17,9 @@ namespace Musicio.Client.Playlist
             _httpClient = httpClient;
         }
 
-        public async Task<bool> CreatePlaylist(string name, string description)
+        public async Task<bool> CreatePlaylist(string name, string description, string image, string fileExtension)
         {
-            var result = await _httpClient.PostJsonAsync<ApiResult>("api/Playlist/create", new PlaylistCreationMessage(name, description));
+            var result = await _httpClient.PostJsonAsync<ApiResult>("api/Playlist/create", new PlaylistCreationMessage(name, description, image, fileExtension));
 
             return result.IsSuccess;
         }

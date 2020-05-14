@@ -67,6 +67,13 @@
         {
             StateHasChanged();
         };
+
+        Howl.OnEnd += e =>
+        {
+            Stop();
+
+            StateHasChanged();
+        };
     }
 
     protected async Task TogglePlay()

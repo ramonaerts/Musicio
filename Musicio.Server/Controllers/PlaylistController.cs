@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Musicio.Core;
 using Musicio.Core.Domain;
 using Musicio.Core.Messages;
+using Musicio.Server.Services.FileManagement;
 using Musicio.Server.Services.Playlist;
 
 namespace Musicio.Server.Controllers
@@ -16,12 +17,14 @@ namespace Musicio.Server.Controllers
     public class PlaylistController : ControllerBase
     {
         private readonly IPlaylistService _playlistService;
+        private readonly IFileManagementService _fileManagementService;
         private readonly IMapper _mapper;
 
-        public PlaylistController(IMapper mapper, IPlaylistService playlistService)
+        public PlaylistController(IMapper mapper, IPlaylistService playlistService, IFileManagementService fileManagementService)
         {
             _mapper = mapper;
             _playlistService = playlistService;
+            _fileManagementService = fileManagementService;
         }
 
         [HttpPost]
@@ -40,6 +43,8 @@ namespace Musicio.Server.Controllers
             List<Playlist> playlistsEntities = await _playlistService.GetUserPlaylists(userId);
 
             var playlistsModels = _mapper.Map<List<Core.Models.Playlist>>(playlistsEntities);
+
+            foreach (var p in playlistsModels) p.Image = _fileManagementService.CreateBase64String(p.Image);
 
             return ApiResult.Success(playlistsModels);
         }

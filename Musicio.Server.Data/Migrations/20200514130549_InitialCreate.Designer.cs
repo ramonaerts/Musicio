@@ -9,7 +9,7 @@ using Musicio.Server.Data;
 namespace Musicio.Server.Data.Migrations
 {
     [DbContext(typeof(MusicioContext))]
-    [Migration("20200513231754_InitialCreate")]
+    [Migration("20200514130549_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,9 @@ namespace Musicio.Server.Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Image")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Title")

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.AspNetCore.Blazor.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Musicio.Client.Authentication;
+using Musicio.Client.Converting;
 using Musicio.Client.Playlist;
 using Musicio.Client.Validation;
 
@@ -31,6 +32,7 @@ namespace Musicio.Client.Web
             builder.Services.AddSingleton<IValidationService, ValidationService>();
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
             builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
+            builder.Services.AddSingleton<IConvertingService, ConvertingService>();
             builder.Services.AddScoped<IHowl, Howl>();
             builder.Services.AddScoped<IHowlGlobal, HowlGlobal>();
 

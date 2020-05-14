@@ -18,6 +18,7 @@ using Musicio.Core.Data;
 using Musicio.Core.Domain;
 using Musicio.Server.Data;
 using Musicio.Server.Services.Authentication;
+using Musicio.Server.Services.FileManagement;
 using Musicio.Server.Services.Playlist;
 
 namespace Musicio.Server
@@ -42,6 +43,7 @@ namespace Musicio.Server
             services.AddScoped<IRepository<Playlist>, Repository<Playlist>>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IPlaylistService, PlaylistService>();
+            services.AddScoped<IFileManagementService, FileManagementService>();
             /*services.AddRepositories();
             services.AddServices();*/
 

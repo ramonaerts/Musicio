@@ -15,7 +15,7 @@
     {
         <div class="playlist-column">
             <div class="playlist-container">
-                <div class="playlist-image" style="background-image: url(images/StockImage.jpg)"></div>
+                <div class="playlist-image" style="background-image: url(data:image/png;base64,@pl.Image)"></div>
                 <div class="playlist-title">@pl.Title</div>
             </div>
         </div>
@@ -28,8 +28,6 @@
     protected override async Task OnInitializedAsync()
     {
         _playlists = await PlaylistService.GetUserPlaylists(1);
-
-        Console.WriteLine(_playlists.Count);
 
         StateHasChanged();
     }

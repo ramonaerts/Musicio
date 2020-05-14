@@ -11,7 +11,7 @@ namespace Musicio.Core.Domain
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
-        //public string ImagePath { get; set; }
+        public string Image { get; set; }
         //public List<Song> PlaylistSongs { get; set; }
     }
 }

@@ -17,5 +17,11 @@
     <ProjectReference Include="..\Musicio.Server.Data\Musicio.Server.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Content\Musicimages\" />
+    <Folder Include="Content\Musicaudio\" />
+    <Folder Include="Content\Playlistimages\" />
+  </ItemGroup>
+
 
 </Project>
