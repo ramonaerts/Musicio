@@ -6,6 +6,8 @@
 @inject NavigationManager NavigationManager
 @inject IAuthenticationService AuthenticationService
 @inject IValidationService ValidationService
+@inject SessionService SessionService
+@inject IJSRuntime JsRuntime
 
 @layout LoginLayout
 
@@ -95,6 +97,8 @@ else
 
         if (_loginSuccess)
         {
+            //await SessionService.LoadUser();
+
             StateHasChanged();
 
             NavigationManager.NavigateTo("/");

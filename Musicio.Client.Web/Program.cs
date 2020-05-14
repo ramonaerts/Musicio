@@ -21,10 +21,10 @@ namespace Musicio.Client.Web
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            /*if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY")))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY")))
             {
                 WebAssemblyHttpMessageHandlerOptions.DefaultCredentials = FetchCredentialsOption.Include;
-            }*/
+            }
 
             builder.RootComponents.Add<App>("app");
 
@@ -33,10 +33,20 @@ namespace Musicio.Client.Web
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
             builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
             builder.Services.AddSingleton<IConvertingService, ConvertingService>();
+            builder.Services.AddSingleton<SessionService>();
             builder.Services.AddScoped<IHowl, Howl>();
             builder.Services.AddScoped<IHowlGlobal, HowlGlobal>();
 
-            await builder.Build().RunAsync();
+            //await builder.Build().RunAsync();
+            var host = builder.Build();
+
+            var sessionService = host.Services.GetRequiredService<SessionService>();
+            if (await sessionService.TryLoadLocalUser())
+            {
+                await sessionService.LoadUser();
+            }
+
+            await host.RunAsync();
         }
     }
 }

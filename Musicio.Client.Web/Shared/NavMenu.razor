@@ -1,4 +1,9 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Musicio.Client.Authentication
+
+@inject SessionService SessionService
+@inject IJSRuntime JsRuntime
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Musicio</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -38,5 +43,19 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override void OnInitialized()
+    {
+        SessionService.OnAuthorizationChange += Refresh;
+
+        base.OnInitialized();
+    }
+
+    public Task Refresh()
+    {
+        StateHasChanged();
+
+        return Task.CompletedTask;
     }
 }
