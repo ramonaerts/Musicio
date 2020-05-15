@@ -2,6 +2,7 @@
 @using Musicio.Client.User
 @using Musicio.Client.Validation
 @using Musicio.Client.Web.Components
+@using Musicio.Core.Models
 
 @inject NavigationManager NavigationManager
 @inject IValidationService ValidationService
@@ -11,24 +12,27 @@
 
 <Form Id="account-management">
     <FormGroup>
-        <InputField Type="text" Enabled="@_editingEnabled" Placeholder="Mail" OnChange="@OnMailChange" />
+        <InputField Type="text" Text="E-mail" Value="@_currentMail" Enabled="@_editingEnabled" Placeholder="Mail" OnChange="@OnMailChange" />
     </FormGroup>
     <FormGroup>
-        <InputField Type="text" Enabled="@_editingEnabled" Placeholder="Username" OnChange="@OnUsernameChange" />
+        <InputField Type="text" Text="Username" Value="@_currentUsername" Enabled="@_editingEnabled" Placeholder="Username" OnChange="@OnUsernameChange" />
     </FormGroup>
     @if (!_editingEnabled)
     {
         <FormGroup>
-            <InputField Type="password" Enabled="@_editingEnabled" Placeholder="Current password" OnChange="@OnCurrentPasswordChange" />
+            <InputField Type="password" Text="Current password" Enabled="@_editingEnabled" Placeholder="Current password" OnChange="@OnCurrentPasswordChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="password" Enabled="@_editingEnabled" Placeholder="New password" OnChange="@OnNewPasswordChange" />
+            <InputField Type="password" Text="New password" Enabled="@_editingEnabled" Placeholder="New password" OnChange="@OnNewPasswordChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="password" Enabled="@_editingEnabled" Placeholder="Confirm new password" OnChange="@OnConfirmPasswordChange" />
+            <InputField Type="password" Text="Confirm new password" Enabled="@_editingEnabled" Placeholder="Confirm new password" OnChange="@OnConfirmPasswordChange" />
         </FormGroup>
         <FormGroup>
-            <Button Class="btn-danger" Enabled="@_buttonEnabled" Text="Change account information" OnClick="@ChangeUserInfo"></Button>
+            <Button Enabled="true" Text="Save" OnClick="@ChangeUserInfo"></Button>
+        </FormGroup>
+        <FormGroup>
+            <Button Enabled="true" Text="Cancel" OnClick="@SwitchMode"></Button>
         </FormGroup>
         @if (_error)
         {
@@ -40,15 +44,16 @@
     else
     {
         <FormGroup>
-            <Button Class="btn-danger" Enabled="true" Text="Change account information" OnClick="@EnableEditing"></Button>
+            <Button Enabled="true" Text="Change account information" OnClick="@SwitchMode"></Button>
+        </FormGroup>
+        <FormGroup>
+            <Button Enabled="true" Text="Logout" OnClick="@Logout"></Button>
         </FormGroup>
     }
 </Form>
-<FormGroup>
-        <Button Class="btn-danger" Enabled="true" Text="Logout" OnClick="@Logout"></Button>
-    </FormGroup>
 
 @code {
+    private User _currentUser = new User();
     private string _currentUsername;
     private string _newUsername;
 
@@ -64,18 +69,22 @@
     private bool _buttonEnabled;
     private bool _error;
 
-    /*
+
     protected override async Task OnInitializedAsync()
     {
-        //TODO: add method in userservice to get username & mail
+        _currentUser = await UserService.GetUserInfo(1);
+        _currentUsername = _currentUser.Username;
+        _currentMail = _currentUser.Mail;
 
         StateHasChanged();
     }
-    */
 
-    public Task EnableEditing()
+    public Task SwitchMode()
     {
-        _editingEnabled = false;
+        _currentUsername = _currentUser.Username;
+        _currentMail = _currentUser.Mail;
+
+        _editingEnabled = !_editingEnabled;
 
         StateHasChanged();
 
@@ -136,14 +145,28 @@
 
     private async Task ChangeUserInfo()
     {
-        //TODO: create correct method in userservice
         if (!_newPassword.Equals(_confirmPassword))
         {
             _errorMessage = "Make sure your new passwords match correctly.";
-            _error = false;
+            _error = true;
 
             StateHasChanged();
             return;
+        }
+
+        bool changeSuccess = await UserService.ChangeUserInfo(1, _newMail, _newUsername, _newPassword, _currentPassword);
+
+        if (changeSuccess)
+        {
+            _errorMessage = "Account settings have been successfully changed, you can log in next time with the new credentials.";
+            _error = false;
+            StateHasChanged();
+        }
+        else
+        {
+            _errorMessage = "An account with the same mail address already exists, use another one.";
+            _error = true;
+            StateHasChanged();
         }
     }
 

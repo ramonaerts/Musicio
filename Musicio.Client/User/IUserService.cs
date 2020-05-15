@@ -9,7 +9,8 @@ namespace Musicio.Client.User
     public interface IUserService
     {
         Task<bool> Login(string mail, string password);
-
         Task<bool> Register(string mail, string username, string password);
+        Task<Core.Models.User> GetUserInfo(int userId);
+        Task<bool> ChangeUserInfo(int userId, string mail, string username, string newPassword, string oldPassword);
     }
 }

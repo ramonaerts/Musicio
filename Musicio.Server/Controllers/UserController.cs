@@ -17,12 +17,12 @@ namespace Musicio.Server.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _authenticationService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService authenticationService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper)
         {
-            _authenticationService = authenticationService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -30,7 +30,7 @@ namespace Musicio.Server.Controllers
         [Route("login")]
         public async Task<ApiResult> PostLogin(LoginMessage message)
         {
-            User user = await _authenticationService.LoginUser(message);
+            User user = await _userService.LoginUser(message);
 
             var userModel = _mapper.Map<Core.Models.User>(user);
 
@@ -41,9 +41,29 @@ namespace Musicio.Server.Controllers
         [Route("register")]
         public async Task<ApiResult> PostRegister(RegisterMessage message)
         {
-            var success = await _authenticationService.RegisterUser(message);
+            var success = await _userService.RegisterUser(message);
 
-            return success ? ApiResult.Success(success) : ApiResult.BadRequest();
+            return success ? ApiResult.Success(true) : ApiResult.BadRequest();
+        }
+
+        [HttpGet]
+        [Route("{userId}")]
+        public ApiResult GetUserById(int userId)
+        {
+            var user = _userService.GetUserById(userId);
+
+            var userModel = _mapper.Map<Core.Models.User>(user);
+
+            return ApiResult.Success(userModel);
+        }
+
+        [HttpPut]
+        [Route("modify")]
+        public ApiResult ChangeUserInfo(ChangeUserInfoMessage message)
+        {
+            var success = _userService.ChangeUserInfo(message);
+
+            return success ? ApiResult.Success(true) : ApiResult.BadRequest();
         }
     }
 }

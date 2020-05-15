@@ -31,5 +31,19 @@ namespace Musicio.Client.User
                 new RegisterMessage(mail, username, password));
             return result.IsSuccess;
         }
+
+        public async Task<Core.Models.User> GetUserInfo(int userId)
+        {
+            var result = await _httpClient.GetJsonAsync<ApiResult>("api/User/" + userId);
+
+            return result.GetData<Core.Models.User>();
+        }
+
+        public async Task<bool> ChangeUserInfo(int userId, string mail, string username, string newPassword, string oldPassword)
+        {
+            var result = await _httpClient.PutJsonAsync<ApiResult>("api/User/modify",
+                new ChangeUserInfoMessage(userId, mail, username, newPassword, oldPassword));
+            return result.IsSuccess;
+        }
     }
 }
