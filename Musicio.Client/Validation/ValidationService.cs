@@ -29,5 +29,18 @@ namespace Musicio.Client.Validation
         {
             return !string.IsNullOrEmpty(value);
         }
+
+        public bool ValidateChangeInfoInput(string mail, string username, string currentPassword, string newPassword, string newPasswordConfirm)
+        {
+            if (string.IsNullOrEmpty(username))
+                return false;
+            if (string.IsNullOrEmpty(mail))
+                return false;
+            if (string.IsNullOrEmpty(currentPassword))
+                return false;
+            if (string.IsNullOrEmpty(newPassword))
+                return false;
+            return !string.IsNullOrEmpty(newPasswordConfirm);
+        }
     }
 }

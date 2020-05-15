@@ -1,7 +1,154 @@
 ﻿@page "/account"
+@using Musicio.Client.User
+@using Musicio.Client.Validation
+@using Musicio.Client.Web.Components
+
+@inject NavigationManager NavigationManager
+@inject IValidationService ValidationService
+@inject IUserService UserService
 
 <h3>Account</h3>
 
-@code {
+<Form Id="account-management">
+    <FormGroup>
+        <InputField Type="text" Enabled="@_editingEnabled" Placeholder="Mail" OnChange="@OnMailChange" />
+    </FormGroup>
+    <FormGroup>
+        <InputField Type="text" Enabled="@_editingEnabled" Placeholder="Username" OnChange="@OnUsernameChange" />
+    </FormGroup>
+    @if (!_editingEnabled)
+    {
+        <FormGroup>
+            <InputField Type="password" Enabled="@_editingEnabled" Placeholder="Current password" OnChange="@OnCurrentPasswordChange" />
+        </FormGroup>
+        <FormGroup>
+            <InputField Type="password" Enabled="@_editingEnabled" Placeholder="New password" OnChange="@OnNewPasswordChange" />
+        </FormGroup>
+        <FormGroup>
+            <InputField Type="password" Enabled="@_editingEnabled" Placeholder="Confirm new password" OnChange="@OnConfirmPasswordChange" />
+        </FormGroup>
+        <FormGroup>
+            <Button Class="btn-danger" Enabled="@_buttonEnabled" Text="Change account information" OnClick="@ChangeUserInfo"></Button>
+        </FormGroup>
+        @if (_error)
+        {
+            <div class="alert alert-danger">
+                @_errorMessage
+            </div>
+        }
+    }
+    else
+    {
+        <FormGroup>
+            <Button Class="btn-danger" Enabled="true" Text="Change account information" OnClick="@EnableEditing"></Button>
+        </FormGroup>
+    }
+</Form>
+<FormGroup>
+        <Button Class="btn-danger" Enabled="true" Text="Logout" OnClick="@Logout"></Button>
+    </FormGroup>
 
+@code {
+    private string _currentUsername;
+    private string _newUsername;
+
+    private string _currentPassword;
+    private string _newPassword;
+    private string _confirmPassword;
+
+    private string _currentMail;
+    private string _newMail;
+
+    private string _errorMessage;
+    private bool _editingEnabled = true;
+    private bool _buttonEnabled;
+    private bool _error;
+
+    /*
+    protected override async Task OnInitializedAsync()
+    {
+        //TODO: add method in userservice to get username & mail
+
+        StateHasChanged();
+    }
+    */
+
+    public Task EnableEditing()
+    {
+        _editingEnabled = false;
+
+        StateHasChanged();
+
+        return Task.CompletedTask;
+    }
+
+    public Task OnUsernameChange(string value)
+    {
+        _newUsername = value;
+
+        ValidateInput();
+
+        return Task.CompletedTask;
+    }
+
+    public Task OnCurrentPasswordChange(string value)
+    {
+        _currentPassword = value;
+
+        ValidateInput();
+
+        return Task.CompletedTask;
+    }
+
+    public Task OnNewPasswordChange(string value)
+    {
+        _newPassword = value;
+
+        ValidateInput();
+
+        return Task.CompletedTask;
+    }
+
+    public Task OnConfirmPasswordChange(string value)
+    {
+        _confirmPassword = value;
+
+        ValidateInput();
+
+        return Task.CompletedTask;
+    }
+
+    public Task OnMailChange(string value)
+    {
+        _newMail = value;
+
+        ValidateInput();
+
+        return Task.CompletedTask;
+    }
+
+    private void ValidateInput()
+    {
+        if (_editingEnabled) _buttonEnabled = ValidationService.ValidateChangeInfoInput(_newMail, _newUsername, _currentPassword, _newPassword, _confirmPassword);
+
+        StateHasChanged();
+    }
+
+    private async Task ChangeUserInfo()
+    {
+        //TODO: create correct method in userservice
+        if (!_newPassword.Equals(_confirmPassword))
+        {
+            _errorMessage = "Make sure your new passwords match correctly.";
+            _error = false;
+
+            StateHasChanged();
+            return;
+        }
+    }
+
+    private async Task Logout()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
 }
