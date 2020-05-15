@@ -44,7 +44,10 @@ namespace Musicio.Server.Controllers
 
             var playlistsModels = _mapper.Map<List<Core.Models.Playlist>>(playlistsEntities);
 
-            foreach (var p in playlistsModels) p.Image = _fileManagementService.CreateBase64String(p.Image);
+            foreach (var p in playlistsModels)
+            {
+                if (p.Image != null) p.Image = _fileManagementService.CreateBase64String(p.Image);
+            }
 
             return ApiResult.Success(playlistsModels);
         }

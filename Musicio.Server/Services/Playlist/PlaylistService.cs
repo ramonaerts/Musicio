@@ -20,7 +20,11 @@ namespace Musicio.Server.Services.Playlist
 
         public async Task<bool> CreatePlaylist(PlaylistCreationMessage message)
         {
-            string imageName = _fileManagementService.SavePlaylistImage(message.Image, message.FileExtension);
+            string imageName = null;
+            if (message.Image != null)
+            {
+                imageName = _fileManagementService.SavePlaylistImage(message.Image, message.FileExtension);
+            }
 
             var newPlaylist = new Core.Domain.Playlist()
             {
