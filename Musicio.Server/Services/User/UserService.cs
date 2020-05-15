@@ -6,17 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Musicio.Core.Data;
 
-namespace Musicio.Server.Services.Authentication
+namespace Musicio.Server.Services.User
 {
-    public class AuthenticationService : IAuthenticationService
+    public class UserService : IUserService
     {
-        private readonly IRepository<User> _userRepository;
-        public AuthenticationService(IRepository<User> userRepository)
+        private readonly IRepository<Core.Domain.User> _userRepository;
+        public UserService(IRepository<Core.Domain.User> userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public async Task<User> LoginUser(LoginMessage message)
+        public async Task<Core.Domain.User> LoginUser(LoginMessage message)
         {
             var user = _userRepository.Table.SingleOrDefault(a => a.Mail == message.Mail);
             if (user == null) return null;
@@ -30,7 +30,7 @@ namespace Musicio.Server.Services.Authentication
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(message.Password);
 
-            var newUser = new User()
+            var newUser = new Core.Domain.User()
             {
                 Username = message.Username,
                 Password = hashedPassword,

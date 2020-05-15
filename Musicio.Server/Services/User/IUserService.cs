@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Musicio.Core.Domain;
 using Musicio.Core.Messages;
 
-namespace Musicio.Server.Services.Authentication
+namespace Musicio.Server.Services.User
 {
-    public interface IAuthenticationService
+    public interface IUserService
     {
-        Task<User> LoginUser(LoginMessage message);
+        Task<Core.Domain.User> LoginUser(LoginMessage message);
 
         Task<bool> RegisterUser(RegisterMessage message);
     }

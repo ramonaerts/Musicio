@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Musicio.Client.User;
 using Musicio.Core;
 using Musicio.Core.Messages;
 using Musicio.Core.Models;
 
-namespace Musicio.Client.Authentication
+namespace Musicio.Client.User
 {
-    public class AuthenticationService : IAuthenticationService
+    public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
 
-        public AuthenticationService(HttpClient httpClient)
+        public UserService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

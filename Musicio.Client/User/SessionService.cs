@@ -9,7 +9,7 @@ using Microsoft.JSInterop;
 using Musicio.Core;
 using Musicio.Core.Models;
 
-namespace Musicio.Client.Authentication
+namespace Musicio.Client.User
 {
     public class SessionService
     {
@@ -19,7 +19,7 @@ namespace Musicio.Client.Authentication
 
         public Func<Task> OnAuthorizationChange { get; set; }
 
-        public User _currentUser;
+        public Core.Models.User _currentUser;
 
         public SessionService(HttpClient httpClient, IJSRuntime ijsRuntime, NavigationManager navigationManager)
         {
@@ -28,14 +28,14 @@ namespace Musicio.Client.Authentication
             _navigationManager = navigationManager;
         }
 
-        public void SetCurrentUser(User user)
+        public void SetCurrentUser(Core.Models.User user)
         {
             _currentUser = user;
 
             OnAuthorizationChange?.Invoke();
         }
 
-        public User GetCurrentUser()
+        public Core.Models.User GetCurrentUser()
         {
             return _currentUser;
         }
@@ -72,7 +72,7 @@ namespace Musicio.Client.Authentication
         {
             ApiResult result = await _httpClient.GetJsonAsync<ApiResult>("api/users/@me");
 
-            SetCurrentUser(result.GetData<User>());
+            SetCurrentUser(result.GetData<Core.Models.User>());
         }
 
         public async void UnloadUser()

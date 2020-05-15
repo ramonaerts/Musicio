@@ -9,7 +9,7 @@ using Microsoft.Extensions.WebEncoders.Testing;
 using Musicio.Core;
 using Musicio.Core.Domain;
 using Musicio.Core.Messages;
-using Musicio.Server.Services.Authentication;
+using Musicio.Server.Services.User;
 
 namespace Musicio.Server.Controllers
 {
@@ -17,10 +17,10 @@ namespace Musicio.Server.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IUserService _authenticationService;
         private readonly IMapper _mapper;
 
-        public UserController(IAuthenticationService authenticationService, IMapper mapper)
+        public UserController(IUserService authenticationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;

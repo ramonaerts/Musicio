@@ -8,9 +8,9 @@ using Howler.Blazor.Components;
 using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.AspNetCore.Blazor.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Musicio.Client.Authentication;
 using Musicio.Client.Converting;
 using Musicio.Client.Playlist;
+using Musicio.Client.User;
 using Musicio.Client.Validation;
 
 namespace Musicio.Client.Web
@@ -30,7 +30,7 @@ namespace Musicio.Client.Web
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddSingleton<IValidationService, ValidationService>();
-            builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
             builder.Services.AddSingleton<IConvertingService, ConvertingService>();
             builder.Services.AddSingleton<SessionService>();

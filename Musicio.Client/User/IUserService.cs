@@ -4,9 +4,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Musicio.Core.Models;
 
-namespace Musicio.Client.Authentication
+namespace Musicio.Client.User
 {
-    public interface IAuthenticationService
+    public interface IUserService
     {
         Task<bool> Login(string mail, string password);
 
