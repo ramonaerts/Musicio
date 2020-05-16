@@ -21,7 +21,7 @@ else
         @foreach (var pl in _playlists)
         {
             <div class="playlist-column">
-                <PlaylistCard Title="@pl.Title" Image="@pl.Image"></PlaylistCard>
+                <PlaylistCard Title="@pl.Title" Image="@pl.Image" PlaylistId="@pl.Id"></PlaylistCard>
             </div>
         }
     </div>

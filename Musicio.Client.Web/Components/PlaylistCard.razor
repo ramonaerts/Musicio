@@ -1,13 +1,17 @@
-﻿<div class="playlist-container">
-    @if (Image == null)
-    {
-        <div class="playlist-image" style="background-image: url(images/StockImage.jpg)"></div>
-    }
-    else
-    {
-        <div class="playlist-image" style="background-image: url(data:image/png;base64,@Image)"></div>
-    }
-    <div class="playlist-title">@Title</div>
+﻿@inject NavigationManager NavigationManager
+
+<div class="playlist-container">
+    <a @onclick="@(() => ViewPlaylist())">
+        @if (Image == null)
+        {
+            <div class="playlist-image" style="background-image: url(images/StockImage.jpg)"></div>
+        }
+        else
+        {
+            <div class="playlist-image" style="background-image: url(data:image/png;base64,@Image)"></div>
+        }
+        <div class="playlist-title">@Title</div>
+    </a>
 </div>
 
 @code {
@@ -21,4 +25,10 @@
     [Parameter]
     public string Image { get; set; }
 
+    private Task ViewPlaylist()
+    {
+        NavigationManager.NavigateTo("/playlists/" + PlaylistId);
+
+        return Task.CompletedTask;
+    }
 }

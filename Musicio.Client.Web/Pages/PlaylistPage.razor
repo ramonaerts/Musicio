@@ -1,0 +1,8 @@
+﻿@page "/playlists/{PlaylistId:int}"
+
+<h3>PlaylistPage @PlaylistId</h3>
+
+@code {
+    [Parameter]
+    public int PlaylistId { get; set; }
+}
