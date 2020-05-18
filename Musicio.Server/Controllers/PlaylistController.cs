@@ -9,6 +9,7 @@ using Musicio.Core.Domain;
 using Musicio.Core.Messages;
 using Musicio.Server.Services.FileManagement;
 using Musicio.Server.Services.Playlist;
+using Song = Musicio.Core.Models.Song;
 
 namespace Musicio.Server.Controllers
 {
@@ -58,7 +59,16 @@ namespace Musicio.Server.Controllers
         {
             Playlist playlist = _playlistService.GetPlaylistSongs(playlistId);
 
-            return ApiResult.Success(playlist);
+            var playlistModel = _mapper.Map<Core.Models.Playlist>(playlist);
+            playlistModel.Songs = new List<Song>();
+
+            foreach (var song in playlist.PlaylistSongs)
+            {
+                var songModel = _mapper.Map<Song>(song.Song);
+                playlistModel.Songs.Add(songModel);
+            }
+
+            return ApiResult.Success(playlistModel);
         }
     }
 }

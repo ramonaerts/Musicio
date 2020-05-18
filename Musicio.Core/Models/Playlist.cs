@@ -14,6 +14,7 @@ namespace Musicio.Core.Models
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
         public string Image { get; set; }
+        public List<Song> Songs { get; set; }
 
         public Playlist()
         {
