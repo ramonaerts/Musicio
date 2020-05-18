@@ -51,5 +51,14 @@ namespace Musicio.Server.Controllers
 
             return ApiResult.Success(playlistsModels);
         }
+
+        [HttpGet]
+        [Route("{playlistId}/songs")]
+        public ApiResult GetPlaylistSongs(int playlistId)
+        {
+            Playlist playlist = _playlistService.GetPlaylistSongs(playlistId);
+
+            return ApiResult.Success(playlist);
+        }
     }
 }

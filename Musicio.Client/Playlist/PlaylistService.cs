@@ -30,5 +30,12 @@ namespace Musicio.Client.Playlist
 
             return result.GetData<List<Core.Models.Playlist>>();
         }
+
+        public async Task<Core.Models.Playlist> GetPlaylistSongs(int playlistId)
+        {
+            var result = await _httpClient.GetJsonAsync<ApiResult>("api/Playlist/" + playlistId + "/songs");
+
+            return result.GetData<Core.Models.Playlist>();
+        }
     }
 }

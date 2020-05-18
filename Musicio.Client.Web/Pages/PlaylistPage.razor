@@ -1,8 +1,27 @@
 ﻿@page "/playlists/{PlaylistId:int}"
+@using Musicio.Client.Playlist
+@using Musicio.Core.Models
+
+@inject IPlaylistService PlaylistService
 
 <h3>PlaylistPage @PlaylistId</h3>
 
 @code {
     [Parameter]
     public int PlaylistId { get; set; }
+
+    private Playlist _playlist = new Playlist();
+
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+
+        _playlist = await PlaylistService.GetPlaylistSongs(PlaylistId);
+
+        StateHasChanged();
+
+        _loading = false;
+    }
 }

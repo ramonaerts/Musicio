@@ -10,5 +10,6 @@ namespace Musicio.Server.Services.Playlist
     {
         Task<bool> CreatePlaylist(PlaylistCreationMessage message);
         Task<List<Core.Domain.Playlist>> GetUserPlaylists(int userId);
+        Core.Domain.Playlist GetPlaylistSongs(int playlistId);
     }
 }
