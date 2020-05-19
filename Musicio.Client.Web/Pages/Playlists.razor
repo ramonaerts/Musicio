@@ -6,13 +6,14 @@
 @inject NavigationManager NavigationManager
 @inject IPlaylistService PlaylistService
 
-    <FormGroup>
-        <Button Enabled="true" Text="Create new playlist" OnClick="@CreatePlaylist"></Button>
-    </FormGroup>
+<FormGroup>
+    <Button Enabled="true" Text="Create new playlist" OnClick="@CreatePlaylist"></Button>
+</FormGroup>
 
 @if (_loading)
 {
-    <div class="spinner-border" role="status">
+    <div class="loading">
+        <div class="spinner-border" role="status"></div>
     </div>
 }
 else
@@ -28,25 +29,25 @@ else
 }
 
 @code {
-    private List<Core.Models.Playlist> _playlists = new List<Core.Models.Playlist>();
+private List<Core.Models.Playlist> _playlists = new List<Core.Models.Playlist>();
 
-    private bool _loading;
+private bool _loading;
 
-    protected override async Task OnInitializedAsync()
-    {
-        _loading = true;
+protected override async Task OnInitializedAsync()
+{
+    _loading = true;
 
-        _playlists = await PlaylistService.GetUserPlaylists(1);
+    _playlists = await PlaylistService.GetUserPlaylists(1);
 
-        StateHasChanged();
+    StateHasChanged();
 
-        _loading = false;
-    }
+    _loading = false;
+}
 
-    private Task CreatePlaylist()
-    {
-        NavigationManager.NavigateTo("/playlists/create");
+private Task CreatePlaylist()
+{
+    NavigationManager.NavigateTo("/playlists/create");
 
-        return Task.CompletedTask;
-    }
+    return Task.CompletedTask;
+}
 }

@@ -68,6 +68,8 @@ namespace Musicio.Server.Controllers
                 playlistModel.Songs.Add(songModel);
             }
 
+            if (playlistModel.Image != null) playlistModel.Image = _fileManagementService.CreateBase64String(playlistModel.Image);
+
             return ApiResult.Success(playlistModel);
         }
     }

@@ -313,16 +313,15 @@ progress::-webkit-progress-value {
     color: black;
 }
 
-h2 {
-    width: 100%;
-    text-align: center
-}
-
 .login {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+}
+
+.loading {
+    text-align: center;
 }
 
 /*Scroll bar*/

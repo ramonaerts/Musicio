@@ -50,3 +50,16 @@
     text-decoration: none;
     position: relative;
 }
+
+.playlist-image-detail {
+    float: left;
+    vertical-align: middle;
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2), 0 5px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 15px;
+    margin-bottom: 30px;
+}

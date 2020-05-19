@@ -15,8 +15,6 @@ namespace Musicio.Client.Converting
             await image.Data.CopyToAsync(ms);
             var bytes = ms.ToArray();
 
-
-
             return Convert.ToBase64String(bytes, 0, bytes.Length);
         }
     }
