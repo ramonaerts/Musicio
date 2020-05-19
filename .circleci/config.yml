@@ -9,5 +9,5 @@
     
      steps:
        - checkout
-       - run: dotnet build src/Musicio
-       - run: dotnet test src/Musicio 
+       - run: dotnet build
+       - run: dotnet test
