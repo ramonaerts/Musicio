@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.WebEncoders.Testing;
 using Musicio.Core;
@@ -13,6 +14,7 @@ using Musicio.Server.Services.User;
 
 namespace Musicio.Server.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -26,6 +28,7 @@ namespace Musicio.Server.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
         public async Task<ApiResult> PostLogin(LoginMessage message)
@@ -34,9 +37,12 @@ namespace Musicio.Server.Controllers
 
             var userModel = _mapper.Map<Core.Models.User>(user);
 
+            userModel.Token = _userService.CreateToken(user.Id);
+
             return userModel != null ? ApiResult.Success(userModel) : ApiResult.BadRequest();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("register")]
         public async Task<ApiResult> PostRegister(RegisterMessage message)

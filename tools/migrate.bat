@@ -8,7 +8,7 @@ IF /I "%AREYOUSURE%" NEQ "Y" GOTO END
 
 cd "%~dp0../Musicio.Server.Data"
 
-dotnet ef migrations add InitialCreate
+dotnet ef migrations add InitialCreate --context MusicioContext
 
 :END
 endlocal

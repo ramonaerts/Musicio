@@ -10,6 +10,7 @@ namespace Musicio.Server.Services.User
     public interface IUserService
     {
         Task<Core.Domain.User> LoginUser(LoginMessage message);
+        string CreateToken(int userId);
         Task<bool> RegisterUser(RegisterMessage message);
         Core.Domain.User GetUserById(int userId);
         bool ChangeUserInfo(ChangeUserInfoMessage message);

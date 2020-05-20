@@ -9,14 +9,14 @@ using Musicio.Server.Data;
 namespace Musicio.Server.Data.Migrations
 {
     [DbContext(typeof(MusicioContext))]
-    [Migration("20200519104016_InitialCreate")]
+    [Migration("20200520172738_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Musicio.Core.Domain.Playlist", b =>
