@@ -28,6 +28,31 @@ namespace Musicio.Client.User
             _navigationManager = navigationManager;
         }
 
+        public async Task SetCookie(string token)
+        {
+            await _jsRuntime.InvokeVoidAsync("setCookies", token);
+        }
+
+        public async Task<string> GetCookie()
+        {
+            var token = await _jsRuntime.InvokeAsync<string>("getCookies");
+
+            return string.IsNullOrEmpty(token) ? null : token;
+        }
+
+        public async Task DeleteCookie()
+        {
+            await _jsRuntime.InvokeVoidAsync("unsetCookies");
+        }
+
+        public async Task<bool> TryLoadAuthentication()
+        {
+            var cookieString = await _jsRuntime.InvokeAsync<string>("getCookies");
+
+            if (string.IsNullOrEmpty(cookieString)) return false;
+            return true;
+        }
+
         public void SetCurrentUser(Core.Models.User user)
         {
             _currentUser = user;

@@ -76,6 +76,12 @@ namespace Musicio.Server
                         ValidateAudience = false
                     };
                 });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = false;
+                options.ExpireTimeSpan = TimeSpan.FromDays(365);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -40,11 +40,11 @@ namespace Musicio.Client.Web
             //await builder.Build().RunAsync();
             var host = builder.Build();
 
-            /*var sessionService = host.Services.GetRequiredService<SessionService>();
+            var sessionService = host.Services.GetRequiredService<SessionService>();
             if (await sessionService.TryLoadLocalUser())
             {
                 await sessionService.LoadUser();
-            }*/
+            }
 
             await host.RunAsync();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Musicio.Core;
 using Musicio.Core.Domain;
@@ -13,6 +14,7 @@ using Song = Musicio.Core.Models.Song;
 
 namespace Musicio.Server.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PlaylistController : ControllerBase

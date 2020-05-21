@@ -1,4 +1,8 @@
-﻿function getCookies() {
+﻿function setCookies() {
+
+}
+
+function getCookies() {
     return document.cookie;
 }
 

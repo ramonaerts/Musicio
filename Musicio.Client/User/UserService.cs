@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Musicio.Client.User;
@@ -22,6 +23,11 @@ namespace Musicio.Client.User
         public async Task<bool> Login(string mail, string password)
         {
             var result = await _httpClient.PostJsonAsync<ApiResult>("api/User/login", new LoginMessage(mail, password));
+
+            var user = result.GetData<Core.Models.User>();
+
+            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+
             return result.IsSuccess;
         }
 

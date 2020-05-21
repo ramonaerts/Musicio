@@ -63,6 +63,15 @@ namespace Musicio.Server.Controllers
             return ApiResult.Success(userModel);
         }
 
+        [HttpGet]
+        [Route("@me")]
+        public ApiResult GetUserId()
+        {
+            var id = User.Claims.First(c => c.Type == "UserId").Value;
+
+            return id != null ? ApiResult.Success(Convert.ToInt32(id)) : ApiResult.BadRequest();
+        }
+
         [HttpPut]
         [Route("modify")]
         public ApiResult ChangeUserInfo(ChangeUserInfoMessage message)
