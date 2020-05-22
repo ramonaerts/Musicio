@@ -17,7 +17,7 @@ function getCookies() {
     return document.cookie;
 }
 
-function unsetCookies() {
+function removeCookies() {
     var cookies = document.cookie.split(";");
 
     for (var i = 0; i < cookies.length; i++) {

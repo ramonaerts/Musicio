@@ -9,6 +9,6 @@ namespace Musicio.Client.User
     {
         Task SetCookie(string name, string token);
         Task<string> GetCookie();
-        Task DeleteCookie();
+        Task RemoveCookies();
     }
 }

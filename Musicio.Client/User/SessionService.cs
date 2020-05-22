@@ -42,9 +42,9 @@ namespace Musicio.Client.User
             return string.IsNullOrEmpty(token) ? null : token;
         }
 
-        public async Task DeleteCookie()
+        public async Task RemoveCookies()
         {
-            await _jsRuntime.InvokeVoidAsync("unsetCookies");
+            await _jsRuntime.InvokeVoidAsync("removeCookies");
         }
 
         public async Task<bool> TryLoadAuthentication()
