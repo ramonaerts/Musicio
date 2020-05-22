@@ -3,6 +3,7 @@
 @using Musicio.Client.Playlist
 @using BlazorInputFile
 @using Musicio.Client.Converting
+@using Musicio.Client.User
 @using Musicio.Client.Validation
 @using Musicio.Client.Web.Components
 @using Musicio.Client.Web.Invokables
@@ -11,6 +12,7 @@
 @inject NavigationManager NavigationManager
 @inject IPlaylistService PlaylistService
 @inject IConvertingService ConvertingService
+@inject ISessionService SessionService
 
 <Form Id="form-createplaylist">
     <FormGroup>
@@ -46,6 +48,15 @@
     private string _description;
     private string _base64Image;
     private IFileListEntry _image;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+    }
 
     public Task OnNameChange(string value)
     {

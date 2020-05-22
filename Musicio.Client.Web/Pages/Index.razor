@@ -1,10 +1,15 @@
 ﻿@page "/"
 @using Musicio.Client.User
-@inject ISessionService UserSessionService
+@inject ISessionService SessionService
+@inject NavigationManager NavigationManager
 
 @code {
     protected override async Task OnInitializedAsync()
     {
-        string token = await UserSessionService.GetJwtCookie();
+        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
     }
 }

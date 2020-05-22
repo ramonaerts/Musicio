@@ -9,6 +9,7 @@ namespace Musicio.Client.User
     {
         Task SetCookie(string name, string token);
         Task<string> GetJwtCookie();
+        Task<int> GetIdFromToken();
         Task<bool> CheckIfTokenIsAvailable();
         Task RemoveCookies();
     }

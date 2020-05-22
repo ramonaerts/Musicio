@@ -1,8 +1,11 @@
 ﻿@page "/playlists/{PlaylistId:int}"
 @using Musicio.Client.Playlist
+@using Musicio.Client.User
 @using Musicio.Core.Models
 
 @inject IPlaylistService PlaylistService
+@inject ISessionService SessionService
+@inject NavigationManager NavigationManager
 
 @if (_loading)
 {
@@ -45,6 +48,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
         _loading = true;
 
         _playlist = await PlaylistService.GetPlaylistSongs(PlaylistId);

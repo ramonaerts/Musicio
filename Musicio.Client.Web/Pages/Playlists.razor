@@ -1,9 +1,11 @@
 ﻿@page "/playlists"
 
 @using Musicio.Client.Playlist
+@using Musicio.Client.User
 @using Musicio.Client.Web.Components
 
 @inject NavigationManager NavigationManager
+@inject ISessionService SessionService
 @inject IPlaylistService PlaylistService
 
 <FormGroup>
@@ -29,25 +31,35 @@ else
 }
 
 @code {
-private List<Core.Models.Playlist> _playlists = new List<Core.Models.Playlist>();
+    private List<Core.Models.Playlist> _playlists = new List<Core.Models.Playlist>();
 
-private bool _loading;
+    private bool _loading;
 
-protected override async Task OnInitializedAsync()
-{
-    _loading = true;
+    protected override async Task OnInitializedAsync()
+    {
+        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
 
-    _playlists = await PlaylistService.GetUserPlaylists(1);
+        _loading = true;
 
-    StateHasChanged();
+        /*var id = await SessionService.GetIdFromToken();
 
-    _loading = false;
-}
+        Console.WriteLine(id);*/
 
-private Task CreatePlaylist()
-{
-    NavigationManager.NavigateTo("/playlists/create");
+        _playlists = await PlaylistService.GetUserPlaylists(1);
 
-    return Task.CompletedTask;
-}
+        StateHasChanged();
+
+        _loading = false;
+    }
+
+    private Task CreatePlaylist()
+    {
+        NavigationManager.NavigateTo("/playlists/create");
+
+        return Task.CompletedTask;
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -16,6 +18,7 @@ namespace Musicio.Client.User
         private readonly HttpClient _httpClient;
         private readonly IJSRuntime _jsRuntime;
         private readonly NavigationManager _navigationManager;
+        private readonly JwtSecurityTokenHandler _handler;
 
         public Func<Task> OnAuthorizationChange { get; set; }
 
@@ -26,6 +29,7 @@ namespace Musicio.Client.User
             _httpClient = httpClient;
             _jsRuntime = ijsRuntime;
             _navigationManager = navigationManager;
+            _handler = new JwtSecurityTokenHandler();
         }
 
         public async Task SetCookie(string name, string value)
@@ -46,8 +50,6 @@ namespace Musicio.Client.User
             cookieContainer.SetCookies(new Uri(_navigationManager.BaseUri), cookieString);
 
             var cookieCollection = cookieContainer.GetCookies(new Uri(_navigationManager.BaseUri));
-
-            Console.WriteLine(cookieCollection);
 
             var cookie = cookieCollection["WebToken"];
 
@@ -75,6 +77,17 @@ namespace Musicio.Client.User
                 return false;
 
             return true;
+        }
+
+        public async Task<int> GetIdFromToken()
+        {
+            var test = HttpClientExtensions.WebToken;
+            var jsonToken = _handler.ReadJwtToken(test);
+            Console.WriteLine(jsonToken);
+            //var id = handler.Claims.First(c => c.Type == "UserId").Value;
+            //Console.WriteLine(id);
+            //return Convert.ToInt32(id);
+            return 1;
         }
 
         public async Task RemoveCookies()

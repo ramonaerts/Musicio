@@ -43,6 +43,8 @@ namespace Musicio.Client.User
 
         public async Task<Core.Models.User> GetUserInfo(int userId)
         {
+            var test = await _httpClient.GetJsonAsync<ApiResult>("api/User/@me");
+
             var result = await _httpClient.GetJsonAsync<ApiResult>("api/User/" + userId);
 
             return result.GetData<Core.Models.User>();

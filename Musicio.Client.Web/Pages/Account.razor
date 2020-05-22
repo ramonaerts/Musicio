@@ -73,6 +73,12 @@
 
     protected override async Task OnInitializedAsync()
     {
+        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
         _currentUser = await UserService.GetUserInfo(1);
         _currentUsername = _currentUser.Username;
         _currentMail = _currentUser.Mail;

@@ -90,9 +90,17 @@ else
 
     private bool _isLogin = true;
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (await SessionService.CheckIfTokenIsAvailable())
+        {
+            NavigationManager.NavigateTo("/");
+            return;
+        }
+    }
+
     private async Task LoginAsync()
     {
-
         _loginSuccess = await AuthenticationService.Login(_mail, _password);
 
         if (_loginSuccess)
