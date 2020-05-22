@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Client", "Musicio.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Server.Data", "Musicio.Server.Data\Musicio.Server.Data.csproj", "{1874CE4C-ED4A-4ED6-B0AF-A223DE29E306}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Musicio.Server.Tests", "Musicio.Server.Tests\Musicio.Server.Tests.csproj", "{7C6E2C3A-6757-4563-B2F8-3FD648A9EDB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicio.Server.Tests", "Musicio.Server.Tests\Musicio.Server.Tests.csproj", "{7C6E2C3A-6757-4563-B2F8-3FD648A9EDB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

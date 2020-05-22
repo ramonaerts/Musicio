@@ -1,6 +1,6 @@
 ﻿@using Musicio.Client.User
 
-@inject SessionService SessionService
+@inject ISessionService SessionService
 @inject IJSRuntime JsRuntime
 
 <div class="top-row pl-4 navbar navbar-dark">
@@ -47,7 +47,7 @@
 
     protected override void OnInitialized()
     {
-        SessionService.OnAuthorizationChange += Refresh;
+        //SessionService.OnAuthorizationChange += Refresh;
 
         base.OnInitialized();
     }

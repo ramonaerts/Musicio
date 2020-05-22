@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.JSInterop;
 using Musicio.Client.User;
 using Musicio.Core;
 using Musicio.Core.Messages;
@@ -14,10 +15,12 @@ namespace Musicio.Client.User
     public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
+        private readonly ISessionService _sessionService;
 
-        public UserService(HttpClient httpClient)
+        public UserService(HttpClient httpClient, ISessionService sessionService)
         {
             _httpClient = httpClient;
+            _sessionService = sessionService;
         }
 
         public async Task<bool> Login(string mail, string password)
@@ -26,6 +29,7 @@ namespace Musicio.Client.User
 
             var user = result.GetData<Core.Models.User>();
 
+            await _sessionService.SetCookie("WebToken", user.Token);
             //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
             return result.IsSuccess;

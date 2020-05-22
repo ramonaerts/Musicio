@@ -33,18 +33,19 @@ namespace Musicio.Client.Web
             builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
             builder.Services.AddSingleton<IConvertingService, ConvertingService>();
-            builder.Services.AddSingleton<SessionService>();
+            builder.Services.AddSingleton<ISessionService, SessionService>();
             builder.Services.AddScoped<IHowl, Howl>();
             builder.Services.AddScoped<IHowlGlobal, HowlGlobal>();
+            builder.Services.AddAuthorizationCore();
 
             //await builder.Build().RunAsync();
             var host = builder.Build();
 
-            var sessionService = host.Services.GetRequiredService<SessionService>();
+            /*var sessionService = host.Services.GetRequiredService<SessionService>();
             if (await sessionService.TryLoadLocalUser())
             {
                 await sessionService.LoadUser();
-            }
+            }*/
 
             await host.RunAsync();
         }

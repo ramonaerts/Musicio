@@ -11,7 +11,7 @@ using Musicio.Core.Models;
 
 namespace Musicio.Client.User
 {
-    public class SessionService
+    public class SessionService : ISessionService
     {
         private readonly HttpClient _httpClient;
         private readonly IJSRuntime _jsRuntime;
@@ -28,14 +28,16 @@ namespace Musicio.Client.User
             _navigationManager = navigationManager;
         }
 
-        public async Task SetCookie(string token)
+        public async Task SetCookie(string name, string value)
         {
-            await _jsRuntime.InvokeVoidAsync("setCookies", token);
+            await _jsRuntime.InvokeVoidAsync("blazorExtensions.writeCookie", name, value, 7);
         }
 
         public async Task<string> GetCookie()
         {
             var token = await _jsRuntime.InvokeAsync<string>("getCookies");
+
+            Console.WriteLine(token);
 
             return string.IsNullOrEmpty(token) ? null : token;
         }
