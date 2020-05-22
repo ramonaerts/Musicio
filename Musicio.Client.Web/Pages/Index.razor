@@ -3,5 +3,8 @@
 @inject ISessionService UserSessionService
 
 @code {
-
+    protected override async Task OnInitializedAsync()
+    {
+        string token = await UserSessionService.GetJwtCookie();
+    }
 }

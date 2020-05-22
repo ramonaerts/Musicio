@@ -41,11 +41,11 @@ namespace Musicio.Client.Web
             //await builder.Build().RunAsync();
             var host = builder.Build();
 
-            /*var sessionService = host.Services.GetRequiredService<SessionService>();
-            if (await sessionService.TryLoadLocalUser())
+            var sessionService = host.Services.GetRequiredService<ISessionService>();
+            if (await sessionService.CheckIfTokenIsAvailable())
             {
-                await sessionService.LoadUser();
-            }*/
+                HttpClientExtensions.WebToken = await sessionService.GetJwtCookie();
+            }
 
             await host.RunAsync();
         }

@@ -8,7 +8,8 @@ namespace Musicio.Client.User
     public interface ISessionService
     {
         Task SetCookie(string name, string token);
-        Task<string> GetCookie();
+        Task<string> GetJwtCookie();
+        Task<bool> CheckIfTokenIsAvailable();
         Task RemoveCookies();
     }
 }

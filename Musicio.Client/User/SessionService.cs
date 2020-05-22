@@ -31,15 +31,50 @@ namespace Musicio.Client.User
         public async Task SetCookie(string name, string value)
         {
             await _jsRuntime.InvokeVoidAsync("blazorExtensions.writeCookie", name, value, 7);
+
+            HttpClientExtensions.WebToken = value;
         }
 
-        public async Task<string> GetCookie()
+        public async Task<string> GetJwtCookie()
         {
-            var token = await _jsRuntime.InvokeAsync<string>("getCookies");
+            var cookieString = await _jsRuntime.InvokeAsync<string>("getCookies");
 
-            Console.WriteLine(token);
+            if (string.IsNullOrEmpty(cookieString))
+                return null;
 
-            return string.IsNullOrEmpty(token) ? null : token;
+            var cookieContainer = new CookieContainer();
+            cookieContainer.SetCookies(new Uri(_navigationManager.BaseUri), cookieString);
+
+            var cookieCollection = cookieContainer.GetCookies(new Uri(_navigationManager.BaseUri));
+
+            Console.WriteLine(cookieCollection);
+
+            var cookie = cookieCollection["WebToken"];
+
+            return cookie.Value;
+        }
+
+        public async Task<bool> CheckIfTokenIsAvailable()
+        {
+            var cookieString = await _jsRuntime.InvokeAsync<string>("getCookies");
+
+            if (string.IsNullOrEmpty(cookieString))
+                return false;
+
+            var cookieContainer = new CookieContainer();
+            cookieContainer.SetCookies(new Uri(_navigationManager.BaseUri), cookieString);
+
+            var cookieCollection = cookieContainer.GetCookies(new Uri(_navigationManager.BaseUri));
+
+            var cookie = cookieCollection["WebToken"];
+
+            if (cookie == null)
+                return false;
+
+            if (cookie.Expired)
+                return false;
+
+            return true;
         }
 
         public async Task RemoveCookies()
@@ -70,29 +105,6 @@ namespace Musicio.Client.User
         public bool IsAuthorized()
         {
             return _currentUser != null;
-        }
-
-        public async Task<bool> TryLoadLocalUser()
-        {
-            var cookieString = await _jsRuntime.InvokeAsync<string>("getCookies");
-
-            if (string.IsNullOrEmpty(cookieString))
-                return false;
-
-            var cookieContainer = new CookieContainer();
-            cookieContainer.SetCookies(new Uri(_navigationManager.BaseUri), cookieString);
-
-            var cookieCollection = cookieContainer.GetCookies(new Uri(_navigationManager.BaseUri));
-
-            var cookie = cookieCollection[".AspNetCore.Identity.Application"];
-
-            if (cookie == null)
-                return false;
-
-            if (cookie.Expired)
-                return false;
-
-            return true;
         }
 
         public async Task LoadUser()

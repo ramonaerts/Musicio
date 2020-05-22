@@ -30,7 +30,6 @@ namespace Musicio.Client.User
             var user = result.GetData<Core.Models.User>();
 
             await _sessionService.SetCookie("WebToken", user.Token);
-            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
             return result.IsSuccess;
         }

@@ -175,6 +175,8 @@
     {
         await SessionService.RemoveCookies();
 
+        HttpClientExtensions.WebToken = null;
+
         NavigationManager.NavigateTo("/login");
     }
 }
