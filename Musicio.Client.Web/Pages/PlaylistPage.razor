@@ -48,13 +48,13 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
+
         if (await SessionService.CheckIfTokenIsAvailable() == false)
         {
             NavigationManager.NavigateTo("/login");
             return;
         }
-
-        _loading = true;
 
         _playlist = await PlaylistService.GetPlaylistSongs(PlaylistId);
 

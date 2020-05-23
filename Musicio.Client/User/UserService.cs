@@ -52,7 +52,7 @@ namespace Musicio.Client.User
 
         public async Task<bool> ChangeUserInfo(int userId, string mail, string username, string newPassword, string oldPassword)
         {
-            var result = await _httpClient.PutJsonAsync<ApiResult>("api/User/modify",
+            var result = await _httpClient.PutJsonAsync<ApiResult>("api/User/" + userId,
                 new ChangeUserInfoMessage(userId, mail, username, newPassword, oldPassword));
             return result.IsSuccess;
         }

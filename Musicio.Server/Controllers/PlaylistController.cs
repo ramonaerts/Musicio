@@ -31,7 +31,7 @@ namespace Musicio.Server.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
+        [Route("")]
         public async Task<ApiResult> CreatePlaylist(PlaylistCreationMessage message)
         {
             var success = await _playlistService.CreatePlaylist(message);

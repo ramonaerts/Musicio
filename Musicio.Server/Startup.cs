@@ -24,6 +24,7 @@ using Musicio.Server.Services.Playlist;
 using Musicio.Server.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Musicio.Server.Services.Artist;
 
 namespace Musicio.Server
 {
@@ -45,9 +46,11 @@ namespace Musicio.Server
             services.AddScoped<IRepository<BaseEntity>, Repository<BaseEntity>>();
             services.AddScoped<IRepository<User>, Repository<User>>();
             services.AddScoped<IRepository<Playlist>, Repository<Playlist>>();
+            services.AddScoped<IRepository<Artist>, Repository<Artist>>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPlaylistService, PlaylistService>();
             services.AddScoped<IFileManagementService, FileManagementService>();
+            services.AddScoped<IArtistService, ArtistService>();
             /*services.AddRepositories();
             services.AddServices();*/
 

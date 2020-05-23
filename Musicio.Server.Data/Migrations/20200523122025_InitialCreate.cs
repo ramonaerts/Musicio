@@ -9,6 +9,20 @@ namespace Musicio.Server.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Artist",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ArtistName = table.Column<string>(nullable: true),
+                    PicturePath = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Artist", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Song",
                 columns: table => new
                 {
@@ -44,6 +58,28 @@ namespace Musicio.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Album",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ArtistId = table.Column<int>(nullable: false),
+                    AlbumTitle = table.Column<string>(nullable: true),
+                    ReleaseDate = table.Column<DateTime>(nullable: false),
+                    Image = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Album", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Album_Artist_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artist",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Playlist",
                 columns: table => new
                 {
@@ -62,6 +98,32 @@ namespace Musicio.Server.Data.Migrations
                         name: "FK_Playlist_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AlbumSong",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AlbumId = table.Column<int>(nullable: false),
+                    SongId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlbumSong", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AlbumSong_Album_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Album",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AlbumSong_Song_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Song",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -93,6 +155,21 @@ namespace Musicio.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Album_ArtistId",
+                table: "Album",
+                column: "ArtistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AlbumSong_AlbumId",
+                table: "AlbumSong",
+                column: "AlbumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AlbumSong_SongId",
+                table: "AlbumSong",
+                column: "SongId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Playlist_UserId",
                 table: "Playlist",
                 column: "UserId");
@@ -111,13 +188,22 @@ namespace Musicio.Server.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AlbumSong");
+
+            migrationBuilder.DropTable(
                 name: "PlaylistSong");
+
+            migrationBuilder.DropTable(
+                name: "Album");
 
             migrationBuilder.DropTable(
                 name: "Playlist");
 
             migrationBuilder.DropTable(
                 name: "Song");
+
+            migrationBuilder.DropTable(
+                name: "Artist");
 
             migrationBuilder.DropTable(
                 name: "User");

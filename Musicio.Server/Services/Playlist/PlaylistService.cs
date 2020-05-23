@@ -50,5 +50,10 @@ namespace Musicio.Server.Services.Playlist
         {
             return _playlistRepository.Table.Include(e => e.PlaylistSongs).ThenInclude(e => e.Song).SingleOrDefault(e => e.Id == playlistId);
         }
+
+        public Core.Domain.Playlist GetPlaylistById(int playlistId)
+        {
+            return _playlistRepository.Table.SingleOrDefault(e => e.Id == playlistId);
+        }
     }
 }

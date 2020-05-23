@@ -75,7 +75,7 @@ namespace Musicio.Server.Controllers
         }
 
         [HttpPut]
-        [Route("modify")]
+        [Route("{userId}")]
         public ApiResult ChangeUserInfo(ChangeUserInfoMessage message)
         {
             var success = _userService.ChangeUserInfo(message);

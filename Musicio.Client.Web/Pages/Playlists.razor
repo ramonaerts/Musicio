@@ -37,17 +37,17 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
+
         if (await SessionService.CheckIfTokenIsAvailable() == false)
         {
             NavigationManager.NavigateTo("/login");
             return;
         }
 
-        _loading = true;
-
         /*var id = await SessionService.GetIdFromToken();
 
-        Console.WriteLine(id);*/
+            Console.WriteLine(id);*/
 
         _playlists = await PlaylistService.GetUserPlaylists(1);
 

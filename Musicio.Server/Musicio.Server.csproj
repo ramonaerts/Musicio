@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="Content\Musicimages\" />
     <Folder Include="Content\Musicaudio\" />
+    <Folder Include="Content\Artistimages\" />
     <Folder Include="Content\Playlistimages\" />
   </ItemGroup>
 

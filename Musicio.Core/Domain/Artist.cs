@@ -9,7 +9,7 @@ namespace Musicio.Core.Domain
     {
         public string ArtistName { get; set; }
         public string PicturePath { get; set; }
-        public List<Album> ArtistAlbums { get; set; }
-        public List<Song> ArtistSingles { get; set; }
+        public List<Album> Albums { get; set; }
+        //public List<Song> ArtistSingles { get; set; }
     }
 }
