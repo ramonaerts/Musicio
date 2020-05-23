@@ -16,7 +16,7 @@ namespace Musicio.Client.User
     {
         private readonly HttpClient _httpClient;
         private readonly ISessionService _sessionService;
-
+        private const string Path = "api/user";
         public UserService(HttpClient httpClient, ISessionService sessionService)
         {
             _httpClient = httpClient;
@@ -25,7 +25,7 @@ namespace Musicio.Client.User
 
         public async Task<bool> Login(string mail, string password)
         {
-            var result = await _httpClient.PostJsonAsync<ApiResult>("api/User/login", new LoginMessage(mail, password));
+            var result = await _httpClient.PostJsonAsync<ApiResult>(Path + "/login", new LoginMessage(mail, password));
 
             var user = result.GetData<Core.Models.User>();
 
@@ -36,23 +36,23 @@ namespace Musicio.Client.User
 
         public async Task<bool> Register(string mail, string username, string password)
         {
-            var result = await _httpClient.PostJsonAsync<ApiResult>("api/User/register",
+            var result = await _httpClient.PostJsonAsync<ApiResult>(Path + "/register",
                 new RegisterMessage(mail, username, password));
             return result.IsSuccess;
         }
 
         public async Task<Core.Models.User> GetUserInfo(int userId)
         {
-            var test = await _httpClient.GetJsonAsync<ApiResult>("api/User/@me");
+            //var test = await _httpClient.GetJsonAsync<ApiResult>("api/User/@me");
 
-            var result = await _httpClient.GetJsonAsync<ApiResult>("api/User/" + userId);
+            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/" + userId);
 
             return result.GetData<Core.Models.User>();
         }
 
         public async Task<bool> ChangeUserInfo(int userId, string mail, string username, string newPassword, string oldPassword)
         {
-            var result = await _httpClient.PutJsonAsync<ApiResult>("api/User/" + userId,
+            var result = await _httpClient.PutJsonAsync<ApiResult>(Path + "/" + userId,
                 new ChangeUserInfoMessage(userId, mail, username, newPassword, oldPassword));
             return result.IsSuccess;
         }
