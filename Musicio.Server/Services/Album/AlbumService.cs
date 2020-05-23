@@ -19,7 +19,7 @@ namespace Musicio.Server.Services.Album
 
         public List<Core.Domain.Album> GetArtistAlbums(int artistId)
         {
-            return _albumRepository.Table.Where(e => e.ArtistId == artistId).ToList();
+            return _albumRepository.TableNoTracking.Where(e => e.ArtistId == artistId).ToList();
         }
     }
 }
