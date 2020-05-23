@@ -55,5 +55,14 @@ namespace Musicio.Server.Services.Playlist
         {
             return _playlistRepository.Table.SingleOrDefault(e => e.Id == playlistId);
         }
+
+        public List<Core.Domain.Playlist> GetPlaylistNameAndId(int userId)
+        {
+            return _playlistRepository.Table.Where(e => e.UserId == userId).Select(p => new Core.Domain.Playlist
+            {
+                Id = p.Id, 
+                Title = p.Title
+            }).ToList();
+        }
     }
 }

@@ -42,5 +42,32 @@ namespace Musicio.Server.Tests.Services
             Assert.Equal(playlist3.UserId, actualPlaylist.UserId);
             Assert.Equal(playlist3.Title, actualPlaylist.Title);
         }
+
+        [Fact]
+        public void GetOnlyPlaylistNameAndIdTest()
+        {
+            //Arrange
+            var playlist1 = new Playlist { UserId = 1, Title = "Playlist 1", Id = 1, Image = "TestImage"};
+            var playlist2 = new Playlist { UserId = 1, Title = "Playlist 2", Id = 2, Image = "TestImage" };
+            var playlist3 = new Playlist { UserId = 2, Title = "Playlist 3", Id = 3, Image = "TestImage" };
+
+            _playlistRepositoryMock.SetupRepositoryMock(options =>
+            {
+                options.Insert(playlist1);
+                options.Insert(playlist2);
+                options.Insert(playlist3);
+            });
+
+            var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null);
+
+            //Act
+            var actualPlaylists = playlistService.GetPlaylistNameAndId(1);
+
+            //Assert
+            Assert.Equal(playlist1.Id, actualPlaylists[0].Id);
+            Assert.Equal(playlist1.Title, actualPlaylists[0].Title);
+            Assert.Null(actualPlaylists[0].Image);
+            Assert.Equal(0, actualPlaylists[0].UserId);
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace Musicio.Server.Services.Playlist
         Task<List<Core.Domain.Playlist>> GetUserPlaylists(int userId);
         Core.Domain.Playlist GetPlaylistById(int playlistId);
         Core.Domain.Playlist GetPlaylistSongs(int playlistId);
+        List<Core.Domain.Playlist> GetPlaylistNameAndId(int userId);
     }
 }

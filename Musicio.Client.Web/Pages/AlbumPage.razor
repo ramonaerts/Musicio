@@ -1,4 +1,47 @@
 ﻿@page "/artists/{ArtistId:int}/{AlbumId:int}"
+@using Musicio.Client.Artist
+@using Musicio.Client.User
+@using Musicio.Core.Models
+
+@inject IArtistService ArtistService
+@inject ISessionService SessionService
+@inject NavigationManager NavigationManager
+
+@if (_loading)
+{
+    <div class="loading">
+        <div class="spinner-border" role="status"></div>
+    </div>
+}
+else
+{
+    <h2>@_album.AlbumTitle</h2>
+    <div class="artist-container">
+        @if (_album.Image == null)
+        {
+            <div class="playlist-image-detail" style="background-image: url(images/StockImage.jpg)"></div>
+        }
+        else
+        {
+            <div class="playlist-image-detail" style="background-image: url(data:image/png;base64,@_album.Image)"></div>
+        }
+    </div>
+    <table class="table table-hover">
+        <tr><th>Title</th><th>Artist</th></tr>
+        @foreach (var song in _album.AlbumSongs)
+        {
+            <tr>
+                <td>@song.SongTitle</td>
+                <td>@song.Artist</td>
+                @*<td>
+                        <form class="" id="" method="post" asp-controller="Playlist" asp-action="RemovePlaylistSong" asp-route-playlistid="@Model.PlaylistId" asp-route-songid="@s.PlaylistSongID">
+                            <input type="submit" class="btn-danger" value="Remove song"/>
+                        </form>
+                    </td>*@
+            </tr>
+        }
+    </table>
+}
 
 @code {
     [Parameter]
@@ -6,4 +49,25 @@
 
     [Parameter]
     public int AlbumId { get; set; }
+
+    private Album _album = new Album();
+
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+
+        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
+        //_album = await AlbumService.GetAlbumSongs(AlbumId);
+
+        StateHasChanged();
+
+        _loading = false;
+    }
 }
