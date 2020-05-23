@@ -22,5 +22,12 @@ namespace Musicio.Client.Artist
 
             return result.GetData<List<Core.Models.Artist>>();
         }
+
+        public async Task<Core.Models.Artist> GetArtistById(int artistId)
+        {
+            var result = await _httpClient.GetJsonAsync<ApiResult>("api/Artist/" + artistId);
+
+            return result.GetData<Core.Models.Artist>();
+        }
     }
 }

@@ -1,0 +1,9 @@
+﻿@page "/artists/{ArtistId:int}/{AlbumId:int}"
+
+@code {
+    [Parameter]
+    public int ArtistId { get; set; }
+
+    [Parameter]
+    public int AlbumId { get; set; }
+}

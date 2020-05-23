@@ -1,5 +1,41 @@
 ﻿@page "/artists/{ArtistId:int}"
+@using Musicio.Client.Artist
+@using Musicio.Client.User
 @using Musicio.Core.Models
+@using Musicio.Client.Web.Components
+
+@inject ISessionService SessionService
+@inject IArtistService ArtistService
+@inject NavigationManager NavigationManager
+
+@if (_loading)
+{
+    <div class="loading">
+        <div class="spinner-border" role="status"></div>
+    </div>
+}
+else
+{
+    <h2>@_artist.ArtistName</h2>
+    <div class="artist-container">
+        @if (_artist.Image == null)
+        {
+            <div class="playlist-image-detail" style="background-image: url(images/StockImage.jpg)"></div>
+        }
+        else
+        {
+            <div class="playlist-image-detail" style="background-image: url(data:image/png;base64,@_artist.Image)"></div>
+        }
+    </div>
+    <div class="playlist-row">
+        @foreach (var album in _artist.Albums)
+        {
+            <div class="playlist-column">
+                <AlbumCard Title="@album.AlbumTitle" Image="@album.Image" ArtistId="@ArtistId" AlbumId="@album.Id"></AlbumCard>
+            </div>
+        }
+    </div>
+}
 
 @code {
     [Parameter]
@@ -8,4 +44,21 @@
     private Artist _artist = new Artist();
 
     private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+
+        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
+        _artist = await ArtistService.GetArtistById(ArtistId);
+
+        StateHasChanged();
+
+        _loading = false;
+    }
 }

@@ -8,5 +8,6 @@ namespace Musicio.Client.Artist
     public interface IArtistService
     {
         Task<List<Core.Models.Artist>> GetArtists();
+        Task<Core.Models.Artist> GetArtistById(int artistId);
     }
 }

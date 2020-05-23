@@ -47,9 +47,9 @@ namespace Musicio.Server.Controllers
 
         [HttpGet]
         [Route("{artistId}")]
-        public ApiResult GetArtistById(int artistId)
+        public ApiResult GetArtistWithAlbums(int artistId)
         {
-            Artist artist = _artistService.GetArtistById(artistId);
+            Artist artist = _artistService.GetArtistWithAlbums(artistId);
 
             var artistModel = _mapper.Map<Core.Models.Artist>(artist);
 

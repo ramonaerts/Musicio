@@ -9,5 +9,6 @@ namespace Musicio.Server.Services.Artist
     {
         List<Core.Domain.Artist> GetArtists();
         Core.Domain.Artist GetArtistById(int artistId);
+        Core.Domain.Artist GetArtistWithAlbums(int artistId);
     }
 }
