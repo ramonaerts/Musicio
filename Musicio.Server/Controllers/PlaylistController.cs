@@ -75,5 +75,16 @@ namespace Musicio.Server.Controllers
 
             return ApiResult.Success(playlistModel);
         }
+
+        [HttpGet]
+        [Route("{userId}/names")]
+        public ApiResult GetUserPlaylistsNames(int userId)
+        {
+            List<Playlist> playlistsEntities = _playlistService.GetPlaylistNameAndId(userId);
+
+            var playlistsModels = _mapper.Map<List<Core.Models.Playlist>>(playlistsEntities);
+
+            return ApiResult.Success(playlistsModels);
+        }
     }
 }

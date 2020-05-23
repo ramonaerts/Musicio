@@ -8,5 +8,6 @@ namespace Musicio.Server.Services.Album
     public interface IAlbumService
     {
         List<Core.Domain.Album> GetArtistAlbums(int artistId);
+        Core.Domain.Album GetAlbumWithSongs(int albumId);
     }
 }

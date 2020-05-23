@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Text;
@@ -8,6 +9,7 @@ using Howler.Blazor.Components;
 using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.AspNetCore.Blazor.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Musicio.Client.Album;
 using Musicio.Client.Artist;
 using Musicio.Client.Converting;
 using Musicio.Client.Playlist;
@@ -36,6 +38,8 @@ namespace Musicio.Client.Web
             builder.Services.AddSingleton<IConvertingService, ConvertingService>();
             builder.Services.AddSingleton<ISessionService, SessionService>();
             builder.Services.AddSingleton<IArtistService, ArtistService>();
+            builder.Services.AddSingleton<IAlbumService, AlbumService>();
+            builder.Services.AddSingleton<JwtSecurityTokenHandler, JwtSecurityTokenHandler>();
             builder.Services.AddScoped<IHowl, Howl>();
             builder.Services.AddScoped<IHowlGlobal, HowlGlobal>();
             builder.Services.AddAuthorizationCore();

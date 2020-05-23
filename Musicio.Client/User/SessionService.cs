@@ -24,12 +24,12 @@ namespace Musicio.Client.User
 
         public Core.Models.User _currentUser;
 
-        public SessionService(HttpClient httpClient, IJSRuntime ijsRuntime, NavigationManager navigationManager)
+        public SessionService(HttpClient httpClient, IJSRuntime ijsRuntime, NavigationManager navigationManager, JwtSecurityTokenHandler handler)
         {
             _httpClient = httpClient;
             _jsRuntime = ijsRuntime;
             _navigationManager = navigationManager;
-            _handler = new JwtSecurityTokenHandler();
+            _handler = handler;
         }
 
         public async Task SetCookie(string name, string value)

@@ -13,6 +13,6 @@ namespace Musicio.Core.Models
         public string AlbumTitle { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string Image { get; set; }
-        public List<Song> AlbumSongs { get; set; }
+        public List<Song> Songs { get; set; }
     }
 }

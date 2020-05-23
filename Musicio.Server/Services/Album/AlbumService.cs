@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Musicio.Core.Data;
 using Musicio.Server.Services.FileManagement;
 
@@ -20,6 +21,12 @@ namespace Musicio.Server.Services.Album
         public List<Core.Domain.Album> GetArtistAlbums(int artistId)
         {
             return _albumRepository.TableNoTracking.Where(e => e.ArtistId == artistId).ToList();
+        }
+
+        public Core.Domain.Album GetAlbumWithSongs(int albumId)
+        {
+            return _albumRepository.Table.Include(e => e.AlbumSongs).ThenInclude(e => e.Song)
+                .SingleOrDefault(e => e.Id == albumId);
         }
     }
 }

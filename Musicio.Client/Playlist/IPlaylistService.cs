@@ -10,5 +10,6 @@ namespace Musicio.Client.Playlist
         Task<bool> CreatePlaylist(string name, string description, string image, string fileExtension);
         Task<List<Core.Models.Playlist>> GetUserPlaylists(int userId);
         Task<Core.Models.Playlist> GetPlaylistSongs(int playlistId);
+        Task<List<Core.Models.Playlist>> GetUserPlaylistNames(int userId);
     }
 }
