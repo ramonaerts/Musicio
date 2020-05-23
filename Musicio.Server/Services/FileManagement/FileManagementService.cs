@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Drawing;
+using Musicio.Core.Enums;
 
 namespace Musicio.Server.Services.FileManagement
 {
@@ -28,11 +29,28 @@ namespace Musicio.Server.Services.FileManagement
             return uniqueFileName + "." + extension;
         }
 
-        public string CreateBase64String(string image)
+        public string CreateBase64String(string image, ImageType type)
         {
-            byte[] bytes = File.ReadAllBytes(Environment.CurrentDirectory + "\\Content\\Playlistimages\\" + image);
+            string path = GetPath(type);
+
+            byte[] bytes = File.ReadAllBytes(Environment.CurrentDirectory + path + image);
 
             return Convert.ToBase64String(bytes, 0, bytes.Length);
+        }
+
+        private string GetPath(ImageType type)
+        {
+            switch (type)
+            {
+                case ImageType.Playlist:
+                    return "\\Content\\Playlistimages\\";
+                case ImageType.Album:
+                    return "\\Content\\Musicimages\\";
+                case ImageType.Artist:
+                    return "\\Content\\Artistimages\\";
+                default:
+                    return null;
+            }
         }
     }
 }

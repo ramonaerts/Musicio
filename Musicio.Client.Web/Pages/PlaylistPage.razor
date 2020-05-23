@@ -17,7 +17,14 @@ else
 {
     <h2>@_playlist.Title</h2>
     <div class="artist-container">
-        <div class="playlist-image-detail" style="background-image: url(data:image/png;base64,@_playlist.Image)"></div>
+        @if (_playlist.Image == null)
+        {
+            <div class="playlist-image-detail" style="background-image: url(images/StockImage.jpg)"></div>
+        }
+        else
+        {
+            <div class="playlist-image-detail" style="background-image: url(data:image/png;base64,@_playlist.Image)"></div>
+        }
     </div>
     <table class="table table-hover">
         <tr><th>Title</th><th>Artist</th></tr>

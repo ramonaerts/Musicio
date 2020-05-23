@@ -19,12 +19,12 @@ namespace Musicio.Server.Services.Artist
 
         public Core.Domain.Artist GetArtistById(int artistId)
         {
-            throw new NotImplementedException();
+            return _artistRepository.Table.SingleOrDefault(e => e.Id == artistId);
         }
 
         public List<Core.Domain.Artist> GetArtists()
         {
-            throw new NotImplementedException();
+            return _artistRepository.TableNoTracking.ToList();
         }
     }
 }

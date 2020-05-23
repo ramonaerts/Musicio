@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Musicio.Core;
 using Musicio.Core.Domain;
+using Musicio.Core.Enums;
 using Musicio.Core.Messages;
 using Musicio.Server.Services.FileManagement;
 using Musicio.Server.Services.Playlist;
@@ -49,7 +50,7 @@ namespace Musicio.Server.Controllers
 
             foreach (var p in playlistsModels)
             {
-                if (p.Image != null) p.Image = _fileManagementService.CreateBase64String(p.Image);
+                if (p.Image != null) p.Image = _fileManagementService.CreateBase64String(p.Image, ImageType.Playlist);
             }
 
             return ApiResult.Success(playlistsModels);
@@ -70,7 +71,7 @@ namespace Musicio.Server.Controllers
                 playlistModel.Songs.Add(songModel);
             }
 
-            if (playlistModel.Image != null) playlistModel.Image = _fileManagementService.CreateBase64String(playlistModel.Image);
+            if (playlistModel.Image != null) playlistModel.Image = _fileManagementService.CreateBase64String(playlistModel.Image, ImageType.Playlist);
 
             return ApiResult.Success(playlistModel);
         }

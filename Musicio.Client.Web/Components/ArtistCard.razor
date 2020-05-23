@@ -1,0 +1,34 @@
+﻿@inject NavigationManager NavigationManager
+
+<div class="playlist-container">
+    <a @onclick="@(() => ViewArtist())">
+        @if (Image == null)
+        {
+            <div class="playlist-image" style="background-image: url(images/StockImage.jpg)"></div>
+        }
+        else
+        {
+            <div class="playlist-image" style="background-image: url(data:image/png;base64,@Image)"></div>
+        }
+        <div class="playlist-title">@Title</div>
+    </a>
+</div>
+
+@code {
+
+    [Parameter]
+    public int ArtistId { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Image { get; set; }
+
+    private Task ViewArtist()
+    {
+        NavigationManager.NavigateTo("/artists/" + ArtistId);
+
+        return Task.CompletedTask;
+    }
+}

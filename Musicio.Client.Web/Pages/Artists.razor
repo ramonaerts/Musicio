@@ -1,0 +1,50 @@
+﻿@page "/artists"
+
+@using Musicio.Client.Artist
+@using Musicio.Client.User
+@using Musicio.Client.Web.Components
+
+@inject NavigationManager NavigationManager
+@inject ISessionService SessionService
+@inject IArtistService ArtistService
+
+@if (_loading)
+{
+    <div class="loading">
+        <div class="spinner-border" role="status"></div>
+    </div>
+}
+else
+{
+    <div class="playlist-row">
+        @foreach (var ar in _artists)
+        {
+            <div class="playlist-column">
+                <ArtistCard Title="@ar.ArtistName" Image="@ar.Image" ArtistId="@ar.Id"></ArtistCard>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Core.Models.Artist> _artists = new List<Core.Models.Artist>();
+
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+
+        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
+        _artists = await ArtistService.GetArtists();
+
+        StateHasChanged();
+
+        _loading = false;
+    }
+}

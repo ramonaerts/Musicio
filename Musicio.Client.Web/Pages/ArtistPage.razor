@@ -1,0 +1,11 @@
+﻿@page "/artists/{ArtistId:int}"
+@using Musicio.Core.Models
+
+@code {
+    [Parameter]
+    public int ArtistId { get; set; }
+
+    private Artist _artist = new Artist();
+
+    private bool _loading;
+}

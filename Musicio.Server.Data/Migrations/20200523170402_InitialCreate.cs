@@ -15,7 +15,7 @@ namespace Musicio.Server.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ArtistName = table.Column<string>(nullable: true),
-                    PicturePath = table.Column<string>(nullable: true)
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

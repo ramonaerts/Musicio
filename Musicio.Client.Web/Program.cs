@@ -8,6 +8,7 @@ using Howler.Blazor.Components;
 using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.AspNetCore.Blazor.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Musicio.Client.Artist;
 using Musicio.Client.Converting;
 using Musicio.Client.Playlist;
 using Musicio.Client.User;
@@ -34,6 +35,7 @@ namespace Musicio.Client.Web
             builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
             builder.Services.AddSingleton<IConvertingService, ConvertingService>();
             builder.Services.AddSingleton<ISessionService, SessionService>();
+            builder.Services.AddSingleton<IArtistService, ArtistService>();
             builder.Services.AddScoped<IHowl, Howl>();
             builder.Services.AddScoped<IHowlGlobal, HowlGlobal>();
             builder.Services.AddAuthorizationCore();
@@ -41,6 +43,7 @@ namespace Musicio.Client.Web
             //await builder.Build().RunAsync();
             var host = builder.Build();
 
+            //Check if user has an available token in their cookies
             var sessionService = host.Services.GetRequiredService<ISessionService>();
             if (await sessionService.CheckIfTokenIsAvailable())
             {

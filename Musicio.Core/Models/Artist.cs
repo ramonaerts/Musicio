@@ -1,15 +1,16 @@
-﻿using Musicio.Core.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AutoMapper;
 
-namespace Musicio.Core.Domain
+namespace Musicio.Core.Models
 {
-    public class Artist : BaseEntity
+    [AutoMap(typeof(Domain.Artist))]
+    public class Artist
     {
+        public int Id { get; set; }
         public string ArtistName { get; set; }
         public string Image { get; set; }
         public List<Album> Albums { get; set; }
-        //public List<Song> ArtistSingles { get; set; }
     }
 }
