@@ -17,7 +17,6 @@ namespace Musicio.Client
         public static async Task<T> PutJsonAsync<T>(this HttpClient httpClient, string url, object data) => await httpClient.SendJsonAsync<T>(HttpMethod.Put, url, data);
         public static async Task<T> GetJsonAsync<T>(this HttpClient httpClient, string url)
         {
-            Console.WriteLine(WebToken);
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", WebToken);
             var response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, ConnectionString + url));
 
@@ -27,7 +26,6 @@ namespace Musicio.Client
 
         public static async Task<T> SendJsonAsync<T>(this HttpClient httpClient, HttpMethod method, string url, object data)
         {
-            Console.WriteLine(WebToken);
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", WebToken);
             var response = await httpClient.SendAsync(new HttpRequestMessage(method, ConnectionString + url)
             {

@@ -18,7 +18,7 @@ namespace Musicio.Client.User
         private readonly HttpClient _httpClient;
         private readonly IJSRuntime _jsRuntime;
         private readonly NavigationManager _navigationManager;
-        private readonly JwtSecurityTokenHandler _handler;
+        private JwtSecurityTokenHandler _handler;
 
         public Func<Task> OnAuthorizationChange { get; set; }
 
@@ -79,15 +79,19 @@ namespace Musicio.Client.User
             return true;
         }
 
-        public async Task<int> GetIdFromToken()
+        public int GetIdFromToken()
         {
+            //TODO: figure out why this is not working
             var test = HttpClientExtensions.WebToken;
-            var jsonToken = _handler.ReadJwtToken(test);
-            Console.WriteLine(jsonToken);
-            //var id = handler.Claims.First(c => c.Type == "UserId").Value;
-            //Console.WriteLine(id);
-            //return Convert.ToInt32(id);
-            return 1;
+            Console.WriteLine(test);
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadJwtToken(test);
+            Console.WriteLine("Here too?");
+            var rawId = jsonToken.Claims.First(c => c.Type == "UserId").Value;
+
+            var id = Convert.ToInt32(rawId);
+            Console.WriteLine(id);
+            return id;
         }
 
         public async Task RemoveCookies()
