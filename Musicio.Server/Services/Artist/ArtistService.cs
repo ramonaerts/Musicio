@@ -23,7 +23,7 @@ namespace Musicio.Server.Services.Artist
 
         public Core.Domain.Artist GetArtistById(int artistId)
         {
-            return _artistRepository.Table.SingleOrDefault(e => e.Id == artistId);
+            return _artistRepository.TableNoTracking.SingleOrDefault(e => e.Id == artistId);
         }
 
         public Core.Domain.Artist GetArtistWithAlbums(int artistId)

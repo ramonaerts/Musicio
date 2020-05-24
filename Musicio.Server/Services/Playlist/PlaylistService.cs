@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Musicio.Core.Data;
+using Musicio.Core.Domain;
 using Musicio.Server.Services.FileManagement;
 
 namespace Musicio.Server.Services.Playlist
@@ -13,10 +14,12 @@ namespace Musicio.Server.Services.Playlist
     {
         private readonly IRepository<Core.Domain.Playlist> _playlistRepository;
         private readonly IFileManagementService _fileManagementService;
-        public PlaylistService(IRepository<Core.Domain.Playlist> playlistRepository, IFileManagementService fileManagementService)
+        private readonly IRepository<PlaylistSong> _playlistSongRepository;
+        public PlaylistService(IRepository<Core.Domain.Playlist> playlistRepository, IFileManagementService fileManagementService, IRepository<PlaylistSong> playlistSongRepository)
         {
             _playlistRepository = playlistRepository;
             _fileManagementService = fileManagementService;
+            _playlistSongRepository = playlistSongRepository;
         }
 
         public async Task<bool> CreatePlaylist(PlaylistCreationMessage message)
@@ -43,27 +46,41 @@ namespace Musicio.Server.Services.Playlist
 
         public async Task<List<Core.Domain.Playlist>> GetUserPlaylists(int userId)
         {
-            return _playlistRepository.Table.Where(e => e.UserId == userId).ToList();
+            return _playlistRepository.TableNoTracking.Where(e => e.UserId == userId).ToList();
         }
 
         public Core.Domain.Playlist GetPlaylistSongs(int playlistId)
         {
-            return _playlistRepository.Table.Include(e => e.PlaylistSongs).ThenInclude(e => e.Song)
+            return _playlistRepository.TableNoTracking.Include(e => e.PlaylistSongs).ThenInclude(e => e.Song)
                 .SingleOrDefault(e => e.Id == playlistId);
         }
 
         public Core.Domain.Playlist GetPlaylistById(int playlistId)
         {
-            return _playlistRepository.Table.SingleOrDefault(e => e.Id == playlistId);
+            return _playlistRepository.TableNoTracking.SingleOrDefault(e => e.Id == playlistId);
         }
 
         public List<Core.Domain.Playlist> GetPlaylistNameAndId(int userId)
         {
-            return _playlistRepository.Table.Where(e => e.UserId == userId).Select(p => new Core.Domain.Playlist
+            return _playlistRepository.TableNoTracking.Where(e => e.UserId == userId).Select(p => new Core.Domain.Playlist
             {
                 Id = p.Id, 
                 Title = p.Title
             }).ToList();
+        }
+
+        public bool PlaylistExists(int playlistId)
+        {
+            return _playlistRepository.TableNoTracking.Any(e => e.Id == playlistId);
+        }
+
+        public void AddSongToPlaylist(int playlistId, int songId)
+        {
+            _playlistSongRepository.Insert(new PlaylistSong
+            {
+                PlaylistId = playlistId,
+                SongId = songId
+            });
         }
     }
 }

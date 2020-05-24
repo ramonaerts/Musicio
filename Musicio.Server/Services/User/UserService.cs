@@ -26,7 +26,7 @@ namespace Musicio.Server.Services.User
 
         public async Task<Core.Domain.User> LoginUser(LoginMessage message)
         {
-            var user = _userRepository.Table.SingleOrDefault(a => a.Mail == message.Mail);
+            var user = _userRepository.TableNoTracking.SingleOrDefault(a => a.Mail == message.Mail);
             if (user == null) return null;
             if (!BCrypt.Net.BCrypt.Verify(message.Password, user.Password)) return null;
             return user;
@@ -72,7 +72,7 @@ namespace Musicio.Server.Services.User
 
         public Core.Domain.User GetUserById(int userId)
         {
-            return _userRepository.Table.SingleOrDefault(a => a.Id == userId);
+            return _userRepository.TableNoTracking.SingleOrDefault(a => a.Id == userId);
         }
 
         public bool ChangeUserInfo(ChangeUserInfoMessage message)
@@ -93,7 +93,7 @@ namespace Musicio.Server.Services.User
 
         public bool MailExists(string mail)
         {
-            return _userRepository.Table.Any(e => e.Mail == mail);
+            return _userRepository.TableNoTracking.Any(e => e.Mail == mail);
         }
     }
 }

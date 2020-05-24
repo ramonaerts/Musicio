@@ -44,5 +44,16 @@ namespace Musicio.Client.Playlist
 
             return result.GetData<List<Core.Models.Playlist>>();
         }
+
+        public async Task<bool> AddSongToPlaylist(int playlistId, int songId)
+        {
+            var result = await _httpClient.PostJsonAsync<ApiResult>(Path + "/" + playlistId + "/songs/" + songId, new
+            {
+                playlistId,
+                songId
+            });
+
+            return result.GetData<bool>();
+        }
     }
 }

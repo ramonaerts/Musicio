@@ -49,6 +49,7 @@ namespace Musicio.Server
             services.AddScoped<IRepository<Playlist>, Repository<Playlist>>();
             services.AddScoped<IRepository<Artist>, Repository<Artist>>();
             services.AddScoped<IRepository<Album>, Repository<Album>>();
+            services.AddScoped<IRepository<PlaylistSong>, Repository<PlaylistSong>>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPlaylistService, PlaylistService>();
             services.AddScoped<IFileManagementService, FileManagementService>();

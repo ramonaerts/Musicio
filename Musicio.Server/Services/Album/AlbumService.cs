@@ -25,7 +25,7 @@ namespace Musicio.Server.Services.Album
 
         public Core.Domain.Album GetAlbumWithSongs(int albumId)
         {
-            return _albumRepository.Table.Include(e => e.AlbumSongs).ThenInclude(e => e.Song)
+            return _albumRepository.TableNoTracking.Include(e => e.AlbumSongs).ThenInclude(e => e.Song)
                 .SingleOrDefault(e => e.Id == albumId);
         }
     }

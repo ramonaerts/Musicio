@@ -36,7 +36,17 @@ else
             <tr>
                 <td>@song.SongTitle</td>
                 <td>@song.Artist</td>
-                <td><span class="oi oi-ellipses" aria-hidden="true"></span></td>
+                <td>
+                    <div class="dropdown">
+                        <span class="oi oi-ellipses" aria-hidden="true"></span>
+                        <div class="dropdown-content">
+                            @foreach (var pl in _userPlaylists)
+                            {
+                                <a @onclick="@(() => AddSongToPlaylist(pl.Id, song.Id))">@pl.Title</a>
+                            }
+                        </div>
+                    </div>
+                </td>
                 @*<td>
                         <form class="" id="" method="post" asp-controller="Playlist" asp-action="RemovePlaylistSong" asp-route-playlistid="@Model.PlaylistId" asp-route-songid="@s.PlaylistSongID">
                             <input type="submit" class="btn-danger" value="Remove song"/>
@@ -75,5 +85,10 @@ else
         StateHasChanged();
 
         _loading = false;
+    }
+
+    private async Task AddSongToPlaylist(int playlistId, int songId)
+    {
+        var success = await PlaylistService.AddSongToPlaylist(playlistId, songId);
     }
 }

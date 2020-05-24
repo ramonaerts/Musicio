@@ -86,5 +86,20 @@ namespace Musicio.Server.Controllers
 
             return ApiResult.Success(playlistsModels);
         }
+
+        [HttpPost]
+        [Route("{playlistId}/songs/{songId}")]
+        public ApiResult AddSongToPlaylist(int playlistId, int songId)
+        {
+            bool playlistExists = _playlistService.PlaylistExists(playlistId);
+
+            if(!playlistExists) return ApiResult.BadRequest();
+
+            //TODO: add check if song exists
+
+            _playlistService.AddSongToPlaylist(playlistId, songId);
+
+            return ApiResult.Success(true);
+        }
     }
 }

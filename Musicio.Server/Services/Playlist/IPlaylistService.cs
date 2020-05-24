@@ -13,5 +13,8 @@ namespace Musicio.Server.Services.Playlist
         Core.Domain.Playlist GetPlaylistById(int playlistId);
         Core.Domain.Playlist GetPlaylistSongs(int playlistId);
         List<Core.Domain.Playlist> GetPlaylistNameAndId(int userId);
+        bool PlaylistExists(int playlistId);
+        void AddSongToPlaylist(int playlistId, int songId);
+
     }
 }

@@ -9,6 +9,7 @@ namespace Musicio.Core.Models
     [AutoMap(typeof(Domain.Song))]
     public class Song
     {
+        public int Id { get; set; }
         public string Artist { get; set; }
         //public SongType Type { get; set; }
         //public int? AlbumId { get; set; }
