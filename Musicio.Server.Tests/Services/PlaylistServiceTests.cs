@@ -33,7 +33,7 @@ namespace Musicio.Server.Tests.Services
                 options.Insert(playlist3);
             });
 
-            var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null);
+            var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null, null);
 
             //Act
             var actualPlaylist = playlistService.GetPlaylistSongs(3);
@@ -58,7 +58,7 @@ namespace Musicio.Server.Tests.Services
                 options.Insert(playlist3);
             });
 
-            var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null);
+            var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null, null);
 
             //Act
             var actualPlaylists = playlistService.GetPlaylistNameAndId(1);
