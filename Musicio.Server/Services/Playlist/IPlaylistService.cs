@@ -15,6 +15,7 @@ namespace Musicio.Server.Services.Playlist
         List<Core.Domain.Playlist> GetPlaylistNameAndId(int userId);
         bool PlaylistExists(int playlistId);
         void AddSongToPlaylist(int playlistId, int songId);
-
+        int GetSongCountInPlaylist(int playlistId);
+        int GetPlaylistCount(int userId);
     }
 }

@@ -80,7 +80,7 @@ else
         }
 
         _album = await AlbumService.GetAlbumWithSongs(AlbumId);
-        _userPlaylists = await PlaylistService.GetUserPlaylistNames(1);
+        _userPlaylists = await PlaylistService.GetUserPlaylistNames(2);
 
         StateHasChanged();
 

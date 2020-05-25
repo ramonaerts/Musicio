@@ -83,10 +83,8 @@ namespace Musicio.Client.User
         {
             //TODO: figure out why this is not working
             var test = HttpClientExtensions.WebToken;
-            Console.WriteLine(test);
             var handler = new JwtSecurityTokenHandler();
             var jsonToken = handler.ReadJwtToken(test);
-            Console.WriteLine("Here too?");
             var rawId = jsonToken.Claims.First(c => c.Type == "UserId").Value;
 
             var id = Convert.ToInt32(rawId);

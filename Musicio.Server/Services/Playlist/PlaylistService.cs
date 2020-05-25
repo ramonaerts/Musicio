@@ -35,7 +35,7 @@ namespace Musicio.Server.Services.Playlist
                 Title = message.Name,
                 Description = message.Description,
                 CreationDate = DateTime.Now,
-                UserId = 1,
+                UserId = 2,
                 Image = imageName
             };
 
@@ -81,6 +81,16 @@ namespace Musicio.Server.Services.Playlist
                 PlaylistId = playlistId,
                 SongId = songId
             });
+        }
+
+        public int GetSongCountInPlaylist(int playlistId)
+        {
+            return _playlistSongRepository.TableNoTracking.Count(e => e.PlaylistId == playlistId);
+        }
+
+        public int GetPlaylistCount(int userId)
+        {
+            return _playlistRepository.TableNoTracking.Count(e => e.UserId == userId);
         }
     }
 }
