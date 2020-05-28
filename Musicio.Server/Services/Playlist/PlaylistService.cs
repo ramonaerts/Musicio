@@ -22,7 +22,7 @@ namespace Musicio.Server.Services.Playlist
             _playlistSongRepository = playlistSongRepository;
         }
 
-        public async Task<bool> CreatePlaylist(PlaylistCreationMessage message, int userId)
+        public bool CreatePlaylist(PlaylistCreationMessage message, int userId)
         {
             string imageName = null;
             if (message.Image != null)
@@ -44,7 +44,7 @@ namespace Musicio.Server.Services.Playlist
             return true;
         }
 
-        public async Task<List<Core.Domain.Playlist>> GetUserPlaylists(int userId)
+        public List<Core.Domain.Playlist> GetUserPlaylists(int userId)
         {
             return _playlistRepository.TableNoTracking.Where(e => e.UserId == userId).ToList();
         }

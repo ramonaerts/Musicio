@@ -24,7 +24,7 @@ namespace Musicio.Server.Services.User
             _appSettings = appSettings.Value;
         }
 
-        public async Task<Core.Domain.User> LoginUser(LoginMessage message)
+        public Core.Domain.User LoginUser(LoginMessage message)
         {
             var user = _userRepository.TableNoTracking.SingleOrDefault(a => a.Mail == message.Mail);
             if (user == null) return null;
@@ -51,7 +51,7 @@ namespace Musicio.Server.Services.User
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<bool> RegisterUser(RegisterMessage message)
+        public bool RegisterUser(RegisterMessage message)
         {
             if (MailExists(message.Mail)) return false;
 

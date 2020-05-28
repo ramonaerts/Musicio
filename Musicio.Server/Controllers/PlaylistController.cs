@@ -34,22 +34,22 @@ namespace Musicio.Server.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ApiResult> CreatePlaylist(PlaylistCreationMessage message)
+        public ApiResult CreatePlaylist(PlaylistCreationMessage message)
         {
             var id = User.Claims.First(c => c.Type == "UserId").Value;
 
-            var success = await _playlistService.CreatePlaylist(message, Convert.ToInt32(id));
+            var success = _playlistService.CreatePlaylist(message, Convert.ToInt32(id));
 
             return success ? ApiResult.Success(success) : ApiResult.BadRequest();
         }
 
         [HttpGet]
         [Route("@me")]
-        public async Task<ApiResult> GetUserPlaylists()
+        public ApiResult GetUserPlaylists()
         {
             var id = User.Claims.First(c => c.Type == "UserId").Value;
 
-            List<Playlist> playlistsEntities = await _playlistService.GetUserPlaylists(Convert.ToInt32(id));
+            List<Playlist> playlistsEntities = _playlistService.GetUserPlaylists(Convert.ToInt32(id));
 
             var playlistsModels = _mapper.Map<List<Core.Models.Playlist>>(playlistsEntities);
 

@@ -33,9 +33,9 @@ namespace Musicio.Server.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        public async Task<ApiResult> PostLogin(LoginMessage message)
+        public ApiResult PostLogin(LoginMessage message)
         {
-            User user = await _userService.LoginUser(message);
+            User user = _userService.LoginUser(message);
 
             var userModel = _mapper.Map<Core.Models.User>(user);
 
@@ -50,9 +50,9 @@ namespace Musicio.Server.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("register")]
-        public async Task<ApiResult> PostRegister(RegisterMessage message)
+        public ApiResult PostRegister(RegisterMessage message)
         {
-            var success = await _userService.RegisterUser(message);
+            var success = _userService.RegisterUser(message);
 
             return success ? ApiResult.Success(true) : ApiResult.BadRequest();
         }

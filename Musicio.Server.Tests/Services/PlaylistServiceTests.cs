@@ -213,11 +213,85 @@ namespace Musicio.Server.Tests.Services
             //Act
             var countBefore = playlistService.GetPlaylistCount(2);
             playlistService.CreatePlaylist(new PlaylistCreationMessage("name", "desc", null, null), 2);
+            var playlist = playlistService.GetPlaylistById(4);
             var countAfter = playlistService.GetPlaylistCount(2);
 
             //Assert
             Assert.Equal(1, countBefore);
             Assert.Equal(2, countAfter);
+            Assert.NotNull(playlist);
+        }
+
+        [Fact]
+        public void PlaylistCountTest()
+        {
+            var playlist1 = new Playlist { Id = 1, UserId = 1 };
+            var playlist2 = new Playlist { Id = 2, UserId = 1 };
+            var playlist3 = new Playlist { Id = 3, UserId = 2 };
+
+            _playlistRepositoryMock.SetupRepositoryMock(options =>
+            {
+                options.Insert(playlist1);
+                options.Insert(playlist2);
+                options.Insert(playlist3);
+            });
+
+            var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null, null);
+
+            var actualCountUser1 = playlistService.GetPlaylistCount(1);
+            var actualCountUser2 = playlistService.GetPlaylistCount(2);
+
+            Assert.Equal(2, actualCountUser1);
+            Assert.Equal(1, actualCountUser2);
+        }
+
+        [Fact]
+        public void GetUserPlaylistsTest()
+        {
+            var playlist1 = new Playlist { Id = 1, UserId = 1 };
+            var playlist2 = new Playlist { Id = 2, UserId = 1 };
+            var playlist3 = new Playlist { Id = 3, UserId = 2 };
+
+            var expectedPlaylists = new List<Playlist>{ playlist1, playlist2 };
+
+            _playlistRepositoryMock.SetupRepositoryMock(options =>
+            {
+                options.Insert(playlist1);
+                options.Insert(playlist2);
+                options.Insert(playlist3);
+            });
+
+            var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null, null);
+
+            var actualPlaylists = playlistService.GetUserPlaylists(1);
+
+            for (int i = 0; i < actualPlaylists.Count; i++)
+            {
+                Assert.Null(actualPlaylists[i].PlaylistSongs);
+                Assert.Equal(expectedPlaylists[i].Id, actualPlaylists[i].Id);
+                Assert.Equal(expectedPlaylists[i].UserId, actualPlaylists[i].UserId);
+            }
+        }
+
+        [Fact]
+        public void GetNonExistentUserPlaylistsTest()
+        {
+            var playlist1 = new Playlist { Id = 1, UserId = 1 };
+            var playlist2 = new Playlist { Id = 2, UserId = 1 };
+            var playlist3 = new Playlist { Id = 3, UserId = 2 };
+
+            _playlistRepositoryMock.SetupRepositoryMock(options =>
+            {
+                options.Insert(playlist1);
+                options.Insert(playlist2);
+                options.Insert(playlist3);
+            });
+
+            var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null, null);
+
+            var actualPlaylists = playlistService.GetUserPlaylists(3);
+
+            Assert.Empty(actualPlaylists);
         }
     }
 }
