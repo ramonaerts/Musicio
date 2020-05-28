@@ -27,11 +27,13 @@ namespace Musicio.Client.User
         {
             var result = await _httpClient.PostJsonAsync<ApiResult>(Path + "/login", new LoginMessage(mail, password));
 
-            var user = result.GetData<Core.Models.User>();
+            if (!result.IsSuccess) return false;
 
+            var user = result.GetData<Core.Models.User>();
             await _sessionService.SetCookie("WebToken", user.Token);
 
-            return result.IsSuccess;
+            return true;
+
         }
 
         public async Task<bool> Register(string mail, string username, string password)

@@ -39,9 +39,12 @@ namespace Musicio.Server.Controllers
 
             var userModel = _mapper.Map<Core.Models.User>(user);
 
+            if (user == null) return ApiResult.Forbidden("Wrong credentials");
+
             userModel.Token = _userService.CreateToken(user.Id);
 
-            return userModel != null ? ApiResult.Success(userModel) : ApiResult.BadRequest();
+            return ApiResult.Success(userModel);
+
         }
 
         [AllowAnonymous]
