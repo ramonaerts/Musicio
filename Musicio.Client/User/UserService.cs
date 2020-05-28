@@ -41,19 +41,17 @@ namespace Musicio.Client.User
             return result.IsSuccess;
         }
 
-        public async Task<Core.Models.User> GetUserInfo(int userId)
+        public async Task<Core.Models.User> GetUserInfo()
         {
-            //var test = await _httpClient.GetJsonAsync<ApiResult>("api/User/@me");
-
-            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/" + userId);
+            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/@me");
 
             return result.GetData<Core.Models.User>();
         }
 
-        public async Task<bool> ChangeUserInfo(int userId, string mail, string username, string newPassword, string oldPassword)
+        public async Task<bool> ChangeUserInfo(string mail, string username, string newPassword, string oldPassword)
         {
-            var result = await _httpClient.PutJsonAsync<ApiResult>(Path + "/" + userId,
-                new ChangeUserInfoMessage(userId, mail, username, newPassword, oldPassword));
+            var result = await _httpClient.PutJsonAsync<ApiResult>(Path + "/@me",
+                new ChangeUserInfoMessage(mail, username, newPassword, oldPassword));
             return result.IsSuccess;
         }
     }

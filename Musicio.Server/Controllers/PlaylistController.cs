@@ -11,6 +11,7 @@ using Musicio.Core.Enums;
 using Musicio.Core.Messages;
 using Musicio.Server.Services.FileManagement;
 using Musicio.Server.Services.Playlist;
+using NAudio.Utils;
 using Song = Musicio.Core.Models.Song;
 
 namespace Musicio.Server.Controllers
@@ -35,16 +36,20 @@ namespace Musicio.Server.Controllers
         [Route("")]
         public async Task<ApiResult> CreatePlaylist(PlaylistCreationMessage message)
         {
-            var success = await _playlistService.CreatePlaylist(message);
+            var id = User.Claims.First(c => c.Type == "UserId").Value;
+
+            var success = await _playlistService.CreatePlaylist(message, Convert.ToInt32(id));
 
             return success ? ApiResult.Success(success) : ApiResult.BadRequest();
         }
 
         [HttpGet]
-        [Route("{userId}")]
-        public async Task<ApiResult> GetUserPlaylists(int userId)
+        [Route("@me")]
+        public async Task<ApiResult> GetUserPlaylists()
         {
-            List<Playlist> playlistsEntities = await _playlistService.GetUserPlaylists(userId);
+            var id = User.Claims.First(c => c.Type == "UserId").Value;
+
+            List<Playlist> playlistsEntities = await _playlistService.GetUserPlaylists(Convert.ToInt32(id));
 
             var playlistsModels = _mapper.Map<List<Core.Models.Playlist>>(playlistsEntities);
 
@@ -77,10 +82,12 @@ namespace Musicio.Server.Controllers
         }
 
         [HttpGet]
-        [Route("{userId}/names")]
-        public ApiResult GetUserPlaylistsNames(int userId)
+        [Route("@me/names")]
+        public ApiResult GetUserPlaylistsNames()
         {
-            List<Playlist> playlistsEntities = _playlistService.GetPlaylistNameAndId(userId);
+            var id = User.Claims.First(c => c.Type == "UserId").Value;
+
+            List<Playlist> playlistsEntities = _playlistService.GetPlaylistNameAndId(Convert.ToInt32(id));
 
             var playlistsModels = _mapper.Map<List<Core.Models.Playlist>>(playlistsEntities);
 

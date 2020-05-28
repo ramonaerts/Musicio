@@ -75,11 +75,11 @@ namespace Musicio.Server.Services.User
             return _userRepository.TableNoTracking.SingleOrDefault(a => a.Id == userId);
         }
 
-        public bool ChangeUserInfo(ChangeUserInfoMessage message)
+        public bool ChangeUserInfo(ChangeUserInfoMessage message, int userId)
         {
             if (MailExists(message.Mail)) return false;
 
-            var user = GetUserById(message.Id);
+            var user = GetUserById(userId);
             if (!BCrypt.Net.BCrypt.Verify(message.OldPassword, user.Password)) return false;
 
             user.Username = message.Username;

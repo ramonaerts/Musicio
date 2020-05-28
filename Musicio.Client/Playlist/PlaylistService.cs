@@ -24,9 +24,9 @@ namespace Musicio.Client.Playlist
             return result.IsSuccess;
         }
 
-        public async Task<List<Core.Models.Playlist>> GetUserPlaylists(int userId)
+        public async Task<List<Core.Models.Playlist>> GetUserPlaylists()
         {
-            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/" + userId);
+            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/@me");
 
             return result.GetData<List<Core.Models.Playlist>>();
         }
@@ -38,9 +38,9 @@ namespace Musicio.Client.Playlist
             return result.GetData<Core.Models.Playlist>();
         }
 
-        public async Task<List<Core.Models.Playlist>> GetUserPlaylistNames(int userId)
+        public async Task<List<Core.Models.Playlist>> GetUserPlaylistNames()
         {
-            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/" + userId + "/names");
+            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/@me/names");
 
             return result.GetData<List<Core.Models.Playlist>>();
         }

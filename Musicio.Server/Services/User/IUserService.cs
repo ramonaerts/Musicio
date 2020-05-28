@@ -13,6 +13,6 @@ namespace Musicio.Server.Services.User
         string CreateToken(int userId);
         Task<bool> RegisterUser(RegisterMessage message);
         Core.Domain.User GetUserById(int userId);
-        bool ChangeUserInfo(ChangeUserInfoMessage message);
+        bool ChangeUserInfo(ChangeUserInfoMessage message, int userId);
     }
 }

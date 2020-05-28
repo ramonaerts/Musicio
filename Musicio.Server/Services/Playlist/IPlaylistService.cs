@@ -8,7 +8,7 @@ namespace Musicio.Server.Services.Playlist
 {
     public interface IPlaylistService
     {
-        Task<bool> CreatePlaylist(PlaylistCreationMessage message);
+        Task<bool> CreatePlaylist(PlaylistCreationMessage message, int userId);
         Task<List<Core.Domain.Playlist>> GetUserPlaylists(int userId);
         Core.Domain.Playlist GetPlaylistById(int playlistId);
         Core.Domain.Playlist GetPlaylistSongs(int playlistId);

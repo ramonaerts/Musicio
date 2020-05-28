@@ -212,7 +212,7 @@ namespace Musicio.Server.Tests.Services
 
             //Act
             var countBefore = playlistService.GetPlaylistCount(2);
-            playlistService.CreatePlaylist(new PlaylistCreationMessage("name", "desc", null, null));
+            playlistService.CreatePlaylist(new PlaylistCreationMessage("name", "desc", null, null), 2);
             var countAfter = playlistService.GetPlaylistCount(2);
 
             //Assert

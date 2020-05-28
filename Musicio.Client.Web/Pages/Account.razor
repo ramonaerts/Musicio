@@ -81,7 +81,7 @@
 
         //var id = SessionService.GetIdFromToken();
 
-        _currentUser = await UserService.GetUserInfo(2);
+        _currentUser = await UserService.GetUserInfo();
         _currentUsername = _currentUser.Username;
         _currentMail = _currentUser.Mail;
 
@@ -163,7 +163,7 @@
             return;
         }
 
-        bool changeSuccess = await UserService.ChangeUserInfo(1, _newMail, _newUsername, _newPassword, _currentPassword);
+        var changeSuccess = await UserService.ChangeUserInfo(_newMail, _newUsername, _newPassword, _currentPassword);
 
         if (changeSuccess)
         {

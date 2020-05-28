@@ -22,7 +22,7 @@ namespace Musicio.Server.Services.Playlist
             _playlistSongRepository = playlistSongRepository;
         }
 
-        public async Task<bool> CreatePlaylist(PlaylistCreationMessage message)
+        public async Task<bool> CreatePlaylist(PlaylistCreationMessage message, int userId)
         {
             string imageName = null;
             if (message.Image != null)
@@ -35,7 +35,7 @@ namespace Musicio.Server.Services.Playlist
                 Title = message.Name,
                 Description = message.Description,
                 CreationDate = DateTime.Now,
-                UserId = 2,
+                UserId = userId,
                 Image = imageName
             };
 
