@@ -23,7 +23,7 @@ else
         }
         else
         {
-            <div class="playlist-image-detail" style="background-image: url(data:image/png;base64,@_playlist.Image)"></div>
+            <div class="playlist-image-detail" style="background-image: url(@($"/playlist/images/{_playlist.Image}"))"></div>
         }
     </div>
     <table class="table table-hover">

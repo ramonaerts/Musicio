@@ -37,11 +37,6 @@ namespace Musicio.Server.Controllers.Api
 
             var artistModels = _mapper.Map<List<Core.Models.Artist>>(artistEntities);
 
-            foreach (var a in artistModels)
-            {
-                if (a.Image != null) a.Image = _fileManagementService.CreateBase64String(a.Image, ImageType.Artist);
-            }
-
             return ApiResult.Success(artistModels);
         }
 
@@ -56,12 +51,9 @@ namespace Musicio.Server.Controllers.Api
             artistModel.Albums = new List<Album>();
             foreach (var album in artist.Albums)
             {
-                if (album.Image != null) album.Image = _fileManagementService.CreateBase64String(album.Image, ImageType.Album);
                 var albumModel = _mapper.Map<Album>(album);
                 artistModel.Albums.Add(albumModel);
             }
-
-            if (artistModel.Image != null) artistModel.Image = _fileManagementService.CreateBase64String(artistModel.Image, ImageType.Artist);
 
             return ApiResult.Success(artistModel);
         }

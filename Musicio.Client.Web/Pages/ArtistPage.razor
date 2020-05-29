@@ -24,7 +24,7 @@ else
         }
         else
         {
-            <div class="playlist-image-detail" style="background-image: url(data:image/png;base64,@_artist.Image)"></div>
+            <div class="playlist-image-detail" style="background-image: url(@($"/artist/images/{_artist.Image}"))"></div>
         }
     </div>
     <div class="playlist-row">

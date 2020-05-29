@@ -44,8 +44,6 @@ namespace Musicio.Server.Controllers.Api
                 albumModel.Songs.Add(songModel);
             }
 
-            if (albumModel.Image != null) albumModel.Image = _fileManagementService.CreateBase64String(albumModel.Image, ImageType.Album);
-
             return ApiResult.Success(albumModel);
         }
     }

@@ -53,11 +53,6 @@ namespace Musicio.Server.Controllers.Api
 
             var playlistsModels = _mapper.Map<List<Core.Models.Playlist>>(playlistsEntities);
 
-            /*foreach (var p in playlistsModels)
-            {
-                if (p.Image != null) p.Image = _fileManagementService.CreateBase64String(p.Image, ImageType.Playlist);
-            }*/
-
             return ApiResult.Success(playlistsModels);
         }
 
@@ -75,8 +70,6 @@ namespace Musicio.Server.Controllers.Api
                 var songModel = _mapper.Map<Song>(song.Song);
                 playlistModel.Songs.Add(songModel);
             }
-
-            if (playlistModel.Image != null) playlistModel.Image = _fileManagementService.CreateBase64String(playlistModel.Image, ImageType.Playlist);
 
             return ApiResult.Success(playlistModel);
         }

@@ -38,14 +38,14 @@ namespace Musicio.Server.Services.FileManagement
             return Convert.ToBase64String(bytes, 0, bytes.Length);
         }
 
-        public bool GetPlaylistImage(string playlistImage, out byte[] imageBytes)
+        public bool GetImageOfType(string imageString, ImageType type, out byte[] imageBytes)
         {
             imageBytes = new byte[0];
-            var path = GetPath(ImageType.Playlist);
+            var path = GetPath(type);
 
-            if (!File.Exists(Path.Combine(Environment.CurrentDirectory + path + playlistImage))) return false;
+            if (!File.Exists(Path.Combine(Environment.CurrentDirectory + path + imageString))) return false;
 
-            imageBytes = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory + path + playlistImage));
+            imageBytes = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory + path + imageString));
 
             return true;
 

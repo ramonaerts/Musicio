@@ -26,7 +26,7 @@ else
         }
         else
         {
-            <div class="playlist-image-detail" style="background-image: url(data:image/png;base64,@_album.Image)"></div>
+            <div class="playlist-image-detail" style="background-image: url(@($"/album/images/{_album.Image}"))"></div>
         }
     </div>
     <table class="table table-hover">
