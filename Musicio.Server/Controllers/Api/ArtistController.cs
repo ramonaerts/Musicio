@@ -12,7 +12,7 @@ using Musicio.Server.Services.Artist;
 using Musicio.Server.Services.FileManagement;
 using Album = Musicio.Core.Models.Album;
 
-namespace Musicio.Server.Controllers
+namespace Musicio.Server.Controllers.Api
 {
     [Authorize]
     [ApiController]

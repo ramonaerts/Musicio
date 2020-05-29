@@ -38,7 +38,20 @@ namespace Musicio.Server.Services.FileManagement
             return Convert.ToBase64String(bytes, 0, bytes.Length);
         }
 
-        private string GetPath(ImageType type)
+        public bool GetPlaylistImage(string playlistImage, out byte[] imageBytes)
+        {
+            imageBytes = new byte[0];
+            var path = GetPath(ImageType.Playlist);
+
+            if (!File.Exists(Path.Combine(Environment.CurrentDirectory + path + playlistImage))) return false;
+
+            imageBytes = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory + path + playlistImage));
+
+            return true;
+
+        }
+
+        private static string GetPath(ImageType type)
         {
             switch (type)
             {

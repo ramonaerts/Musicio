@@ -45,10 +45,6 @@ else
             return;
         }
 
-        /*var id = await SessionService.GetIdFromToken();
-
-            Console.WriteLine(id);*/
-
         _playlists = await PlaylistService.GetUserPlaylists();
 
         StateHasChanged();

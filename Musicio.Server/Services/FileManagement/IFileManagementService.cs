@@ -10,5 +10,6 @@ namespace Musicio.Server.Services.FileManagement
     {
         string SavePlaylistImage(string image, string fileExtension);
         string CreateBase64String(string image, ImageType type);
+        bool GetPlaylistImage(string playlistImage, out byte[] imageBytes);
     }
 }

@@ -11,7 +11,7 @@ using Musicio.Core.Enums;
 using Musicio.Server.Services.Album;
 using Musicio.Server.Services.FileManagement;
 
-namespace Musicio.Server.Controllers
+namespace Musicio.Server.Controllers.Api
 {
     [Authorize]
     [ApiController]

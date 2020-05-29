@@ -14,7 +14,7 @@ using Musicio.Core.Domain;
 using Musicio.Core.Messages;
 using Musicio.Server.Services.User;
 
-namespace Musicio.Server.Controllers
+namespace Musicio.Server.Controllers.Api
 {
     [Authorize]
     [ApiController]
