@@ -124,7 +124,7 @@ namespace Musicio.Client.User
 
         public async Task LoadUser()
         {
-            ApiResult result = await _httpClient.GetJsonAsync<ApiResult>("api/users/@me");
+            ApiResult result = await _httpClient.GetJsonAsync<ApiResult>("api/users/me");
 
             SetCurrentUser(result.GetData<Core.Models.User>());
         }

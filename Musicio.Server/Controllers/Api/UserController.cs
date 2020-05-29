@@ -69,7 +69,7 @@ namespace Musicio.Server.Controllers.Api
         }
 
         [HttpGet]
-        [Route("@me")]
+        [Route("me")]
         public ApiResult GetPersonalInfo()
         {
             var id = User.Claims.First(c => c.Type == "UserId").Value;
@@ -82,7 +82,7 @@ namespace Musicio.Server.Controllers.Api
         }
 
         [HttpPut]
-        [Route("@me")]
+        [Route("me")]
         public ApiResult ChangeUserInfo(ChangeUserInfoMessage message)
         {
             var id = User.Claims.First(c => c.Type == "UserId").Value;

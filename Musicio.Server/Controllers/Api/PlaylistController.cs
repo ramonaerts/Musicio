@@ -44,7 +44,7 @@ namespace Musicio.Server.Controllers.Api
         }
 
         [HttpGet]
-        [Route("@me")]
+        [Route("me")]
         public ApiResult GetUserPlaylists()
         {
             var id = User.Claims.First(c => c.Type == "UserId").Value;
@@ -75,7 +75,7 @@ namespace Musicio.Server.Controllers.Api
         }
 
         [HttpGet]
-        [Route("@me/names")]
+        [Route("me/names")]
         public ApiResult GetUserPlaylistsNames()
         {
             var id = User.Claims.First(c => c.Type == "UserId").Value;

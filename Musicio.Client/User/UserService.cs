@@ -45,14 +45,14 @@ namespace Musicio.Client.User
 
         public async Task<Core.Models.User> GetUserInfo()
         {
-            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/@me");
+            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/me");
 
             return result.GetData<Core.Models.User>();
         }
 
         public async Task<bool> ChangeUserInfo(string mail, string username, string newPassword, string oldPassword)
         {
-            var result = await _httpClient.PutJsonAsync<ApiResult>(Path + "/@me",
+            var result = await _httpClient.PutJsonAsync<ApiResult>(Path + "/me",
                 new ChangeUserInfoMessage(mail, username, newPassword, oldPassword));
             return result.IsSuccess;
         }

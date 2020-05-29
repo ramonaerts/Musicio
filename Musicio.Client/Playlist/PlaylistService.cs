@@ -26,7 +26,7 @@ namespace Musicio.Client.Playlist
 
         public async Task<List<Core.Models.Playlist>> GetUserPlaylists()
         {
-            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/@me");
+            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/me");
 
             return result.GetData<List<Core.Models.Playlist>>();
         }
@@ -40,7 +40,7 @@ namespace Musicio.Client.Playlist
 
         public async Task<List<Core.Models.Playlist>> GetUserPlaylistNames()
         {
-            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/@me/names");
+            var result = await _httpClient.GetJsonAsync<ApiResult>(Path + "/me/names");
 
             return result.GetData<List<Core.Models.Playlist>>();
         }
