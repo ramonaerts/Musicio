@@ -15,21 +15,13 @@ namespace Musicio.Client.User
 {
     public class SessionService : ISessionService
     {
-        private readonly HttpClient _httpClient;
         private readonly IJSRuntime _jsRuntime;
         private readonly NavigationManager _navigationManager;
-        private JwtSecurityTokenHandler _handler;
 
-        public Func<Task> OnAuthorizationChange { get; set; }
-
-        public Core.Models.User _currentUser;
-
-        public SessionService(HttpClient httpClient, IJSRuntime ijsRuntime, NavigationManager navigationManager, JwtSecurityTokenHandler handler)
+        public SessionService(IJSRuntime ijsRuntime, NavigationManager navigationManager)
         {
-            _httpClient = httpClient;
             _jsRuntime = ijsRuntime;
             _navigationManager = navigationManager;
-            _handler = handler;
         }
 
         public async Task SetCookie(string name, string value)
@@ -79,63 +71,9 @@ namespace Musicio.Client.User
             return true;
         }
 
-        public int GetIdFromToken()
-        {
-            //TODO: figure out why this is not working
-            var test = HttpClientExtensions.WebToken;
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadJwtToken(test);
-            var rawId = jsonToken.Claims.First(c => c.Type == "UserId").Value;
-
-            var id = Convert.ToInt32(rawId);
-            Console.WriteLine(id);
-            return id;
-        }
-
         public async Task RemoveCookies()
         {
             await _jsRuntime.InvokeVoidAsync("removeCookies");
-        }
-
-        public async Task<bool> TryLoadAuthentication()
-        {
-            var cookieString = await _jsRuntime.InvokeAsync<string>("getCookies");
-
-            if (string.IsNullOrEmpty(cookieString)) return false;
-            return true;
-        }
-
-        public void SetCurrentUser(Core.Models.User user)
-        {
-            _currentUser = user;
-
-            OnAuthorizationChange?.Invoke();
-        }
-
-        public Core.Models.User GetCurrentUser()
-        {
-            return _currentUser;
-        }
-
-        public bool IsAuthorized()
-        {
-            return _currentUser != null;
-        }
-
-        public async Task LoadUser()
-        {
-            ApiResult result = await _httpClient.GetJsonAsync<ApiResult>("api/users/me");
-
-            SetCurrentUser(result.GetData<Core.Models.User>());
-        }
-
-        public async void UnloadUser()
-        {
-            SetCurrentUser(null);
-
-            await _jsRuntime.InvokeVoidAsync("unsetCookies");
-
-            OnAuthorizationChange?.Invoke();
         }
     }
 }
