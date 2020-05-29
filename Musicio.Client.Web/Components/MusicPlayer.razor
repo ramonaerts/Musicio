@@ -44,9 +44,7 @@
 
         encoder = new FileEncoder();
 
-        string path = "audio/Animals.mp3";
-
-        Song song = new Song { SongFile = path, SongTitle = "Animals", Artist = "Martin Garrix" };
+        Song song = new Song { SongFile = "Animals.mp3", SongTitle = "Animals", Artist = "Martin Garrix" };
         CurrentSong = song;
 
         functions = new Functions(JSRuntime);
@@ -84,7 +82,7 @@
             HasStarted = true;
             functions.SetTimeout(RefreshTimeStatus, 900);
             icon = "oi oi-media-pause";
-            await Howl.Play(CurrentSong.SongFile);
+            await Howl.Play($"/song/songs/{CurrentSong.SongFile}");
         }
         else if (IsPlaying && HasStarted)
         {

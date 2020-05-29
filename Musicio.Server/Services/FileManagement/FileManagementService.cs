@@ -48,7 +48,6 @@ namespace Musicio.Server.Services.FileManagement
             imageBytes = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory + path + imageString));
 
             return true;
-
         }
 
         private static string GetPath(ImageType type)
@@ -61,6 +60,8 @@ namespace Musicio.Server.Services.FileManagement
                     return "\\Content\\Musicimages\\";
                 case ImageType.Artist:
                     return "\\Content\\Artistimages\\";
+                case ImageType.Song:
+                    return "\\Content\\Musicaudio\\";
                 default:
                     return null;
             }

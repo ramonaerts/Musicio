@@ -8,6 +8,7 @@ namespace Musicio.Core.Enums
     {
         Playlist,
         Artist,
-        Album
+        Album,
+        Song
     }
 }
