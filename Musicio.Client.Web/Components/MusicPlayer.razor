@@ -23,7 +23,6 @@
 
     MusicProgress _musicProgress;
     Functions functions;
-    FileEncoder encoder;
     string icon = "oi oi-media-play";
 
     [Parameter]
@@ -41,8 +40,6 @@
 
         IsPlaying = false;
         HasStarted = false;
-
-        encoder = new FileEncoder();
 
         Song song = new Song { SongFile = "Animals.mp3", SongTitle = "Animals", Artist = "Martin Garrix" };
         CurrentSong = song;
