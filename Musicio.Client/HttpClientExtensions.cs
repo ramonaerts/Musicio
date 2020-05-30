@@ -10,8 +10,12 @@ namespace Musicio.Client
 {
     public static class HttpClientExtensions
     {
+#if DEBUG
         private const string ConnectionString = "https://localhost:5001/";
-        
+#else
+        private const string ConnectionString = "http://musicio.azurewebsites.net/";
+#endif
+
         public static string WebToken { get; set; }
         public static async Task<T> PostJsonAsync<T>(this HttpClient httpClient, string url, object data) => await httpClient.SendJsonAsync<T>(HttpMethod.Post, url, data);
         public static async Task<T> PutJsonAsync<T>(this HttpClient httpClient, string url, object data) => await httpClient.SendJsonAsync<T>(HttpMethod.Put, url, data);
