@@ -38,3 +38,28 @@ stages:
       inputs:
         command: 'test'
         projects: '**/Musicio.Server/Musicio.Server.csproj'
+
+- stage: Release
+  displayName: Release stage
+
+  jobs:
+  - job: Release
+    displayName: Release to Azure
+
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: Publish the project
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure for Students(c84a8ed9-acd7-42ac-97cb-252be8ff6ec9)'
+        appType: 'webApp'
+        WebAppName: 'musicio'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
