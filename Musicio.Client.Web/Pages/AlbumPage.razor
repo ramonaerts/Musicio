@@ -2,13 +2,16 @@
 @using Musicio.Client.Album
 @using Musicio.Client.Artist
 @using Musicio.Client.Playlist
+@using Musicio.Client.Song
 @using Musicio.Client.User
 @using Musicio.Core.Models
+@using Musicio.Client.Web.Components
 
 @inject IAlbumService AlbumService
 @inject IPlaylistService PlaylistService
 @inject ISessionService SessionService
 @inject NavigationManager NavigationManager
+@inject ISongService SongService
 
 @if (_loading)
 {
@@ -29,6 +32,7 @@ else
             <div class="playlist-image-detail" style="background-image: url(@($"/album/images/{_album.Image}"))"></div>
         }
     </div>
+    <Button Enabled="true" Text="Play album" OnClick="@PlayAlbum"></Button>
     <table class="table table-hover">
         <tr><th>Title</th><th>Artist</th><th>Add song</th></tr>
         @foreach (var song in _album.Songs)
@@ -90,5 +94,12 @@ else
     private async Task AddSongToPlaylist(int playlistId, int songId)
     {
         var success = await PlaylistService.AddSongToPlaylist(playlistId, songId);
+    }
+
+    private Task PlayAlbum()
+    {
+        SongService?.OnPlay(_album.Songs);
+
+        return Task.CompletedTask;
     }
 }

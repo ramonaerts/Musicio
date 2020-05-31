@@ -13,6 +13,7 @@ using Musicio.Client.Album;
 using Musicio.Client.Artist;
 using Musicio.Client.Converting;
 using Musicio.Client.Playlist;
+using Musicio.Client.Song;
 using Musicio.Client.User;
 using Musicio.Client.Validation;
 
@@ -39,6 +40,7 @@ namespace Musicio.Client.Web
             builder.Services.AddSingleton<ISessionService, SessionService>();
             builder.Services.AddSingleton<IArtistService, ArtistService>();
             builder.Services.AddSingleton<IAlbumService, AlbumService>();
+            builder.Services.AddSingleton<ISongService, SongService>();
             builder.Services.AddSingleton<JwtSecurityTokenHandler, JwtSecurityTokenHandler>();
             builder.Services.AddScoped<IHowl, Howl>();
             builder.Services.AddScoped<IHowlGlobal, HowlGlobal>();

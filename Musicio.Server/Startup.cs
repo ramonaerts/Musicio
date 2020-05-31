@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Musicio.Server.Services.Album;
 using Musicio.Server.Services.Artist;
+using Newtonsoft.Json;
 
 namespace Musicio.Server
 {
@@ -43,7 +44,12 @@ namespace Musicio.Server
         {
             services.AddSingleton<DbContext, MusicioContext>();
             services.AddDbContext<MusicioContext>();
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
             services.AddScoped<IRepository<BaseEntity>, Repository<BaseEntity>>();
             services.AddScoped<IRepository<User>, Repository<User>>();
             services.AddScoped<IRepository<Playlist>, Repository<Playlist>>();

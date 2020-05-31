@@ -15,7 +15,7 @@ namespace Musicio.Core.Models
         //public int? AlbumId { get; set; }
         public string SongTitle { get; set; }
         //public SongGenre Genre { get; set; }
-        //public string SongFile { get; set; }
-        //public TimeSpan SongDuration { get; set; }
+        public string SongFile { get; set; }
+        public TimeSpan SongDuration { get; set; }
     }
 }

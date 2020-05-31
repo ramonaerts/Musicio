@@ -1,18 +1,17 @@
 ﻿@using System.IO
 @using Howler.Blazor.Components
+@using Musicio.Client.Song
 @using Musicio.Client.Web.Invokables
-@using Musicio.Core.Domain
+@using Musicio.Core.Models
 @using NAudio.Wave
 @inject IJSRuntime JSRuntime
 @inject IHowl Howl
 @inject IHowlGlobal HowlGlobal
+@inject ISongService SongService
 
 <MusicProgress @ref="_musicProgress" />
 <button class="btn btn-primary @icon" @onclick="TogglePlay"></button>
 <button class="btn btn-primary oi oi-media-stop" @onclick="Stop"></button>
-@*<audio controls>
-    <source src="audio/Sample.mp3" type="audio/mpeg">
-</audio>*@
 @*<p>@CurrentSong.SongTitle</p>
 <p>@CurrentSong.Artist</p>*@
 
@@ -29,6 +28,9 @@
     public Song CurrentSong { get; set; }
 
     [Parameter]
+    public List<Song> SongQueue { get; set; }
+
+    [Parameter]
     public bool IsPlaying { get; set; }
 
     [Parameter]
@@ -38,11 +40,13 @@
     {
         base.OnInitialized();
 
+        SongService.OnPlay = SetNewQueue;
+
         IsPlaying = false;
         HasStarted = false;
 
-        Song song = new Song { SongFile = "Animals.mp3", SongTitle = "Animals", Artist = "Martin Garrix" };
-        CurrentSong = song;
+        /*Song song = new Song { SongFile = "Animals.mp3", SongTitle = "Animals", Artist = "Martin Garrix" };
+        CurrentSong = song;*/
 
         functions = new Functions(JSRuntime);
 
@@ -65,7 +69,17 @@
 
         Howl.OnEnd += e =>
         {
-            Stop();
+            if (SongQueue.Count == 0)
+            {
+                Stop();
+            }
+            else
+            {
+                LoadNextSong();
+                IsPlaying = false;
+                HasStarted = false;
+                TogglePlay();
+            }
 
             StateHasChanged();
         };
@@ -94,7 +108,14 @@
             icon = "oi oi-media-pause";
             await Howl.Pause();
         }
+
         StateHasChanged();
+    }
+
+    protected void LoadNextSong()
+    {
+        CurrentSong = SongQueue[0];
+        SongQueue.RemoveAt(0);
     }
 
     protected async Task Stop()
@@ -114,12 +135,17 @@
         {
             _musicProgress.SetTotalTime((int)CurrentSong.SongDuration.TotalSeconds);
             TimeSpan currentTime = await Howl.GetCurrentTime();
-            Console.WriteLine(currentTime);
             int currentTimeSec = (int)currentTime.TotalSeconds;
-            Console.WriteLine(currentTimeSec);
             _musicProgress.Refresh(currentTimeSec);
 
             functions.SetTimeout(RefreshTimeStatus, 900);
         }
+    }
+
+    private void SetNewQueue(List<Song> songs)
+    {
+        SongQueue = songs;
+        LoadNextSong();
+        StateHasChanged();
     }
 }
