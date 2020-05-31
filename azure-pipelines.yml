@@ -37,7 +37,7 @@ stages:
       displayName: Run Unit Tests
       inputs:
         command: 'test'
-        projects: '**/Musicio.Server/Musicio.Server.csproj'
+        projects: '**/Musicio.Server.Test/Musicio.Server.Test.csproj'
 
 - stage: Release
   displayName: Release stage
