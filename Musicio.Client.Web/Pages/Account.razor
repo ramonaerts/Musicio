@@ -1,4 +1,5 @@
 ﻿@page "/account"
+@using Musicio.Client.Song
 @using Musicio.Client.User
 @using Musicio.Client.Validation
 @using Musicio.Client.Web.Components
@@ -8,6 +9,7 @@
 @inject IValidationService ValidationService
 @inject IUserService UserService
 @inject ISessionService SessionService
+@inject ISongService SongService
 
 <h3>Account</h3>
 
@@ -182,8 +184,8 @@
     private async Task Logout()
     {
         await SessionService.RemoveCookies();
-
         HttpClientExtensions.WebToken = null;
+        SongService?.StopOnLogout();
 
         NavigationManager.NavigateTo("/login");
     }

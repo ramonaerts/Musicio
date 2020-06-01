@@ -7,6 +7,6 @@ namespace Musicio.Client.Song
     public interface ISongService
     {
         Action<List<Core.Models.Song>> OnPlay { get; set; }
-        void SetNewSongQueue(List<Core.Models.Song> songs);
+        Action StopOnLogout { get; set; }
     }
 }

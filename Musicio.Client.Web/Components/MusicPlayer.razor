@@ -41,12 +41,10 @@
         base.OnInitialized();
 
         SongService.OnPlay = SetNewQueue;
+        SongService.StopOnLogout = StopOnLogout;
 
         IsPlaying = false;
         HasStarted = false;
-
-        /*Song song = new Song { SongFile = "Animals.mp3", SongTitle = "Animals", Artist = "Martin Garrix" };
-        CurrentSong = song;*/
 
         functions = new Functions(JSRuntime);
 
@@ -134,8 +132,8 @@
         if (IsPlaying || !HasStarted)
         {
             _musicProgress.SetTotalTime((int)CurrentSong.SongDuration.TotalSeconds);
-            TimeSpan currentTime = await Howl.GetCurrentTime();
-            int currentTimeSec = (int)currentTime.TotalSeconds;
+            var currentTime = await Howl.GetCurrentTime();
+            var currentTimeSec = (int)currentTime.TotalSeconds;
             _musicProgress.Refresh(currentTimeSec);
 
             functions.SetTimeout(RefreshTimeStatus, 900);
@@ -146,6 +144,12 @@
     {
         SongQueue = songs;
         LoadNextSong();
+        TogglePlay();
         StateHasChanged();
+    }
+
+    private void StopOnLogout()
+    {
+        Stop();
     }
 }

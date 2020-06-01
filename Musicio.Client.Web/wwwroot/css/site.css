@@ -292,6 +292,11 @@ progress::-webkit-progress-value {
         background: #243342;
     }
 
+    .button:disabled {
+        cursor: not-allowed;
+        background: #273747
+    }
+
 .input-title {
     color: hotpink;
     width: 100%;
