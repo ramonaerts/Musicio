@@ -9,7 +9,7 @@
         } else {
             expires = "";
         }
-        document.cookie = name + "=" + value + expires + "; path=/";
+        document.cookie = name + "=" + value + expires + "; path=/;secure";
     }
 }
 

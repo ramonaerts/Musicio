@@ -395,3 +395,30 @@ progress::-webkit-progress-value {
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
 }
+
+/*Grid items*/
+.grid {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.grid-column {
+    flex-direction: column;
+}
+
+.grid-column-1 {
+    width: 33%;
+}
+
+.grid-column-2 {
+    width: 66%;
+}
+
+.grid-column-3 {
+    width: 100%;
+}
+
+.grid-item {
+    margin: 8px;
+}
