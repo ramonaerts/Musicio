@@ -32,6 +32,7 @@ namespace Musicio.Server
 {
     public class Startup
     {
+        readonly string AllowOrigins = "_AllowOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,6 +43,18 @@ namespace Musicio.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("https://musicio.azurewebsites.net",
+                                            "http://musicio.azurewebsites.net")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
+            
             services.AddSingleton<DbContext, MusicioContext>();
             services.AddDbContext<MusicioContext>();
             services.AddControllers()
@@ -109,10 +122,7 @@ namespace Musicio.Server
 
             app.UseRouting();
 
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors(AllowOrigins);
 
             app.UseAuthentication();
             app.UseAuthorization();
