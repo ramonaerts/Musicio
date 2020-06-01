@@ -41,7 +41,7 @@ else
 
     [Parameter]
     public List<Song> SongQueue { get; set; }
-    private int _queueNumber = -1;
+    private int _queueNumber;
 
     [Parameter]
     public bool IsPlaying { get; set; }
@@ -173,6 +173,7 @@ else
 
     private void SetNewQueue(List<Song> songs)
     {
+        _queueNumber = -1;
         SongQueue = songs;
         LoadNextSong();
         StateHasChanged();
