@@ -45,12 +45,13 @@ namespace Musicio.Server
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(name: AllowOrigins,
+                options.AddPolicy(AllowOrigins,
                     builder =>
                     {
                         builder.WithOrigins("https://musicio.azurewebsites.net",
                                             "http://musicio.azurewebsites.net",
                                             "https://localhost:5001")
+                                            .AllowAnyOrigin()
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                     });
