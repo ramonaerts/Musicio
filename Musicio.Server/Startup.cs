@@ -49,7 +49,8 @@ namespace Musicio.Server
                     builder =>
                     {
                         builder.WithOrigins("https://musicio.azurewebsites.net",
-                                            "http://musicio.azurewebsites.net")
+                                            "http://musicio.azurewebsites.net",
+                                            "https://localhost:5001")
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                     });
