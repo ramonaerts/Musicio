@@ -3,32 +3,52 @@
 @using Musicio.Client.Song
 @using Musicio.Client.Web.Invokables
 @using Musicio.Core.Models
+@using Musicio.Client.Web.Components.Grid
 @using NAudio.Wave
 @inject IJSRuntime JSRuntime
 @inject IHowl Howl
 @inject IHowlGlobal HowlGlobal
 @inject ISongService SongService
 
-<MusicProgress @ref="_musicProgress" />
-@if (HasStarted)
-{
-    <button class="btn btn-primary oi oi-arrow-thick-left" @onclick="LoadPreviousSong"></button>
-    <button class="btn btn-primary @icon" @onclick="TogglePlay"></button>
-    <button class="btn btn-primary oi oi-media-stop" @onclick="Stop"></button>
-    <button class="btn btn-primary oi oi-arrow-thick-right" @onclick="LoadNextSong"></button>
-}
-else
-{
-    <button class="btn btn-primary oi oi-arrow-thick-left" @onclick="LoadPreviousSong" disabled></button>
-    <button class="btn btn-primary @icon" @onclick="TogglePlay" disabled></button>
-    <button class="btn btn-primary oi oi-media-stop" @onclick="Stop" disabled></button>
-    <button class="btn btn-primary oi oi-arrow-thick-right" @onclick="LoadNextSong" disabled></button>
-}
-@*<p>@CurrentSong.SongTitle</p>
-    <p>@CurrentSong.Artist</p>*@
-
-@*<button class="btn btn-primary oi oi-media-step-backward" @onclick="Previous"></button>
-    <button class="btn btn-primary oi oi-media-step-forward" @onclick="Next"></button>*@
+<Grid>
+    <GridColumn ColumnSize="ColumnSize.Small">
+        <GridItem>
+            @if (HasStarted)
+            {
+                <div class="text-white">
+                    @CurrentSong.SongTitle<br/>
+                    @CurrentSong.Artist
+                </div>
+            }
+        </GridItem>
+    </GridColumn>
+    <GridRow>
+        <GridColumn ColumnSize="ColumnSize.Full">
+            <GridItem>
+                <MusicProgress @ref="_musicProgress"/>
+            </GridItem>
+        </GridColumn>
+        <GridColumn ColumnSize="ColumnSize.Full">
+            <GridItem>
+                @if (HasStarted)
+                {
+                    <button class="btn btn-primary oi oi-arrow-thick-left" @onclick="LoadPreviousSong"></button>
+                    <button class="btn btn-primary @icon" @onclick="TogglePlay"></button>
+                    <button class="btn btn-primary oi oi-media-stop" @onclick="Stop"></button>
+                    <button class="btn btn-primary oi oi-arrow-thick-right" @onclick="LoadNextSong"></button>
+                }
+                else
+                {
+                    <button class="btn btn-primary oi oi-arrow-thick-left" @onclick="LoadPreviousSong" disabled></button>
+                    <button class="btn btn-primary @icon" @onclick="TogglePlay" disabled></button>
+                    <button class="btn btn-primary oi oi-media-stop" @onclick="Stop" disabled></button>
+                    <button class="btn btn-primary oi oi-arrow-thick-right" @onclick="LoadNextSong" disabled></button>
+                }
+            </GridItem>
+        </GridColumn>
+    </GridRow>
+    <GridColumn ColumnSize="ColumnSize.Small"></GridColumn>
+</Grid>
 
 @code {
 
@@ -56,6 +76,10 @@ else
         SongService.OnPlay = SetNewQueue;
         SongService.StopOnLogout = StopOnLogout;
 
+        CurrentSong = new Song();
+        CurrentSong.Artist = "";
+        CurrentSong.SongTitle = "";
+
         IsPlaying = false;
         HasStarted = false;
 
@@ -82,7 +106,6 @@ else
         {
             if (SongQueue.Count == 0)
             {
-                _queueNumber = 0;
                 Stop();
             }
             else

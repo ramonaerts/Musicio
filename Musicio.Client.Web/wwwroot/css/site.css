@@ -206,7 +206,8 @@ progress {
     display: block;
     width: 500px;
     height: 20px;
-    margin: 2em auto;
+    margin: 5px;
+    margin-top: 10px;
     padding: 4px;
     border: 0 none;
     background: #dedede;
@@ -298,7 +299,7 @@ progress::-webkit-progress-value {
     }
 
 .input-title {
-    color: hotpink;
+    color: black;
     width: 100%;
     font-size: 24px;
 }
@@ -403,6 +404,10 @@ progress::-webkit-progress-value {
     width: 100%;
 }
 
+.grid-row {
+    flex-direction: row;
+}
+
 .grid-column {
     flex-direction: column;
 }
@@ -421,4 +426,5 @@ progress::-webkit-progress-value {
 
 .grid-item {
     margin: 8px;
+    text-align: center;
 }

@@ -11,25 +11,25 @@
 @inject ISessionService SessionService
 @inject ISongService SongService
 
-<h3>Account</h3>
+<h2>Account</h2>
 
 <Form Id="account-management">
     <FormGroup>
-        <InputField Type="text" Text="E-mail" Value="@_currentMail" Enabled="@_editingEnabled" Placeholder="Mail" OnChange="@OnMailChange" />
+        <InputField Type="text" Title="E-mail" Value="@_currentMail" Enabled="@_editingEnabled" Placeholder="Mail" OnChange="@OnMailChange" />
     </FormGroup>
     <FormGroup>
-        <InputField Type="text" Text="Username" Value="@_currentUsername" Enabled="@_editingEnabled" Placeholder="Username" OnChange="@OnUsernameChange" />
+        <InputField Type="text" Title="Username" Value="@_currentUsername" Enabled="@_editingEnabled" Placeholder="Username" OnChange="@OnUsernameChange" />
     </FormGroup>
     @if (!_editingEnabled)
     {
         <FormGroup>
-            <InputField Type="password" Text="Current password" Enabled="@_editingEnabled" Placeholder="Current password" OnChange="@OnCurrentPasswordChange" />
+            <InputField Type="password" Title="Current password" Enabled="@_editingEnabled" Placeholder="Current password" OnChange="@OnCurrentPasswordChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="password" Text="New password" Enabled="@_editingEnabled" Placeholder="New password" OnChange="@OnNewPasswordChange" />
+            <InputField Type="password" Title="New password" Enabled="@_editingEnabled" Placeholder="New password" OnChange="@OnNewPasswordChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="password" Text="Confirm new password" Enabled="@_editingEnabled" Placeholder="Confirm new password" OnChange="@OnConfirmPasswordChange" />
+            <InputField Type="password" Title="Confirm new password" Enabled="@_editingEnabled" Placeholder="Confirm new password" OnChange="@OnConfirmPasswordChange" />
         </FormGroup>
         <FormGroup>
             <Button Enabled="true" Text="Save" OnClick="@ChangeUserInfo"></Button>
