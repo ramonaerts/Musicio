@@ -141,7 +141,7 @@ else
         IsPlaying = false;
         HasStarted = false;
         Howl.Stop();
-        _queueNumber--;
+        if(_queueNumber != 0) _queueNumber--;
         CurrentSong = SongQueue[_queueNumber];
         TogglePlay();
     }
