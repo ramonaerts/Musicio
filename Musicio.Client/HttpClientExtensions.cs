@@ -10,7 +10,7 @@ namespace Musicio.Client
 {
     public static class HttpClientExtensions
     {
-        private const string ConnectionString = "https://musicio.azurewebsites.net/";
+        private const string ConnectionString = "http://musicio.azurewebsites.net/";
         //private const string ConnectionString = "https://localhost:5001/";
 
         public static string WebToken { get; set; }
