@@ -29,7 +29,7 @@ else
             <div class="playlist-image-detail" style="background-image: url(@($"/playlist/images/{_playlist.Image}"))"></div>
         }
     </div>
-    <Button Enabled="true" Text="Play Playlist" OnClick="@PlayPlaylist"></Button>
+    <Button Enabled="@_playable" Text="Play Playlist" OnClick="@PlayPlaylist"></Button>
     <table class="table table-hover">
         <tr><th>Title</th><th>Artist</th></tr>
         @foreach (var song in _playlist.Songs)
@@ -55,6 +55,7 @@ else
 
     private Playlist _playlist = new Playlist();
 
+    private bool _playable;
     private bool _loading;
 
     protected override async Task OnInitializedAsync()
@@ -68,6 +69,8 @@ else
         }
 
         _playlist = await PlaylistService.GetPlaylistSongs(PlaylistId);
+
+        if (_playlist.Songs.Count != 0) _playable = true;
 
         StateHasChanged();
 
