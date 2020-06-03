@@ -185,7 +185,7 @@
     {
         await SessionService.RemoveCookies();
         HttpClientExtensions.WebToken = null;
-        SongService?.StopOnLogout();
+        SongService?.StopMusic();
 
         NavigationManager.NavigateTo("/login");
     }

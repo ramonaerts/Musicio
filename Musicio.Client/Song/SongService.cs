@@ -7,6 +7,6 @@ namespace Musicio.Client.Song
     public class SongService : ISongService
     {
         public Action<List<Core.Models.Song>> OnPlay { get; set; }
-        public Action StopOnLogout { get; set; }
+        public Action StopMusic { get; set; }
     }
 }

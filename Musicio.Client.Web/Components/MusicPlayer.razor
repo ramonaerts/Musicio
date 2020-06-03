@@ -74,7 +74,7 @@
         base.OnInitialized();
 
         SongService.OnPlay = SetNewQueue;
-        SongService.StopOnLogout = StopOnLogout;
+        SongService.StopMusic = StopMusic;
 
         CurrentSong = new Song();
         CurrentSong.Artist = "";
@@ -155,8 +155,12 @@
         HasStarted = false;
         Howl.Stop();
         _queueNumber++;
-        CurrentSong = SongQueue[_queueNumber];
-        TogglePlay();
+        if (_queueNumber == SongQueue.Count) Stop();
+        else
+        {
+            CurrentSong = SongQueue[_queueNumber];
+            TogglePlay();
+        }
     }
 
     protected void LoadPreviousSong()
@@ -196,13 +200,14 @@
 
     private void SetNewQueue(List<Song> songs)
     {
+        Howl.Stop();
         _queueNumber = -1;
         SongQueue = songs;
         LoadNextSong();
         StateHasChanged();
     }
 
-    private void StopOnLogout()
+    private void StopMusic()
     {
         Stop();
     }
