@@ -8,7 +8,7 @@
 @inject IPlaylistService PlaylistService
 @inject ISessionService SessionService
 @inject NavigationManager NavigationManager
-@inject ISongService SongService 
+@inject ISongService SongService
 
 @if (_loading)
 {
@@ -29,58 +29,92 @@ else
             <div class="playlist-image-detail" style="background-image: url(@($"/playlist/images/{_playlist.Image}"))"></div>
         }
     </div>
-    <Button Enabled="@_playable" Text="Play Playlist" OnClick="@PlayPlaylist"></Button>
-    <table class="table table-hover">
-        <tr><th>Title</th><th>Artist</th></tr>
-        @foreach (var song in _playlist.Songs)
+    <p>
+        <Button Enabled="@_playable" Text="Play Playlist" OnClick="@PlayPlaylist"></Button>
+    </p>
+    @if (_success)
         {
-            <tr>
-                <td>@song.SongTitle</td>
-                <td>@song.Artist</td>
-                @*<td>
-                        <form class="" id="" method="post" asp-controller="Playlist" asp-action="RemovePlaylistSong" asp-route-playlistid="@Model.PlaylistId" asp-route-songid="@s.PlaylistSongID">
-                            <input type="submit" class="btn-danger" value="Remove song"/>
-                        </form>
-                    </td>*@
-            </tr>
+            <div class="alert alert-success">@_message</div>
         }
-    </table>
-}
+        @if (_error)
+        {
+            <div class="alert alert-danger">@_message</div>
+        }
+        <table class="table table-hover">
+            <tr><th>Title</th><th>Artist</th></tr>
+            @foreach (var song in _playlist.Songs)
+            {
+                <tr>
+                    <td>@song.SongTitle</td>
+                    <td>@song.Artist</td>
+                    <td>
+                        <a class="oi oi-x" @onclick="@(() => RemovePlaylistSong(song.CollectionId, song.SongTitle))"></a>
+                    </td>
+                </tr>
+            }
+        </table>
+        }
 
 
 
-@code {
+        @code {
     [Parameter]
-    public int PlaylistId { get; set; }
+        public int PlaylistId { get; set; }
 
-    private Playlist _playlist = new Playlist();
+        private Playlist _playlist = new Playlist();
 
-    private bool _playable;
-    private bool _loading;
+        private bool _playable;
+        private bool _loading;
+        private bool _error = false;
+        private bool _success = false;
+        private string _message;
 
-    protected override async Task OnInitializedAsync()
-    {
-        _loading = true;
-
-        if (await SessionService.CheckIfTokenIsAvailable() == false)
+        protected override async Task OnInitializedAsync()
         {
-            NavigationManager.NavigateTo("/login");
-            return;
+            _loading = true;
+
+            if (await SessionService.CheckIfTokenIsAvailable() == false)
+            {
+                NavigationManager.NavigateTo("/login");
+                return;
+            }
+
+            _playlist = await PlaylistService.GetPlaylistSongs(PlaylistId);
+
+            if (_playlist.Songs.Count != 0) _playable = true;
+
+            StateHasChanged();
+
+            _loading = false;
         }
 
-        _playlist = await PlaylistService.GetPlaylistSongs(PlaylistId);
+        private async Task RemovePlaylistSong(int playlistSongId, string title)
+        {
+            Console.WriteLine(playlistSongId);
+            var success = await PlaylistService.RemovePlaylistSong(_playlist.Id, playlistSongId);
 
-        if (_playlist.Songs.Count != 0) _playable = true;
+            if (success)
+            {
+                _error = false;
+                _success = true;
+                _message = title + " has successfully been removed from the playlist";
+                _playlist.Songs.RemoveAll(x => x.CollectionId == playlistSongId);
 
-        StateHasChanged();
+            }
+            else
+            {
+                _error = true;
+                _success = false;
+                _message = "Something went wrong, please try again";
+            }
 
-        _loading = false;
-    }
+            StateHasChanged();
+        }
 
-    private Task PlayPlaylist()
-    {
-        SongService?.OnPlay(_playlist.Songs);
+        private Task PlayPlaylist()
+        {
+            SongService?.OnPlay(_playlist.Songs);
 
-        return Task.CompletedTask;
-    }
-}
+            return Task.CompletedTask;
+        }
+        }

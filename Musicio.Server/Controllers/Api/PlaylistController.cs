@@ -60,7 +60,9 @@ namespace Musicio.Server.Controllers.Api
         [Route("{playlistId}/songs")]
         public ApiResult GetPlaylistSongs(int playlistId)
         {
-            Playlist playlist = _playlistService.GetPlaylistSongs(playlistId);
+            if (!_playlistService.PlaylistExists(playlistId)) return ApiResult.BadRequest();
+
+            var playlist = _playlistService.GetPlaylistWithSongs(playlistId);
 
             var playlistModel = _mapper.Map<Core.Models.Playlist>(playlist);
             playlistModel.Songs = new List<Song>();
@@ -68,6 +70,7 @@ namespace Musicio.Server.Controllers.Api
             foreach (var song in playlist.PlaylistSongs)
             {
                 var songModel = _mapper.Map<Song>(song.Song);
+                songModel.CollectionId = song.Id;
                 playlistModel.Songs.Add(songModel);
             }
 
@@ -91,13 +94,26 @@ namespace Musicio.Server.Controllers.Api
         [Route("{playlistId}/songs/{songId}")]
         public ApiResult AddSongToPlaylist(int playlistId, int songId)
         {
-            bool playlistExists = _playlistService.PlaylistExists(playlistId);
+            var playlistExists = _playlistService.PlaylistExists(playlistId);
 
             if(!playlistExists) return ApiResult.BadRequest();
 
             //TODO: add check if song exists
 
             _playlistService.AddSongToPlaylist(playlistId, songId);
+
+            return ApiResult.Success(true);
+        }
+
+        [HttpDelete]
+        [Route("{playlistId}/songs/{songId}")]
+        public ApiResult RemovePlaylistSong(int playlistId, int songId)
+        {
+            var playlistExists = _playlistService.PlaylistExists(playlistId);
+
+            if (!playlistExists) return ApiResult.BadRequest();
+
+            _playlistService.RemovePlaylistSong(songId);
 
             return ApiResult.Success(true);
         }

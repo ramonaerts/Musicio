@@ -49,7 +49,7 @@ namespace Musicio.Server.Services.Playlist
             return _playlistRepository.TableNoTracking.Where(e => e.UserId == userId).ToList();
         }
 
-        public Core.Domain.Playlist GetPlaylistSongs(int playlistId)
+        public Core.Domain.Playlist GetPlaylistWithSongs(int playlistId)
         {
             return _playlistRepository.TableNoTracking.Include(e => e.PlaylistSongs).ThenInclude(e => e.Song)
                 .SingleOrDefault(e => e.Id == playlistId);
@@ -81,6 +81,12 @@ namespace Musicio.Server.Services.Playlist
                 PlaylistId = playlistId,
                 SongId = songId
             });
+        }
+
+        public void RemovePlaylistSong(int songId)
+        {
+            var playlistSong = _playlistSongRepository.GetById(songId);
+            _playlistSongRepository.Delete(playlistSong);
         }
 
         public int GetSongCountInPlaylist(int playlistId)

@@ -33,6 +33,14 @@ else
         }
     </div>
     <Button Enabled="@_playable" Text="Play album" OnClick="@PlayAlbum"></Button>
+    @if (_success)
+    {
+        <div class="alert alert-success">@_message</div>
+    }
+    @if (_error)
+    {
+        <div class="alert alert-danger">@_message</div>
+    }
     <table class="table table-hover">
         <tr><th>Title</th><th>Artist</th><th>Add song</th></tr>
         @foreach (var song in _album.Songs)
@@ -46,16 +54,11 @@ else
                         <div class="dropdown-content">
                             @foreach (var pl in _userPlaylists)
                             {
-                                <a @onclick="@(() => AddSongToPlaylist(pl.Id, song.Id))">@pl.Title</a>
+                                <a @onclick="@(() => AddSongToPlaylist(pl.Id, song.Id, song.SongTitle))">@pl.Title</a>
                             }
                         </div>
                     </div>
                 </td>
-                @*<td>
-                        <form class="" id="" method="post" asp-controller="Playlist" asp-action="RemovePlaylistSong" asp-route-playlistid="@Model.PlaylistId" asp-route-songid="@s.PlaylistSongID">
-                            <input type="submit" class="btn-danger" value="Remove song"/>
-                        </form>
-                    </td>*@
             </tr>
         }
     </table>
@@ -73,6 +76,9 @@ else
 
     private bool _playable;
     private bool _loading;
+    private bool _error = false;
+    private bool _success = false;
+    private string _message;
 
     protected override async Task OnInitializedAsync()
     {
@@ -94,9 +100,22 @@ else
         _loading = false;
     }
 
-    private async Task AddSongToPlaylist(int playlistId, int songId)
+    private async Task AddSongToPlaylist(int playlistId, int songId, string title)
     {
         var success = await PlaylistService.AddSongToPlaylist(playlistId, songId);
+
+        if (success)
+        {
+            _error = false;
+            _success = true;
+            _message = title + " has successfully been added to the chosen playlist";
+        }
+        else
+        {
+            _error = true;
+            _success = false;
+            _message = "Something went wrong, please try again";
+        }
     }
 
     private Task PlayAlbum()

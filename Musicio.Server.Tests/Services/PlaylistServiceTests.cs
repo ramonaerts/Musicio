@@ -65,7 +65,7 @@ namespace Musicio.Server.Tests.Services
             var playlistService = new PlaylistService(_playlistRepositoryMock.Object, null, null);
 
             //Act
-            var actualPlaylist = playlistService.GetPlaylistSongs(3);
+            var actualPlaylist = playlistService.GetPlaylistWithSongs(3);
 
             //Assert
             Assert.Equal(playlist3.UserId, actualPlaylist.UserId);

@@ -55,5 +55,12 @@ namespace Musicio.Client.Playlist
 
             return result.GetData<bool>();
         }
+
+        public async Task<bool> RemovePlaylistSong(int playlistId, int songId)
+        {
+            var result = await _httpClient.DeleteJsonAsync<ApiResult>(Path + "/" + playlistId + "/songs/" + songId);
+
+            return result.GetData<bool>();
+        }
     }
 }

@@ -11,10 +11,11 @@ namespace Musicio.Server.Services.Playlist
         bool CreatePlaylist(PlaylistCreationMessage message, int userId);
         List<Core.Domain.Playlist> GetUserPlaylists(int userId);
         Core.Domain.Playlist GetPlaylistById(int playlistId);
-        Core.Domain.Playlist GetPlaylistSongs(int playlistId);
+        Core.Domain.Playlist GetPlaylistWithSongs(int playlistId);
         List<Core.Domain.Playlist> GetPlaylistNameAndId(int userId);
         bool PlaylistExists(int playlistId);
         void AddSongToPlaylist(int playlistId, int songId);
+        void RemovePlaylistSong(int songId);
         int GetSongCountInPlaylist(int playlistId);
         int GetPlaylistCount(int userId);
     }

@@ -12,5 +12,6 @@ namespace Musicio.Client.Playlist
         Task<Core.Models.Playlist> GetPlaylistSongs(int playlistId);
         Task<List<Core.Models.Playlist>> GetUserPlaylistNames();
         Task<bool> AddSongToPlaylist(int playlistId, int songId);
+        Task<bool> RemovePlaylistSong(int playlistId, int playlistSongId);
     }
 }
