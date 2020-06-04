@@ -32,17 +32,17 @@
             <GridItem>
                 @if (HasStarted)
                 {
-                    <button class="btn btn-primary oi oi-arrow-thick-left" @onclick="LoadPreviousSong"></button>
-                    <button class="btn btn-primary @icon" @onclick="TogglePlay"></button>
-                    <button class="btn btn-primary oi oi-media-stop" @onclick="Stop"></button>
-                    <button class="btn btn-primary oi oi-arrow-thick-right" @onclick="LoadNextSong"></button>
+                    <button class="btn btn-mc oi oi-arrow-thick-left" @onclick="LoadPreviousSong"></button>
+                    <button class="btn btn-mc @icon" @onclick="TogglePlay"></button>
+                    <button class="btn btn-mc oi oi-media-stop" @onclick="Stop"></button>
+                    <button class="btn btn-mc oi oi-arrow-thick-right" @onclick="LoadNextSong"></button>
                 }
                 else
                 {
-                    <button class="btn btn-primary oi oi-arrow-thick-left" @onclick="LoadPreviousSong" disabled></button>
-                    <button class="btn btn-primary @icon" @onclick="TogglePlay" disabled></button>
-                    <button class="btn btn-primary oi oi-media-stop" @onclick="Stop" disabled></button>
-                    <button class="btn btn-primary oi oi-arrow-thick-right" @onclick="LoadNextSong" disabled></button>
+                    <button class="btn btn-mc oi oi-arrow-thick-left" @onclick="LoadPreviousSong" disabled></button>
+                    <button class="btn btn-mc @icon" @onclick="TogglePlay" disabled></button>
+                    <button class="btn btn-mc oi oi-media-stop" @onclick="Stop" disabled></button>
+                    <button class="btn btn-mc oi oi-arrow-thick-right" @onclick="LoadNextSong" disabled></button>
                 }
             </GridItem>
         </GridColumn>

@@ -14,6 +14,15 @@ a, .btn-link {
     border-color: #1861ac;
 }
 
+.btn-mc {
+    color: #34495e;
+    background-color: #dedede;
+    border-radius: 50%;
+    height: 37px;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+    border: 0 none;
+}
+
 app {
     position: relative;
     display: flex;
