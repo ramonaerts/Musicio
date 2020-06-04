@@ -20,12 +20,10 @@ namespace Musicio.Server.Controllers.Api
     public class ArtistController : ControllerBase
     {
         private readonly IArtistService _artistService;
-        private readonly IFileManagementService _fileManagementService;
         private readonly IMapper _mapper;
-        public ArtistController(IArtistService artistService ,IMapper mapper, IFileManagementService fileManagementService)
+        public ArtistController(IArtistService artistService ,IMapper mapper)
         {
             _artistService = artistService;
-            _fileManagementService = fileManagementService;
             _mapper = mapper;
         }
 

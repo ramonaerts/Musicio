@@ -19,13 +19,11 @@ namespace Musicio.Server.Controllers.Api
     public class AlbumController : ControllerBase
     {
         private readonly IAlbumService _albumService;
-        private readonly IFileManagementService _fileManagementService;
         private readonly IMapper _mapper;
 
-        public AlbumController(IAlbumService albumService, IFileManagementService fileManagementService, IMapper mapper)
+        public AlbumController(IAlbumService albumService, IMapper mapper)
         {
             _albumService = albumService;
-            _fileManagementService = fileManagementService;
             _mapper = mapper;
         }
 

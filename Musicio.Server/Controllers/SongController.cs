@@ -24,7 +24,7 @@ namespace Musicio.Server.Controllers
         [Route("songs/{songFile}")]
         public IActionResult GetSongFile(string songFile)
         {
-            if (_fileManagementService.GetImageOfType(songFile, ImageType.Song, out var songBytes))
+            if (_fileManagementService.GetContentOfType(songFile, DataType.Song, out var songBytes))
             {
                 if (!new FileExtensionContentTypeProvider().TryGetContentType(songFile, out var contentType))
                     contentType = "application/octet-stream";

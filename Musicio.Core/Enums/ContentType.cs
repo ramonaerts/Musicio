@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Musicio.Core.Enums
 {
-    public enum ImageType
+    public enum DataType
     {
         Playlist,
         Artist,

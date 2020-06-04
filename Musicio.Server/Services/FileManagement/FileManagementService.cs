@@ -29,38 +29,29 @@ namespace Musicio.Server.Services.FileManagement
             return uniqueFileName + "." + extension;
         }
 
-        public string CreateBase64String(string image, ImageType type)
+        public bool GetContentOfType(string dataString, DataType type, out byte[] bytes)
         {
-            string path = GetPath(type);
-
-            byte[] bytes = File.ReadAllBytes(Environment.CurrentDirectory + path + image);
-
-            return Convert.ToBase64String(bytes, 0, bytes.Length);
-        }
-
-        public bool GetImageOfType(string imageString, ImageType type, out byte[] imageBytes)
-        {
-            imageBytes = new byte[0];
+            bytes = new byte[0];
             var path = GetPath(type);
 
-            if (!File.Exists(Path.Combine(Environment.CurrentDirectory + path + imageString))) return false;
+            if (!File.Exists(Path.Combine(Environment.CurrentDirectory + path + dataString))) return false;
 
-            imageBytes = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory + path + imageString));
+            bytes = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory + path + dataString));
 
             return true;
         }
 
-        private static string GetPath(ImageType type)
+        private static string GetPath(DataType type)
         {
             switch (type)
             {
-                case ImageType.Playlist:
+                case DataType.Playlist:
                     return "\\Content\\Playlistimages\\";
-                case ImageType.Album:
+                case DataType.Album:
                     return "\\Content\\Musicimages\\";
-                case ImageType.Artist:
+                case DataType.Artist:
                     return "\\Content\\Artistimages\\";
-                case ImageType.Song:
+                case DataType.Song:
                     return "\\Content\\Musicaudio\\";
                 default:
                     return null;

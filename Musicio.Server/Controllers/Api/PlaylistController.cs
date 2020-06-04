@@ -22,14 +22,12 @@ namespace Musicio.Server.Controllers.Api
     public class PlaylistController : ControllerBase
     {
         private readonly IPlaylistService _playlistService;
-        private readonly IFileManagementService _fileManagementService;
         private readonly IMapper _mapper;
 
-        public PlaylistController(IMapper mapper, IPlaylistService playlistService, IFileManagementService fileManagementService)
+        public PlaylistController(IMapper mapper, IPlaylistService playlistService)
         {
             _mapper = mapper;
             _playlistService = playlistService;
-            _fileManagementService = fileManagementService;
         }
 
         [HttpPost]

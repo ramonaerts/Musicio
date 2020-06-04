@@ -24,7 +24,7 @@ namespace Musicio.Server.Controllers
         [Route("images/{artistImage}")]
         public IActionResult GetArtistImage(string artistImage)
         {
-            if (_fileManagementService.GetImageOfType(artistImage, ImageType.Artist, out var imageBytes))
+            if (_fileManagementService.GetContentOfType(artistImage, DataType.Artist, out var imageBytes))
             {
                 if (!new FileExtensionContentTypeProvider().TryGetContentType(artistImage, out var contentType))
                     contentType = "application/octet-stream";

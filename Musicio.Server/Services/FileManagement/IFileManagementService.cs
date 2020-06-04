@@ -9,7 +9,6 @@ namespace Musicio.Server.Services.FileManagement
     public interface IFileManagementService
     {
         string SavePlaylistImage(string image, string fileExtension);
-        string CreateBase64String(string image, ImageType type);
-        bool GetImageOfType(string imageString, ImageType type, out byte[] imageBytes);
+        bool GetContentOfType(string contentString, DataType type, out byte[] imageBytes);
     }
 }
