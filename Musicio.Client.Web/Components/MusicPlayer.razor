@@ -15,7 +15,7 @@
         <GridItem>
             @if (HasStarted)
             {
-                <div class="text-white">
+                <div class="music-text">
                     @CurrentSong.SongTitle<br/>
                     @CurrentSong.Artist
                 </div>
@@ -55,6 +55,7 @@
     MusicProgress _musicProgress;
     Functions functions;
     string icon = "oi oi-media-play";
+    bool _onEnded;
 
     [Parameter]
     public Song CurrentSong { get; set; }
@@ -104,15 +105,16 @@
 
         Howl.OnEnd += e =>
         {
-            if (SongQueue.Count == 0)
+            _queueNumber++;
+            if (SongQueue.Count == _queueNumber)
             {
+                _queueNumber = -1;
                 Stop();
             }
             else
             {
+                _onEnded = true;
                 LoadNextSong();
-                IsPlaying = false;
-                HasStarted = false;
                 TogglePlay();
             }
 
@@ -122,22 +124,22 @@
 
     protected async Task TogglePlay()
     {
-        Console.WriteLine("Here?");
         if (!IsPlaying && !HasStarted)
         {
-            Console.WriteLine("Here too?");
             IsPlaying = true;
             HasStarted = true;
             functions.SetTimeout(RefreshTimeStatus, 900);
             icon = "oi oi-media-pause";
             await Howl.Play($"/song/songs/{CurrentSong.SongFile}");
         }
+
         else if (IsPlaying && HasStarted)
         {
             IsPlaying = false;
             icon = "oi oi-media-play";
             await Howl.Pause();
         }
+
         else if (!IsPlaying && HasStarted)
         {
             IsPlaying = true;
@@ -154,13 +156,14 @@
         IsPlaying = false;
         HasStarted = false;
         Howl.Stop();
-        _queueNumber++;
-        if (_queueNumber == SongQueue.Count) Stop();
-        else
-        {
-            CurrentSong = SongQueue[_queueNumber];
-            TogglePlay(); 
-        }
+
+        if (_onEnded) _onEnded = false;
+        else _queueNumber++;
+
+        if (_queueNumber == SongQueue.Count) return;
+
+        CurrentSong = SongQueue[_queueNumber];
+        TogglePlay();
     }
 
     protected void LoadPreviousSong()
@@ -168,14 +171,15 @@
         IsPlaying = false;
         HasStarted = false;
         Howl.Stop();
+
         if(_queueNumber != 0) _queueNumber--;
+
         CurrentSong = SongQueue[_queueNumber];
         TogglePlay();
     }
 
     protected async Task Stop()
     {
-        _queueNumber = -1;
         IsPlaying = false;
         HasStarted = false;
         icon = "oi oi-media-play";

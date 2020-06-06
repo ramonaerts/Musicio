@@ -23,6 +23,10 @@ a, .btn-link {
     border: 0 none;
 }
 
+.music-text {
+    color: #dedede;
+}
+
 app {
     position: relative;
     display: flex;
