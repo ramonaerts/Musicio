@@ -18,10 +18,10 @@
             <h2>Login</h2>
         </FormGroup>
         <FormGroup>
-            <InputField Type="text" Placeholder="E-mail" OnChange="@OnMailChange" />
+            <InputField Text="E-mail" Type="text" Placeholder="E-mail" OnChange="@OnMailChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
+            <InputField Text="Password" Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
         </FormGroup>
         <FormGroup>
             <Button Enabled="@_buttonEnabled" Text="Login" OnClick="@LoginAsync"></Button>
@@ -44,16 +44,16 @@ else
             <h2>Register</h2>
         </FormGroup>
         <FormGroup>
-            <InputField Type="mail" Placeholder="E-mail" OnChange="@OnMailChange" />
+            <InputField Text="E-mail" Type="mail" Placeholder="E-mail" OnChange="@OnMailChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="text" Placeholder="Username" OnChange="@OnUsernameChange" />
+            <InputField Text="Username" Type="text" Placeholder="Username" OnChange="@OnUsernameChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
+            <InputField Text="Password" Type="password" Placeholder="Password" OnChange="@OnPasswordChange" />
         </FormGroup>
         <FormGroup>
-            <InputField Type="password" Placeholder="Confirm Password" OnChange="@OnConfirmPasswordChange" />
+            <InputField Text="Confirm Password" Type="password" Placeholder="Confirm Password" OnChange="@OnConfirmPasswordChange" />
         </FormGroup>
         <FormGroup>
             <Button Enabled="@_buttonEnabled" Text="Register" OnClick="@RegisterAsync"></Button>
@@ -94,8 +94,7 @@ else
     {
         if (await SessionService.CheckIfTokenIsAvailable())
         {
-            NavigationManager.NavigateTo("/");
-            return;
+            NavigationManager.NavigateTo("/playlists");
         }
     }
 

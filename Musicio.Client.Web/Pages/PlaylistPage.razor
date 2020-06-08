@@ -33,27 +33,27 @@ else
         <Button Enabled="@_playable" Text="Play Playlist" OnClick="@PlayPlaylist"></Button>
     </p>
     @if (_success)
+    {
+        <div class="alert alert-success">@_message</div>
+    }
+    @if (_error)
+    {
+        <div class="alert alert-danger">@_message</div>
+    }
+    <table class="table table-hover">
+        <tr><th>Title</th><th>Artist</th><th>Remove song</th></tr>
+        @foreach (var song in _playlist.Songs)
         {
-            <div class="alert alert-success">@_message</div>
+            <tr>
+                <td>@song.SongTitle</td>
+                <td>@song.Artist</td>
+                <td>
+                    <a class="oi oi-x" @onclick="@(() => RemovePlaylistSong(song.CollectionId, song.SongTitle))"></a>
+                </td>
+            </tr>
         }
-        @if (_error)
-        {
-            <div class="alert alert-danger">@_message</div>
-        }
-        <table class="table table-hover">
-            <tr><th>Title</th><th>Artist</th></tr>
-            @foreach (var song in _playlist.Songs)
-            {
-                <tr>
-                    <td>@song.SongTitle</td>
-                    <td>@song.Artist</td>
-                    <td>
-                        <a class="oi oi-x" @onclick="@(() => RemovePlaylistSong(song.CollectionId, song.SongTitle))"></a>
-                    </td>
-                </tr>
-            }
-        </table>
-        }
+    </table>
+}
 
 
 

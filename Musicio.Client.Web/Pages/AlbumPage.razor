@@ -32,7 +32,9 @@ else
             <div class="playlist-image-detail" style="background-image: url(@($"/album/images/{_album.Image}"))"></div>
         }
     </div>
-    <Button Enabled="@_playable" Text="Play album" OnClick="@PlayAlbum"></Button>
+    <p>
+        <Button Enabled="@_playable" Text="Play album" OnClick="@PlayAlbum"></Button>
+    </p>
     @if (_success)
     {
         <div class="alert alert-success">@_message</div>

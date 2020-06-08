@@ -318,7 +318,7 @@ progress::-webkit-progress-value {
 }
 
 .input-text {
-    color: purple;
+    color: #000000;
     width: 100%;
     font-size: 16px;
 }

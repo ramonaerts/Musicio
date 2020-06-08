@@ -43,6 +43,8 @@ namespace Musicio.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCompression();
+
             services.AddCors(options =>
             {
                 options.AddPolicy(AllowOrigins,
@@ -59,12 +61,14 @@ namespace Musicio.Server
             
             services.AddSingleton<DbContext, MusicioContext>();
             services.AddDbContext<MusicioContext>();
+
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
+
             services.AddScoped<IRepository<BaseEntity>, Repository<BaseEntity>>();
             services.AddScoped<IRepository<User>, Repository<User>>();
             services.AddScoped<IRepository<Playlist>, Repository<Playlist>>();
@@ -119,6 +123,8 @@ namespace Musicio.Server
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseResponseCompression();
 
             app.UseHttpsRedirection();
 
