@@ -53,7 +53,7 @@ namespace Musicio.Server
                         builder.WithOrigins("https://musicio.azurewebsites.net",
                                             "http://musicio.azurewebsites.net",
                                             "https://localhost:5001")
-                                            .AllowAnyOrigin()
+                                            /*.AllowAnyOrigin()*/
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                     });
